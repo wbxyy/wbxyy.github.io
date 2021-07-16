@@ -275,10 +275,7 @@ NexT.utils = {
           targets  : document.scrollingElement,
           duration : 500,
           easing   : 'linear',
-          scrollTop: offset + 10,
-          complete : () => {
-            history.pushState(null, document.title, element.href);
-          }
+          scrollTop: offset + 10
         });
       });
       return target;
