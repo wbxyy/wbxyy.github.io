@@ -28,7 +28,7 @@
 <meta property="og:description" content="浅谈vue3响应式原理(第一篇)1年前，在开课吧的视频里看到winter、大圣还有尤大吹嘘着vue3，各种新名词映入眼帘：watchEffect，reactive，ref，当时觉得好牛逼啊，一定要学一下（咕咕咕）。1年后，watchEffect是啥，reactive是啥，怎么多了出了这么多东西，好难啊，眼看着那个视频上的时间已经过去一年了，自己却完全没有长进，这次一定要摸进去。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-19T10:24:28.000Z">
-<meta property="article:modified_time" content="2021-07-19T07:08:50.024Z">
+<meta property="article:modified_time" content="2021-07-19T07:12:53.116Z">
 <meta property="article:author" content="wanbaoxiaoyiyi">
 <meta property="article:tag" content="杂货">
 <meta name="twitter:card" content="summary">
@@ -272,7 +272,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-07-19 10:24:28 / 修改时间：07:08:50" itemprop="dateCreated datePublished" datetime="2021-07-19T10:24:28Z">2021-07-19</time>
+      <time title="创建时间：2021-07-19 10:24:28 / 修改时间：07:12:53" itemprop="dateCreated datePublished" datetime="2021-07-19T10:24:28Z">2021-07-19</time>
     </span>
 
   
@@ -304,20 +304,20 @@
         <h1 id="浅谈vue3响应式原理-第一篇"><a href="#浅谈vue3响应式原理-第一篇" class="headerlink" title="浅谈vue3响应式原理(第一篇)"></a>浅谈vue3响应式原理(第一篇)</h1><p>1年前，在开课吧的视频里看到winter、大圣还有尤大吹嘘着vue3，各种新名词映入眼帘：watchEffect，reactive，ref，当时觉得好牛逼啊，一定要学一下（咕咕咕）。<br>1年后，watchEffect是啥，reactive是啥，怎么多了出了这么多东西，好难啊，眼看着那个视频上的时间已经过去一年了，自己却完全没有长进，这次一定要摸进去。</p>
 <span id="more"></span>
 
-<h3 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h3><p>我们经常能在尤大口中听到一个词：sideEffect。首次听这个词时，我也是一头雾水，副作用到底是什么，吃药时的副作用吗？在尤大在评论winter的小案例时，他讲了winter在组件销毁时没有清理掉之前设置的事件监听器，这会对程序产生副作用。当然，尤大此时说的是sideEffect是另一个方面的。</p>
-<p>vue3中的sideEffect怎么理解？一些变量执行某些基本操作时，被拦截并执行一些事情，这些事情叫sideEffect。</p>
+<h3 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h3><p>我们经常能在尤大口中听到一个词：<code>sideEffect</code>。首次听这个词时，我也是一头雾水，副作用到底是什么，吃药时的副作用吗？在尤大在评论winter的小案例时，他讲了winter在组件销毁时没有清理掉之前设置的事件监听器，这会对程序产生副作用。当然，尤大此时说的是<code>sideEffect</code>是另一个方面的。</p>
+<p>vue3中的<code>sideEffect</code>怎么理解？一些变量执行某些基本操作时，被拦截并执行一些事情，这些事情叫<code>sideEffect</code>。</p>
 <h3 id="拦截"><a href="#拦截" class="headerlink" title="拦截"></a>拦截</h3><p>上面说到拦截，这是vue经常做的事情。vue就喜欢在变量读取、写入的时候拦截并做操作。</p>
-<p>在vue2中，尤大是通过Object.defineProperty给变量设置存取器属性，然后在存取器中执行副作用。到了vue3，尤大用了es6的新特性Proxy和Reflect重写了这部分的代码。Proxy提供了对变量基本操作的各种拦截回调，Reflect则是对这些基本操作的实现。通过Proxy，将变量的<strong>基本操作</strong>修改为<strong>副作用+基本操作</strong>，完成副作用的执行。</p>
+<p>在vue2中，尤大是通过<code>Object.defineProperty</code>给变量设置存取器属性，然后在存取器中执行副作用。到了vue3，尤大用了es6的新特性<code>Proxy</code>和<code>Reflect</code>重写了这部分的代码。<code>Proxy</code>提供了对变量基本操作的各种拦截回调，<code>Reflect</code>则是对这些基本操作的实现。通过<code>Proxy</code>，将变量的<strong>基本操作</strong>修改为<strong>副作用+基本操作</strong>，完成副作用的执行。</p>
 <h3 id="响应式"><a href="#响应式" class="headerlink" title="响应式"></a>响应式</h3><h4 id="响应式是什么"><a href="#响应式是什么" class="headerlink" title="响应式是什么"></a>响应式是什么</h4><p>要明白响应式是什么，我们通过下面几行代码讲解</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> product = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">10</span>,</span><br><span class="line">  <span class="attr">quantity</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span></span><br><span class="line">total = product.price * product.quantity <span class="comment">//20</span></span><br><span class="line">product.quantity = <span class="number">3</span></span><br><span class="line">total <span class="comment">//20</span></span><br></pre></td></tr></table></figure>
 <p>上面代码表明了total是由price和quantity计算得出，但是当我们修改了quantity后，total的值却没有跟着变，因此我们知道原生的javascript是没有响应式的</p>
 <h4 id="那么要怎么实现响应式"><a href="#那么要怎么实现响应式" class="headerlink" title="那么要怎么实现响应式"></a>那么要怎么实现响应式</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> product = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">10</span>,</span><br><span class="line">  <span class="attr">quantity</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trigger</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  total = product.price * product.quantity</span><br><span class="line">&#125;</span><br><span class="line">trigger()</span><br><span class="line">total <span class="comment">//20</span></span><br><span class="line">product.quantity = <span class="number">3</span></span><br><span class="line">trigger()</span><br><span class="line">total <span class="comment">//30</span></span><br></pre></td></tr></table></figure>
 <p>我们发现，如果我们将total的计算方式保存为一个函数，然后在每次更新quantity之后调用一次，total的值就会跟着变化。</p>
-<p>那么只要我们在quantity更新时自动执行trigger，响应式就实现了。</p>
+<p>那么只要我们在quantity更新时自动执行<code>trigger</code>，响应式就实现了。</p>
 <h4 id="自动？"><a href="#自动？" class="headerlink" title="自动？"></a>自动？</h4><p>要实现自动，我们就需要前面讲到的知识：<strong>拦截</strong>。</p>
-<p>我们通过proxy，在quantity执行set操作时进行拦截，然后将上述trigger添加为set操作的副作用。</p>
+<p>我们通过<code>Proxy</code>，在quantity执行<code>set</code>操作时进行拦截，然后将上述<code>trigger</code>添加为<code>set</code>操作的副作用。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">10</span>,</span><br><span class="line">  <span class="attr">quantity</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trigger</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  total = p.price * p.quantity</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> product = <span class="keyword">new</span> <span class="built_in">Proxy</span>(p,&#123;</span><br><span class="line">  <span class="function"><span class="title">set</span>(<span class="params">target:any,key:string,value:any,receiver:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="built_in">Reflect</span>.set(target,key,value,receiver)</span><br><span class="line">    trigger()</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">trigger()</span><br><span class="line">total<span class="comment">//20</span></span><br><span class="line">product.quantity = <span class="number">3</span></span><br><span class="line">total<span class="comment">//30</span></span><br></pre></td></tr></table></figure>
-<p>这下我们可以在set操作时自动执行trigger了</p>
+<p>这下我们可以在<code>set</code>操作时自动执行<code>trigger</code>了</p>
 
     </div>
 
