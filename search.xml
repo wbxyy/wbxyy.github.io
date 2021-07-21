@@ -96,6 +96,31 @@
       </tags>
   </entry>
   <entry>
+    <title>vue-route杂谈</title>
+    <url>/2021/07/19/learnRouter/</url>
+    <content><![CDATA[<h1 id="vue-router杂谈"><a href="#vue-router杂谈" class="headerlink" title="vue-router杂谈"></a>vue-router杂谈</h1><p>说到<code>vue-router</code>，我会有联系到下面几个对象：<code>router,routes,route</code>，还有下面几个属性：<code>path,component,name</code>，还有下面几个方法：<code>BeforeRouteUpdate()，BeforeRouteEnter()，BeforeRouteLeave()，router.beforeEach()</code></p>
+<span id="more"></span>
+
+<p><code>router</code>是一个路由器，他的功能是根据自身记录的路由表，完成路由和组件的映射，并通过<code>go(),replace(),push()</code>方法提供可编程的路由切换。</p>
+<p><code>routes</code>是路由表，是一个路由对象数组，他将被登记在路由器中。</p>
+<p><code>route</code>就是路由，路由表中的一个元素，是一个拥有地址path、路由参数params、查询串query、路由名name、组件component等信息的对象。根据这个路由对象，就能让地址栏中的地址path和组件component形成映射关系，路由名name和component形成映射关系。</p>
+<h3 id="这些玩意怎么使用？"><a href="#这些玩意怎么使用？" class="headerlink" title="这些玩意怎么使用？"></a>这些玩意怎么使用？</h3><p>地址栏输入地址后，router通过path查找路由表中的路由，确定path和component的映射关系，从而实现输入指定地址显示指定组件。而使用<code>router.push()</code>等方法切换路由时，router通过传入的参数name，确定name和component的映射关系，确定参数name对应的component完成路由切换。</p>
+<p><code>BeforeRouteWhatTheFuck()</code>，根据文档的说法，这个玩意称作导航守卫。“导航”意为路由发生变化，“守卫”意为回调。</p>
+<p>当参数或查询改变时，不会触发进入/离开的导航守卫，而会触发更新的导航守卫</p>
+<p>所以，进入/离开守卫与更新守卫是互斥的。</p>
+<p>当path的查询和参数被修改时，进入<code>BeforeRouteUpdate()</code></p>
+<p>当查询和参数未被修改，或path被修改时，进入<code>BeforeRouteEnter()和BeforeRouteLeave()</code></p>
+<h3 id="由此可见"><a href="#由此可见" class="headerlink" title="由此可见"></a>由此可见</h3><p>路由变更有两种：<strong>路由修改</strong>和<strong>路由切换</strong></p>
+<p>前者复用实例，后者销毁并创建新实例</p>
+<blockquote>
+<p>关于路由切换时，watch route无法触发这个问题，我的解释是这样的：组件实例被销毁，是对响应式对象的直接销毁，watch无法追踪。 </p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>杂货</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浅谈vue3响应式原理 第三篇 ref、computed</title>
     <url>/2021/07/21/learnReactivity3/</url>
     <content><![CDATA[<h1 id="ref和computed的由来"><a href="#ref和computed的由来" class="headerlink" title="ref和computed的由来"></a>ref和computed的由来</h1><p>能够坚持看到这里，实属不易，vue3响应式的原理在前两篇已经讲得差不多了。</p>
@@ -224,31 +249,6 @@
 ]]></content>
       <tags>
         <tag>干货</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vue-route杂谈</title>
-    <url>/2021/07/19/learnRouter/</url>
-    <content><![CDATA[<h1 id="vue-router杂谈"><a href="#vue-router杂谈" class="headerlink" title="vue-router杂谈"></a>vue-router杂谈</h1><p>说到<code>vue-router</code>，我会有联系到下面几个对象：<code>router,routes,route</code>，还有下面几个属性：<code>path,component,name</code>，还有下面几个方法：<code>BeforeRouteUpdate()，BeforeRouteEnter()，BeforeRouteLeave()，router.beforeEach()</code></p>
-<span id="more"></span>
-
-<p><code>router</code>是一个路由器，他的功能是根据自身记录的路由表，完成路由和组件的映射，并通过<code>go(),replace(),push()</code>方法提供可编程的路由切换。</p>
-<p><code>routes</code>是路由表，是一个路由对象数组，他将被登记在路由器中。</p>
-<p><code>route</code>就是路由，路由表中的一个元素，是一个拥有地址path、路由参数params、查询串query、路由名name、组件component等信息的对象。根据这个路由对象，就能让地址栏中的地址path和组件component形成映射关系，路由名name和component形成映射关系。</p>
-<h3 id="这些玩意怎么使用？"><a href="#这些玩意怎么使用？" class="headerlink" title="这些玩意怎么使用？"></a>这些玩意怎么使用？</h3><p>地址栏输入地址后，router通过path查找路由表中的路由，确定path和component的映射关系，从而实现输入指定地址显示指定组件。而使用<code>router.push()</code>等方法切换路由时，router通过传入的参数name，确定name和component的映射关系，确定参数name对应的component完成路由切换。</p>
-<p><code>BeforeRouteWhatTheFuck()</code>，根据文档的说法，这个玩意称作导航守卫。“导航”意为路由发生变化，“守卫”意为回调。</p>
-<p>当参数或查询改变时，不会触发进入/离开的导航守卫，而会触发更新的导航守卫</p>
-<p>所以，进入/离开守卫与更新守卫是互斥的。</p>
-<p>当path的查询和参数被修改时，进入<code>BeforeRouteUpdate()</code></p>
-<p>当查询和参数未被修改，或path被修改时，进入<code>BeforeRouteEnter()和BeforeRouteLeave()</code></p>
-<h3 id="由此可见"><a href="#由此可见" class="headerlink" title="由此可见"></a>由此可见</h3><p>路由变更有两种：<strong>路由修改</strong>和<strong>路由切换</strong></p>
-<p>前者复用实例，后者销毁并创建新实例</p>
-<blockquote>
-<p>关于路由切换时，watch route无法触发这个问题，我的解释是这样的：组件实例被销毁，是对响应式对象的直接销毁，watch无法追踪。 </p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>杂货</tag>
       </tags>
   </entry>
 </search>
