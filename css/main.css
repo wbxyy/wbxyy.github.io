@@ -4,8 +4,8 @@
   --card-bg-color: #f5f5f5;
   --text-color: #555;
   --blockquote-color: #666;
-  --link-color: #555;
-  --link-hover-color: #222;
+  --link-color: #0593d3;
+  --link-hover-color: #0593d3;
   --brand-color: #fff;
   --brand-hover-color: #fff;
   --table-row-odd-bg-color: #f9f9f9;
@@ -29,8 +29,8 @@
     --card-bg-color: #555;
     --text-color: #ccc;
     --blockquote-color: #bbb;
-    --link-color: #ccc;
-    --link-hover-color: #eee;
+    --link-color: #0593d3;
+    --link-hover-color: #0593d3;
     --brand-color: #ddd;
     --brand-hover-color: #ddd;
     --table-row-odd-bg-color: #282828;
@@ -253,7 +253,7 @@ p {
   margin: 0 0 20px;
 }
 a {
-  border-bottom: 1px solid #999;
+  border-bottom: 1px solid #0593d3;
   color: var(--link-color);
   cursor: pointer;
   outline: 0;
@@ -1845,6 +1845,16 @@ pre code {
   width: 100%;
   z-index: 1500;
 }
+.reading-progress-bar {
+  --progress: 0;
+  background: #9059bf;
+  height: 3px;
+  position: fixed;
+  z-index: 1500;
+  width: var(--progress);
+  left: 0;
+  top: 0;
+}
 .rtl.post-body p,
 .rtl.post-body a,
 .rtl.post-body h1,
@@ -3038,5 +3048,6 @@ mark.search-keyword {
   }
 }
 p {
-  word-break: break-all;
+  overflow-wrap: break-word;
+  overflow-wrap: break-word;
 }
