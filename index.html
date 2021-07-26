@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 <meta name="description" content="王者的鼓动，现在就展现给你看">
 <meta property="og:type" content="website">
 <meta property="og:title" content="这里是苏苏的小屋">
@@ -43,7 +43,7 @@
 
 
 
-
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -274,7 +274,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-07-22 09:13:28" itemprop="dateModified" datetime="2021-07-22T09:13:28Z">2021-07-22</time>
+        <time title="修改时间：2021-07-23 02:52:31" itemprop="dateModified" datetime="2021-07-23T02:52:31Z">2021-07-23</time>
       </span>
 
   
@@ -304,7 +304,7 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1>浅谈 typescript 装饰器</h1>
-<p>typescript 的装饰器，是个很尴尬的存在，从这个概念被提出以来，就一直在经历各种规范上的修改，直到现在还没有一种公认、稳定的规范拿上台。<a target="_blank" rel="noopener" href="https://www.baidu.com">百度</a></p>
+<p>typescript 的装饰器，是个很尴尬的存在，从这个概念被提出以来，就一直在经历各种规范上的修改，直到现在还没有一种公认、稳定的规范拿上台。</p>
 <p>装饰器是和 class 的概念相关的，从尤大的话来说，前端页面的交互逻辑使用 class 来写，可能并不是那么顺手。从 vue3 放出的 api 来看，vue3 最终还是选择了开放函数式编程的接口。用尤大的话来讲：设计一个 class 编程接口，要踩的坑实在是太多。</p>
 <p>不过即使是冷门的语法，也阻止不了<ruby> 好奇<rt>得闲 </rt></ruby>的我去<ruby> 科研<rt>玩耍 </rt></ruby>一下。</p>
 <h3 id="什么是装饰器">什么是装饰器</h3>
@@ -373,7 +373,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-07-22 09:13:45" itemprop="dateModified" datetime="2021-07-22T09:13:45Z">2021-07-22</time>
+        <time title="修改时间：2021-07-23 08:58:49" itemprop="dateModified" datetime="2021-07-23T08:58:49Z">2021-07-23</time>
       </span>
 
   
@@ -405,9 +405,8 @@
           <h1>浅谈 vue3 响应式原理 第三篇 ref、computed</h1>
 <p>能够坚持看到这里，实属不易，vue3 响应式的原理在前两篇已经讲得差不多了。</p>
 <p>本篇作为一个补充，结合前面的内容，带大家了解 vue3 开放的2个 api：</p>
-<blockquote>
-<p>ref 函数和 computed 函数</p>
-</blockquote>
+<div class="note info"><p>ref 函数和 computed 函数</p>
+</div>
 <h2 id="ref-和-computed-的由来"><a href="#ref-%E5%92%8C-computed-%E7%9A%84%E7%94%B1%E6%9D%A5">ref 和 computed 的由来</a></h2>
 <p>回想起上一篇，我们把 <strong>Proxy</strong> 封装成了 <strong>Reactive 函数</strong></p>
 <p>通过它，我们对对象的<strong>读取、写入</strong>进行<strong>拦截</strong>，在拦截中插入<strong>记录</strong>和<strong>重放</strong>的操作，就能把普通的 javascript 对象变成响应式对象。</p>
@@ -475,7 +474,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-07-22 09:14:01" itemprop="dateModified" datetime="2021-07-22T09:14:01Z">2021-07-22</time>
+        <time title="修改时间：2021-07-23 09:53:02" itemprop="dateModified" datetime="2021-07-23T09:53:02Z">2021-07-23</time>
       </span>
 
   
@@ -486,7 +485,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.2k</span>
+      <span>5.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -504,12 +503,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1>浅谈 vue3 响应式原理 第二篇 记录与重放</h1>
+          <style>
+  <%- fa_inline('twitter', {prefix: 'fab'}) %>
+</style>
+<h1>浅谈 vue3 响应式原理 第二篇 记录与重放</h1>
 <p>上一篇简单讲了一下什么是响应式，实现响应式的基本套路：在变量被设置新值的时候，重新执行一次副作用。</p>
 <p>但是副作用有很多，我们不可能把每个副作用的执行都在 <code>Proxy</code> 中硬编码一遍，如何设计才能管理这么多副作用，这次来讲 vue3 实现响应式需要的数据结构。</p>
 <h3 id="副作用的存储">副作用的存储</h3>
 <p>要完成响应式，我们上一篇讲了在变量执行 <code>set</code> 操作时将副作用重放一遍。但是一个程序有这么多变量，这么多副作用，vue3 是如何管理的呢？</p>
-<p>首先这里引入一个<strong>新名词: depsMap</strong></p>
+<div class="note info"><p>首先这里引入一个<strong>新名词：depsMap</strong></p>
+</div>
 <p><code>depsMap</code> 是一个绑定属性与副作用的 <code>Map</code>。他的 key 是变量的属性名，他的 value 是属性对应的副作用。</p>
           <!--noindex-->
             <div class="post-button">
@@ -674,7 +677,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-07-22 01:51:00" itemprop="dateModified" datetime="2021-07-22T01:51:00Z">2021-07-22</time>
+        <time title="修改时间：2021-07-23 08:46:05" itemprop="dateModified" datetime="2021-07-23T08:46:05Z">2021-07-23</time>
       </span>
 
   
@@ -772,7 +775,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-07-22 09:29:36" itemprop="dateModified" datetime="2021-07-22T09:29:36Z">2021-07-22</time>
+        <time title="修改时间：2021-07-23 08:43:38" itemprop="dateModified" datetime="2021-07-23T08:43:38Z">2021-07-23</time>
       </span>
 
   
@@ -801,13 +804,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p><strong>适用日期：2021-7</strong></p>
-</blockquote>
+          <div class="note info"><p><strong>适用日期：2021-7</strong></p>
+</div>
 <h1>一、使用 vite 新建 Vue3 应用</h1>
-<blockquote>
-<p>Vite requires Node.js version &gt;=12.0.0.</p>
-</blockquote>
+<div class="note info"><p>Vite requires Node.js version &gt;=12.0.0.</p>
+</div>
 <h3 id="创建-vue3-项目">创建 vue3 项目</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn create @vitejs/app</span><br></pre></td></tr></table></figure>
 <h3 id="进入-vue3-项目">进入 vue3 项目</h3>
