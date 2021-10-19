@@ -1,36 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>浅谈 vue3 响应式原理 第一篇 响应式和副作用</title>
-    <url>/2021/07/19/learnReactivity1/</url>
-    <content><![CDATA[<h1>浅谈 vue3 响应式原理 第一篇 响应式和副作用</h1>
-<p>一年前，在开课吧的视频里看到 winter、大圣还有尤大吹嘘着 vue3，各种新名词映入眼帘：watchEffect，reactive，ref，当时觉得好牛逼啊，一定要学一下（咕咕咕）。</p>
-<p>一年后，watchEffect 是啥，reactive 是啥，ref 又是啥，怎么多了出了这么多东西，好难啊，趁现在赶紧摸索清楚。</p>
-<h3 id="副作用">副作用</h3>
-<p>我们经常能在尤大口中听到一个词： <code>sideEffect</code>。首次听这个词时，我也是一头雾水，副作用到底是什么，吃药时的副作用吗？在尤大在评论 winter 的小案例时，他讲了 winter 在组件销毁时没有清理掉之前设置的事件监听器，这会对程序产生副作用。当然，尤大此时说的是 <code>sideEffect</code> 是另一个方面的。</p>
-<p>vue3中的 <code>sideEffect</code> 怎么理解？一些变量执行某些基本操作时，被拦截并执行一些事情，这些事情叫 <code>sideEffect</code>。</p>
+    <title>详谈游戏王实卡集换社小程序寄存仓——实卡圈最大倒爷撕破了自己的面具</title>
+    <url>/2021/10/19/discussOfYgoCardProfiteer/</url>
+    <content><![CDATA[<h3 id="前言">前言</h3>
+<p>圈里老人基本不用看别人的什么分析，但是圈里总还是些新人，毕竟<code>付叔叔（鹏鹏卡牌屋）</code>，<code>乐通（乐通天下，来来）</code>，<code>小豆丁（正版游戏王卡牌专门店）</code>这些乐色都有那么多月销量。所以还是开个贴细说下这玩意儿吧，哪怕能多帮到一个人也算是好的</p>
+<h3 id="先说说个人卖家">先说说个人卖家</h3>
+<div class="note info"><p>寄件</p>
+</div>
+<p>先说说作为散户卖家，给他们寄存，他们的可操作性吧</p>
+<p>从你寄出去卡的那一刻起，所有的主动权都从你的手中转移到了集换社的手中。</p>
+<p>寄过去卡，他可以告诉你你的卡损了他们不要，然后退给你一张损卡。你若是没拍封箱那集换社说什么就是什么。</p>
+<p>即使你录了封箱，他们也可以以运输损为由退给你损卡，因为作为对快递公司下单的一方，运输出了问题是需要你去交涉而不是他们去。</p>
+<p>甚至可以直接说没收到卡，不给你寄存也不给你退。反正集换社的客服也都是自己的手下人，又能去哪里讨一个公道？</p>
 <span id="more"></span>
-<h3 id="拦截">拦截</h3>
-<p>上面说到拦截，这是 vue 经常做的事情。vue 就喜欢在变量读取、写入的时候拦截并做操作。</p>
-<p>在 vue2 中，尤大是通过 <code>Object.defineProperty</code> 给变量设置存取器属性，然后在存取器中执行副作用。到了 vue3，尤大用了 es6 的新特性 <code>Proxy</code> 和 <code>Reflect</code> 重写了这部分的代码。<code>Proxy</code> 提供了对变量基本操作的各种拦截回调，<code>Reflect</code> 则是对这些基本操作的实现。通过 <code>Proxy</code>，将变量的<strong>基本操作</strong>修改为<strong>副作用+基本操作</strong>，完成副作用的执行。</p>
-<h3 id="响应式">响应式</h3>
-<h4 id="响应式是什么">响应式是什么</h4>
-<p>要明白响应式是什么，我们通过下面几行代码讲解</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> product = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">10</span>,</span><br><span class="line">  <span class="attr">quantity</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span></span><br><span class="line">total = product.price * product.quantity <span class="comment">//20</span></span><br><span class="line">product.quantity = <span class="number">3</span></span><br><span class="line">total <span class="comment">//20</span></span><br></pre></td></tr></table></figure>
-<p>上面代码表明了 total 是由 price 和 quantity 计算得出，但是当我们修改了 quantity 后，total 的值却没有跟着变，因此我们知道原生的 javascript 是没有响应式的</p>
-<h4 id="那么要怎么实现响应式">那么要怎么实现响应式</h4>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> product = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">10</span>,</span><br><span class="line">  <span class="attr">quantity</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trigger</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  total = product.price * product.quantity</span><br><span class="line">&#125;</span><br><span class="line">trigger()</span><br><span class="line">total <span class="comment">//20</span></span><br><span class="line">product.quantity = <span class="number">3</span></span><br><span class="line">trigger()</span><br><span class="line">total <span class="comment">//30</span></span><br></pre></td></tr></table></figure>
-<p>我们发现，如果我们将 total 的计算方式保存为一个函数，然后在每次更新 quantity 之后调用一次，total 的值就会跟着变化。</p>
-<p>那么只要我们在quantity更新时自动执行 <code>trigger</code>，响应式就实现了。</p>
-<h4 id="自动？">自动？</h4>
-<p>要实现自动，我们就需要前面讲到的知识：<strong>拦截</strong>。</p>
-<p>我们通过 <code>Proxy</code>，在 quantity 执行 <code>set</code> 操作时进行拦截，然后将上述 <code>trigger</code> 添加为 <code>set</code> 操作的副作用。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">10</span>,</span><br><span class="line">  <span class="attr">quantity</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trigger</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  total = p.price * p.quantity</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> product = <span class="keyword">new</span> <span class="built_in">Proxy</span>(p,&#123;</span><br><span class="line">  <span class="function"><span class="title">set</span>(<span class="params">target:any,key:string,value:any,receiver:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="built_in">Reflect</span>.set(target,key,value,receiver)</span><br><span class="line">    trigger()</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">trigger()</span><br><span class="line">total<span class="comment">//20</span></span><br><span class="line">product.quantity = <span class="number">3</span></span><br><span class="line">total<span class="comment">//30</span></span><br></pre></td></tr></table></figure>
-<p>这下我们可以在 <code>set</code> 操作时自动执行 <code>trigger</code> 了</p>
-<p>未完持续O(∩_∩)O</p>
+<div class="note info"><p>寄售</p>
+</div>
+<p>寄件部分过去，就到了寄售部分</p>
+<p>“倒爷扫货”这个事情即使新人不知道，应该也至少听说过些相关内容。以前的倒爷想扫货，就是一家一家的点过去。散户拥有拒绝的权利，顶多就是被举报空挂吃个警告。</p>
+<p>而有了这个寄存仓，作为最大倒爷的集换社甚至连开小号扫货都不需要了。只要涨了，就在你联系他们调价格之前告诉你已经卖出并且按照之前的挂价付给你钱，你也是一点办法都没有。拒绝的权利在你寄出卡的一瞬间就消失了。</p>
+<p>至于没涨反而跌了的卡，那就更简单了。反正集换社不需要把钱付给你就能拿到你的卡，你的卡卖不出去和他们一点关系都没有，甚至还能白拿你一波寄存费。</p>
+<div class="note info"><p>取回</p>
+</div>
+<p>如果你不想卖了想拿回自己的卡该怎么办？</p>
+<p>我看了几遍公告，半个字没提如果想拿回自己的卡该怎么办。换句话说，他们直接拒绝寄还给你也可以说这个功能从一开始就禁止卖家取回。而有这一点兜底，他们完全可以卖掉你的卡都不给你钱，就告诉你没卖出去，反正你也不知道也拿不回去。</p>
+<p>如果允许退，那肯定不可能是他们负担邮费。自己的卡没卖出去还自己白白承担来回邮费，铁亏的事情。</p>
+<h3 id="而作为个人买家又如何呢？">而作为个人买家又如何呢？</h3>
+<p>以上我说的内容实际上都属于可操作而不是实锤（但说实话真的是八九不离十），所以我假设以上情况全都不会出现，集换社会真的按照大家心里想的那样来寄卖</p>
+<p>垄断这个词想必每个人都不会陌生，顶多就是一些人对具体怎么样垄断没有概念。如果没有概念，就记住只有货多的人才能操控价格就可以了。</p>
+<p>我们可以看到，目前集换社内已经有了寄存仓库存，但没记错的话这个功能今天才上线，所以大概率是集换社自己上架，而定价也是相当的高（比如sr的增殖的g，最低价14r，而寄存售价50r）</p>
+<p>这个上架目前来说主要作用还是吸引散户卖家，告诉你们可以把卡卖的很高，这样他们就可以零成本囤货（毕竟只有售出后才需要给卖家钱）。有了足够的货，就有了操纵价格的资本，这种离谱的价格可能就是以后买家买卡需要面对的了。</p>
+<p>简单的假设一下，还是这张增殖的g，把寄存售价卡和一堆小号的卡价都卡在50然后去把这之下的货全部扫空，作为个人卖家看到最低价是50还会去挂15，20吗？这对每个买家来说都是很致命的事情。</p>
+<p>更不用说这还是假设以上全部不会发生。如果集换社想，完全可以在这样操作把卡价抬上去，然后在寄售卖家还没改价之前告诉他们已经售出，并且按照先前价格付款。没有人有机会说理，因为平台炒卡，你找平台客服有什么用呢？</p>
+<h3 id="所以-za-ma-le">所以 za ma le ?</h3>
+<p>总之，这个功能的出现代表着集换社彻底的扯开脸皮，明目张胆的告诉所有人“我要炒卡”，然后去靠那些不明所以的，入圈不深的散户来囤货，再进一步操作国内的实卡市场。</p>
+<p>之前一直在说lj 小程序滚出 zg，但那时小程序的问题在于高价手续费，装死客服等，直接选择不用他们偶尔用来查查卡就行了。</p>
+<p>但现在如果真让他们这么倒腾市场，真不敢想以后会是什么情况，极有可能会波及到小程序之外的交易市场，毕竟不得不说，目前就我已知的实卡圈子，集换社确实是相当多人用也相对好用的查卡/卡价的地方。</p>
+<p>虽然我只是一个普通的实卡玩家，没本事直接跟他们硬刚把这东西摁回去，但也不想什么都不做，就写个贴子希望能对对这个功能有期待的不明所以的入圈不深的玩家一点帮助。</p>
+<p>作者：<code>无聊的咏罪</code> <a href="https://www.bilibili.com/read/cv13637361">原文链接</a><br>
+出处：<code>bilibili</code></p>
 ]]></content>
       <tags>
-        <tag>杂货</tag>
+        <tag>ygo</tag>
       </tags>
   </entry>
   <entry>
@@ -157,6 +168,39 @@
       </tags>
   </entry>
   <entry>
+    <title>浅谈 vue3 响应式原理 第一篇 响应式和副作用</title>
+    <url>/2021/07/19/learnReactivity1/</url>
+    <content><![CDATA[<h1>浅谈 vue3 响应式原理 第一篇 响应式和副作用</h1>
+<p>一年前，在开课吧的视频里看到 winter、大圣还有尤大吹嘘着 vue3，各种新名词映入眼帘：watchEffect，reactive，ref，当时觉得好牛逼啊，一定要学一下（咕咕咕）。</p>
+<p>一年后，watchEffect 是啥，reactive 是啥，ref 又是啥，怎么多了出了这么多东西，好难啊，趁现在赶紧摸索清楚。</p>
+<h3 id="副作用">副作用</h3>
+<p>我们经常能在尤大口中听到一个词： <code>sideEffect</code>。首次听这个词时，我也是一头雾水，副作用到底是什么，吃药时的副作用吗？在尤大在评论 winter 的小案例时，他讲了 winter 在组件销毁时没有清理掉之前设置的事件监听器，这会对程序产生副作用。当然，尤大此时说的是 <code>sideEffect</code> 是另一个方面的。</p>
+<p>vue3中的 <code>sideEffect</code> 怎么理解？一些变量执行某些基本操作时，被拦截并执行一些事情，这些事情叫 <code>sideEffect</code>。</p>
+<span id="more"></span>
+<h3 id="拦截">拦截</h3>
+<p>上面说到拦截，这是 vue 经常做的事情。vue 就喜欢在变量读取、写入的时候拦截并做操作。</p>
+<p>在 vue2 中，尤大是通过 <code>Object.defineProperty</code> 给变量设置存取器属性，然后在存取器中执行副作用。到了 vue3，尤大用了 es6 的新特性 <code>Proxy</code> 和 <code>Reflect</code> 重写了这部分的代码。<code>Proxy</code> 提供了对变量基本操作的各种拦截回调，<code>Reflect</code> 则是对这些基本操作的实现。通过 <code>Proxy</code>，将变量的<strong>基本操作</strong>修改为<strong>副作用+基本操作</strong>，完成副作用的执行。</p>
+<h3 id="响应式">响应式</h3>
+<h4 id="响应式是什么">响应式是什么</h4>
+<p>要明白响应式是什么，我们通过下面几行代码讲解</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> product = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">10</span>,</span><br><span class="line">  <span class="attr">quantity</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span></span><br><span class="line">total = product.price * product.quantity <span class="comment">//20</span></span><br><span class="line">product.quantity = <span class="number">3</span></span><br><span class="line">total <span class="comment">//20</span></span><br></pre></td></tr></table></figure>
+<p>上面代码表明了 total 是由 price 和 quantity 计算得出，但是当我们修改了 quantity 后，total 的值却没有跟着变，因此我们知道原生的 javascript 是没有响应式的</p>
+<h4 id="那么要怎么实现响应式">那么要怎么实现响应式</h4>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> product = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">10</span>,</span><br><span class="line">  <span class="attr">quantity</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trigger</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  total = product.price * product.quantity</span><br><span class="line">&#125;</span><br><span class="line">trigger()</span><br><span class="line">total <span class="comment">//20</span></span><br><span class="line">product.quantity = <span class="number">3</span></span><br><span class="line">trigger()</span><br><span class="line">total <span class="comment">//30</span></span><br></pre></td></tr></table></figure>
+<p>我们发现，如果我们将 total 的计算方式保存为一个函数，然后在每次更新 quantity 之后调用一次，total 的值就会跟着变化。</p>
+<p>那么只要我们在quantity更新时自动执行 <code>trigger</code>，响应式就实现了。</p>
+<h4 id="自动？">自动？</h4>
+<p>要实现自动，我们就需要前面讲到的知识：<strong>拦截</strong>。</p>
+<p>我们通过 <code>Proxy</code>，在 quantity 执行 <code>set</code> 操作时进行拦截，然后将上述 <code>trigger</code> 添加为 <code>set</code> 操作的副作用。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">10</span>,</span><br><span class="line">  <span class="attr">quantity</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trigger</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  total = p.price * p.quantity</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> product = <span class="keyword">new</span> <span class="built_in">Proxy</span>(p,&#123;</span><br><span class="line">  <span class="function"><span class="title">set</span>(<span class="params">target:any,key:string,value:any,receiver:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="built_in">Reflect</span>.set(target,key,value,receiver)</span><br><span class="line">    trigger()</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">trigger()</span><br><span class="line">total<span class="comment">//20</span></span><br><span class="line">product.quantity = <span class="number">3</span></span><br><span class="line">total<span class="comment">//30</span></span><br></pre></td></tr></table></figure>
+<p>这下我们可以在 <code>set</code> 操作时自动执行 <code>trigger</code> 了</p>
+<p>未完持续O(∩_∩)O</p>
+]]></content>
+      <tags>
+        <tag>杂货</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浅谈 vue3 响应式原理 第二篇 记录与重放</title>
     <url>/2021/07/19/learnReactivity2/</url>
     <content><![CDATA[<style>
@@ -244,6 +288,32 @@
 <a href="/2021/07/19/learnReactivity1/" title="浅谈 vue3 响应式原理 第一篇 响应式和副作用">浅谈 vue3 响应式原理 第一篇 响应式和副作用</a>
 <br>
 <a href="/2021/07/19/learnReactivity2/" title="浅谈 vue3 响应式原理 第二篇 记录与重放">浅谈 vue3 响应式原理 第二篇 记录与重放</a>
+]]></content>
+      <tags>
+        <tag>杂货</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue-route杂谈</title>
+    <url>/2021/07/19/learnRouter/</url>
+    <content><![CDATA[<h2 id="vue-router杂谈"><a href="#vue-router%E6%9D%82%E8%B0%88">vue-router杂谈</a></h2>
+<p>说到 <code>vue-router</code> ，我会有联系到下面几个对象： <code>router,routes,route</code>，还有下面几个属性： <code>path,component,name</code>，还有下面几个方法： <code>BeforeRouteUpdate()，BeforeRouteEnter()，BeforeRouteLeave()，router.beforeEach()</code></p>
+<p><code>router</code> 是一个路由器，他的功能是根据自身记录的路由表，完成路由和组件的映射，并通过 <code>go()，replace()，push()</code> 方法提供可编程的路由切换。</p>
+<p><code>routes</code> 是路由表，是一个路由对象数组，他将被登记在路由器中。</p>
+<p><code>route</code> 就是路由，路由表中的一个元素，是一个拥有地址 path、路由参数 params、查询串 query、路由名 name、组件 component 等信息的对象。根据这个路由对象，就能让地址栏中的地址 path 和组件 component 形成映射关系，路由名 name 和 component 形成映射关系。</p>
+<span id="more"></span>
+<h3 id="这些玩意怎么使用？">这些玩意怎么使用？</h3>
+<p>地址栏输入地址后，router 通过 path 查找路由表中的路由，确定 path 和 component 的映射关系，从而实现输入指定地址显示指定组件。而使用 <code>router.push()</code> 等方法切换路由时，router 通过传入的参数 name，确定 name 和 component 的映射关系，确定参数 name 对应的 component 完成路由切换。</p>
+<p><code>BeforeRouteWhatTheFuck()</code>，根据文档的说法，这个玩意称作导航守卫。“导航”意为路由发生变化，“守卫”意为回调。</p>
+<p>当参数或查询改变时，不会触发进入/离开的导航守卫，而会触发更新的导航守卫</p>
+<p>所以，进入/离开守卫与更新守卫是互斥的。</p>
+<p>当path的查询和参数被修改时，进入 <code>BeforeRouteUpdate()</code></p>
+<p>当查询和参数未被修改，或path被修改时，进入 <code>BeforeRouteEnter()</code> 和 <code>BeforeRouteLeave()</code></p>
+<h3 id="由此可见">由此可见</h3>
+<p>路由变更有两种：<strong>路由修改</strong>和<strong>路由切换</strong></p>
+<p>前者复用实例，后者销毁并创建新实例</p>
+<div class="note info"><p>关于路由切换时，watch route 无法触发这个问题，我的解释是这样的：组件实例被销毁，是对响应式对象的直接销毁，watch 无法追踪。</p>
+</div>
 ]]></content>
       <tags>
         <tag>杂货</tag>
@@ -347,29 +417,493 @@
       </tags>
   </entry>
   <entry>
-    <title>vue-route杂谈</title>
-    <url>/2021/07/19/learnRouter/</url>
-    <content><![CDATA[<h2 id="vue-router杂谈"><a href="#vue-router%E6%9D%82%E8%B0%88">vue-router杂谈</a></h2>
-<p>说到 <code>vue-router</code> ，我会有联系到下面几个对象： <code>router,routes,route</code>，还有下面几个属性： <code>path,component,name</code>，还有下面几个方法： <code>BeforeRouteUpdate()，BeforeRouteEnter()，BeforeRouteLeave()，router.beforeEach()</code></p>
-<p><code>router</code> 是一个路由器，他的功能是根据自身记录的路由表，完成路由和组件的映射，并通过 <code>go()，replace()，push()</code> 方法提供可编程的路由切换。</p>
-<p><code>routes</code> 是路由表，是一个路由对象数组，他将被登记在路由器中。</p>
-<p><code>route</code> 就是路由，路由表中的一个元素，是一个拥有地址 path、路由参数 params、查询串 query、路由名 name、组件 component 等信息的对象。根据这个路由对象，就能让地址栏中的地址 path 和组件 component 形成映射关系，路由名 name 和 component 形成映射关系。</p>
-<span id="more"></span>
-<h3 id="这些玩意怎么使用？">这些玩意怎么使用？</h3>
-<p>地址栏输入地址后，router 通过 path 查找路由表中的路由，确定 path 和 component 的映射关系，从而实现输入指定地址显示指定组件。而使用 <code>router.push()</code> 等方法切换路由时，router 通过传入的参数 name，确定 name 和 component 的映射关系，确定参数 name 对应的 component 完成路由切换。</p>
-<p><code>BeforeRouteWhatTheFuck()</code>，根据文档的说法，这个玩意称作导航守卫。“导航”意为路由发生变化，“守卫”意为回调。</p>
-<p>当参数或查询改变时，不会触发进入/离开的导航守卫，而会触发更新的导航守卫</p>
-<p>所以，进入/离开守卫与更新守卫是互斥的。</p>
-<p>当path的查询和参数被修改时，进入 <code>BeforeRouteUpdate()</code></p>
-<p>当查询和参数未被修改，或path被修改时，进入 <code>BeforeRouteEnter()</code> 和 <code>BeforeRouteLeave()</code></p>
-<h3 id="由此可见">由此可见</h3>
-<p>路由变更有两种：<strong>路由修改</strong>和<strong>路由切换</strong></p>
-<p>前者复用实例，后者销毁并创建新实例</p>
-<div class="note info"><p>关于路由切换时，watch route 无法触发这个问题，我的解释是这样的：组件实例被销毁，是对响应式对象的直接销毁，watch 无法追踪。</p>
+    <title>learnVueAgain-1</title>
+    <url>/2021/10/09/learnVueAgain-1/</url>
+    <content><![CDATA[<h3 id="001-——-初识-Vue">001 —— 初识 Vue</h3>
+<h4 id="使用方法">使用方法</h4>
+<div class="note info"><ol start="8">
+<li>准备好一个容器</li>
+<li>创建 Vue 实例。</li>
+<li>el 用于指定当前 Vue 实例为哪个容器服务，值通常为 css 选择器字符串。</li>
+<li>data 用于存储数据，数据供 el 所指定的容器去使用，值我们暂时写成一个对象.</li>
+</ol>
 </div>
+<h4 id="详细解答">详细解答</h4>
+<ol start="12">
+<li>想让 Vue 工作，就必须创建一个 Vue 实例，且传入一个配置对象；</li>
+<li>root 容器里的代码依然符合 html 规范，只不过混入了一些特殊的 Vue 语法；</li>
+<li>root 容器里的代码被成为【Vue 模板】；</li>
+<li>Vue 实例和容器是一一对应的；</li>
+<li>真实开发中只有一个 Vue 实例，并且会配合着组件一起使用；</li>
+<li>
+ 中的 xxx 要写 js 表达式，且 xxx 可以自动读取到 data 中的所有属性；
+</li>
+<li>一旦 data 中的数据发生改变，那么模板中用到该数据的地方会自动更新；</li>
+</ol>
+<span id="more"></span>
+<h3 id="002-——-Vue-的模板语法">002 —— Vue 的模板语法</h3>
+<div class="note info"><p>Vue 的模板语法有 2 大类：</p>
+</div>
+<ol>
+<li>插值语法：<br>
+功能：用于解析标签体内容<br>
+写法：, xxx 是 js 表达式，且可以直接读取 data 中的所有属性。</li>
+<li>指令语法：<br>
+功能：用于解析标签（包括：标签属性、标签体内容、绑定事件…）<br>
+举例：v-bind:href=“xxx” 或简写为 :href=“xxx”, xxx 同样要写 js 表达式，且可以直接读取到 data 中的所有属性。<br>
+备注：Vue 中有很多指令，且形式都是：v-???, 此处我们只是拿 v-bind 举个例子。</li>
+</ol>
+<h3 id="003-——-Vue-的数据绑定">003 —— Vue 的数据绑定</h3>
+<h4 id="Vue-中有2种数据绑定的方式：">Vue 中有2种数据绑定的方式：</h4>
+<ol>
+<li>单向绑定(v-bind): 数据只能从 data 流向页面。</li>
+<li>双向绑定(v-model): 数据不仅能从 data 流向页面，还可以从页面流向 data。<br>
+备注：
+<ol>
+<li>双向绑定一般都应用在表单类元素上（如：input、select等）</li>
+<li>v-model:value 可以简写为 v-model,因为 v-model 默认收集的就是 value 值。</li>
+</ol>
+</li>
+</ol>
+<h3 id="004-——-el-和-data-的两种写法">004 —— el 和 data 的两种写法</h3>
+<h4 id="data-与-el-的-2-种写法">data 与 el 的 2 种写法</h4>
+<ol>
+<li>el 有 2 种写法
+<ol>
+<li>new Vue 时候配置 el 属性。</li>
+<li>先创建 Vue 实例，随后再通过 vm.$mount(‘#root’) 指定 el 的值。</li>
+</ol>
+</li>
+<li>data 有 2 种写法
+<ol>
+<li>对象式</li>
+<li>函数式<br>
+如何选择：目前哪种写法都可以，以后学习到组件时， data 必须使用函数式，否则会报错。</li>
+</ol>
+</li>
+<li>一个重要的原则：由 Vue 管理的的函数，一定不要写箭头函数，一旦写了箭头函数， this 就不再是 Vue 实例了。</li>
+</ol>
+<h3 id="005-——-MVVM-模型">005 —— MVVM 模型</h3>
+<h4 id="MVVM-模型">MVVM 模型</h4>
+<ol>
+<li>M:模型（model）：data 中的数据</li>
+<li>V:视图（View）：模板代码</li>
+<li>VM:视图模型（ViewModel）：Vue 实例<br>
+观察发现：</li>
+<li>data 中所有的属性，最后都出现在 vm 身上。</li>
+<li>vm 身上所有的属性及 Vue 原型上所有的属性，在 Vue 模板中都可以直接使用。</li>
+</ol>
+<h3 id="006-——-Vue-中的数据代理">006 —— Vue 中的数据代理</h3>
+<ol>
+<li>Vue 中的数据代理：<br>
+通过 vm 对象来代理 data 对象中属性的操作（读/写）</li>
+<li>Vue 中数据代理的好处：<br>
+更加方便地操作 data 中的数据</li>
+<li>基本原理：<br>
+通过 Object.defineProperty() 把 data 对象中所有属性添加到 vm 上。<br>
+为每一个添加到 vm 上的属性，都指定一个 getter/setter。<br>
+在 getter/setter 内部去操作（读/写）data 中对应的属性。</li>
+</ol>
+<h3 id="007-——-事件处理">007 —— 事件处理</h3>
+<h4 id="事件的基本使用：">事件的基本使用：</h4>
+<ol>
+<li>使用 v-on:xxx 或 @xxx 绑定事件，其中 xxx 是事件名；</li>
+<li>事件的回调需要配置在 methods 对象中，最终会在 vm 上；</li>
+<li>methods 中配置的函数，不要用箭头函数！否则 this 就不是 vm 了；</li>
+<li>methods 中配置的函数，都是被 Vue 所管理的函数，this 的指向是 vm 或组件实例对象；</li>
+<li>@click=“demo” 和 @click=“demo($event)” 效果一致，但后者可以传参；</li>
+</ol>
+<h4 id="Vue-中的事件修饰符：">Vue 中的事件修饰符：</h4>
+<ol>
+<li>prevent：阻止默认事件（常用）；</li>
+<li>stop：阻止事件冒泡（常用）；</li>
+<li>once：事件只触发一次（常用）；</li>
+<li>capture：使用事件的捕获模式；</li>
+<li>self：只有 event.target 是当前操作的元素时才会触发事件；</li>
+<li>passive：事件的默认行为立即执行，无需等待事件回调执行完毕；</li>
+</ol>
+<h4 id="Vue-中的键盘事件：">Vue 中的键盘事件：</h4>
+<ol>
+<li>Vue 中常见的键盘别名<br>
+回车 =&gt; enter<br>
+删除 =&gt; delete （捕获“删除”和“退格”键）<br>
+退出 =&gt; esc<br>
+空格 =&gt; space<br>
+换行 =&gt; tab （特殊，必须配合 keydown 去使用）<br>
+上 =&gt; up<br>
+下 =&gt; down<br>
+左 =&gt; left<br>
+右 =&gt; right</li>
+<li>Vue 未提供别名的按键，可以使用按键原始的 key 值去绑定，但注意要转为 kebab-case（短横线命名）</li>
+<li>系统修饰键（用法特殊）：ctrl、alt、shift、meta<br>
+配合 keyup 使用：按下修饰键的同时，再按下其他键，随后释放其他键，事件才被触发<br>
+配合 keydown 使用：正常触发事件</li>
+<li>也可以使用 keyCode 去指定具体的按键（不推荐）</li>
+<li>Vue.config.keyCodes.自定义别名 = 键码，可以去定制按键别名</li>
+</ol>
+<h3 id="008-——-计算属性">008 —— 计算属性</h3>
+<p>计算属性</p>
+<ol>
+<li>定义：要用的属性不存在，要通过已有的属性计算得来。</li>
+<li>原理：底层借助了 Object.defineProperty() 方法提供的 getter 和 setter。</li>
+<li>get 函数什么时候执行？
+<ol>
+<li>初次读取时会执行一次</li>
+<li>当依赖的数据发生改变时会被再次调用</li>
+</ol>
+</li>
+<li>优势：与 method 实现相比，内部有缓存机制（复用），效率更高，调试方便。</li>
+<li>备注：
+<ol>
+<li>计算属性最终会出现在 vm 上，直接读取使用即可。</li>
+<li>如果计算属性要被修改，那必须写 set 函数去响应修改，且 set 中要引起计算时依赖的数据发生更改。</li>
+</ol>
+</li>
+</ol>
+<h3 id="009-——-监视属性">009 —— 监视属性</h3>
+<p>监视属性 watch：</p>
+<ol>
+<li>当被监视的属性变化时，回调函数自动调用，进行相关操作</li>
+<li>监视的属性必须存在，才能进行监视！！！</li>
+<li>监视的两种写法：
+<ol>
+<li>.new Vue 时传入 watch 配置</li>
+<li>通过 vm.$watch 监视</li>
+</ol>
+</li>
+</ol>
+<p>深度监视</p>
+<ol>
+<li>Vue 中的 watch 默认不监视对象內部值的改变（一层）。</li>
+<li>配置 deep:true 可以监视对象内部值的改变（多层）。<br>
+备注：</li>
+<li>Vue 自身可以监视对象内部值的改变，但 Vue 提供的 watch 默认不可以！</li>
+<li>使用 watch 时根据数据的具体结构，决定是否使用深度监视。</li>
+</ol>
+<p>computed 和 watch 之间的区别：</p>
+<ol>
+<li>computed 能完成的功能，watch 都可以完成。</li>
+<li>watch 能完成的功能，computed 不一定能完成，例如：watch 可以进行异步操作。<br>
+两个重要的小原则：</li>
+<li>被 Vue 所管理的函数，最好写成普通函数，这样 this 的指向才是 vm 或组件实例对象。</li>
+<li>所有不被 Vue 所管理的函数（setTimeout 定时器的回调函数，axios 的回调函数，promise 的回调函数等），最好写成箭头函数，这样 this 的指向才是 vm 或组件实例对象。</li>
+</ol>
+<h3 id="010-——-绑定样式">010 —— 绑定样式</h3>
+<ol>
+<li>class 样式<br>
+写法：class = “xxx” xxx 可以是字符串、对象、数组。<br>
+绑定 class 样式 —— 字符串写法，适用于：样式的类名不确定，需要动态指定。<br>
+绑定 class 样式 —— 数组写法，适用于：要绑定的样式个数不确定、名字也不确定。<br>
+绑定 class 样式 —— 对象写法，适用于：要绑定的样式个数确定、名字也确定，但要动态决定用不用。</li>
+<li>style 样式<br>
+:style = “{fontSize:xxx}” 其中 xxx 是动态值。<br>
+:style = “[a,b]” 其中 a、b 是样式对象。</li>
+</ol>
+<h3 id="011-——-条件渲染">011 —— 条件渲染</h3>
+<ol>
+<li>v-if<br>
+写法：<br>
+v-if = “表达式”<br>
+v-else-if = “表达式”<br>
+v-else<br>
+适用于：切换频率较低的场景。<br>
+特点：不展示的 DOM 元素直接被移除。<br>
+注意：v-if 可以和 :v-else-if、v-else 一起使用，但要求结构不能被“打断”。</li>
+<li>v-show<br>
+写法：v-show = “表达式”<br>
+适用于：切换频率较高的场景。<br>
+特点：不展示的 DOM 元素未被移除，仅仅是使用样式隐藏掉。</li>
+<li>备注：使用 v-if 的时候，元素可能无法捕获到，而使用 v-show 一定能捕获到。</li>
+</ol>
+<h3 id="012-——-列表渲染">012 —— 列表渲染</h3>
+<p>v-for 指令：</p>
+<ol>
+<li>用于展示列表数据</li>
+<li>语法 v-for = “(item,index) in xxx” :key=“yyy”</li>
+<li>可遍历：数组、对象、字符串、按数字遍历指定次数<br>
+数组：（item,index）<br>
+对象：（value,key）<br>
+字符串：（char,index）<br>
+数字：（number,index）</li>
+</ol>
+<h4 id="常见问题：react、vue-中的-key-有什么作用？（key的内部原理）">常见问题：react、vue 中的 key 有什么作用？（key的内部原理）</h4>
+<ol>
+<li>
+<p>虚拟 DOM 中 key 的作用<br>
+key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【新数据】生成【新的虚拟 DOM】<br>
+随后 Vue 进行【新虚拟 DOM】和【旧虚拟 DOM】的差异比较，比较规则如下：</p>
+</li>
+<li>
+<p>对比规则：<br>
+旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key：</p>
+<ol>
+<li>若虚拟 DOM 内容没变，直接使用之前的真实 DOM！</li>
+<li>若虚拟 DOM 中内容变了，则生成新的真实 DOM，随后替换掉页面中之前的真实 DOM。<br>
+旧虚拟 DOM 中未找到与新虚拟 DOM 相同的 key<br>
+创建新的真实 DOM，随后渲染到页面。</li>
+</ol>
+</li>
+<li>
+<p>用 index 作为 key 可能会引发的问题：</p>
+<ol>
+<li>若对数据进行：逆序添加、逆序删除等破坏顺序操作：会产生没有必要的真实 DOM 更新 ==&gt; 界面效果没问题，但效率低。</li>
+<li>如果结构中还包含输入类 DOM：会产生错误 DOM 更新 ==&gt; 界面有问题。</li>
+</ol>
+</li>
+<li>
+<p>开发中如何选择 key?</p>
+<ol>
+<li>最好使用每条数据的唯一标识作为 key,比如 id、手机号、身份证号、学号等唯一值。</li>
+<li>如果不存在对数据的逆序添加、逆序删除等破坏顺序操作，仅用于渲染列表用于展示，使用 index 作为 key 是没有问题的。</li>
+</ol>
+</li>
+</ol>
+<h4 id="常见问题：Vue-监视数据的原理">常见问题：Vue 监视数据的原理</h4>
+<ol>
+<li>
+<p>Vue 会监视 data 中所有层次的数据。</p>
+</li>
+<li>
+<p>如何监测对象中的数据？<br>
+通过 setter 实现监视，且在 new Vue 时就传入要监测的数据。</p>
+<ol>
+<li>对象中后追加的属性，Vue 默认不做响应式处理。</li>
+<li>如需给后追加的属性做响应式，请使用如下 API:<br>
+Vue.set(target, propertyName/index, value) 或 vm.$set(target, propertyName/index, value)</li>
+</ol>
+</li>
+<li>
+<p>如何监测数组中的数据？<br>
+通过包裹更新元素的方法实现，本质就是做了两件事：</p>
+<ol>
+<li>调用原生对应的方法对数组进行更新。</li>
+<li>重新解析模板，进而更新页面。</li>
+</ol>
+</li>
+<li>
+<p>在 Vue 中修改数组中的某个元素一定要用如下方法：</p>
+<ol>
+<li>使用这些 API: push()、pop()、shift()、unshift()、splice()、sort()、reverse()</li>
+<li>Vue.set() 或 vm.$set()</li>
+</ol>
+</li>
+</ol>
+<p>特别注意：Vue.set() 或 vm.$set() 不能给 vm 或 vm 的根数据对象添加属性！！！</p>
+<h3 id="013-——-收集表单数据">013 —— 收集表单数据</h3>
+<p>若：<input type="text"/>.则 v-model 收集的是 value 值，用户输入的就是 value 值。<br>
+若：<input type="radio"/>.则 v-model 收集的是 value 值，且要给标签配置 value 值。<br>
+若：<input type="checkbox"/>.</p>
+<ol>
+<li>没有配置 input 的 value 属性，那么收集的就是 checked（勾选 or 未勾选，是布尔值）</li>
+<li>配置 input 的 value 属性：</li>
+<li>v-model 的初始值是非数组，那么收集的就是 checked（勾选 or 未勾选，是布尔值）</li>
+<li>v-model 的初始值是数组，那么收集的就是 value 组成的数组</li>
+</ol>
+<p>备注：v-model 的三个修饰符</p>
+<ol>
+<li>lazy：失去焦点再收集数据</li>
+<li>number：输入的字符串转为有效的数字</li>
+<li>输入的首尾空格过滤</li>
+</ol>
+<h3 id="014-——-过滤器">014 —— 过滤器</h3>
+<p>定义：对要显示的数据进行特定格式化后再显示（适用于一些简单逻辑的处理）</p>
+<p>语法：</p>
+<ol>
+<li>注册过滤器：Vue.filter(name,callback) 或 new Vue{filters:{}}</li>
+<li>使用过滤器：<code>&#123;&#123; xxx | 过滤器名 &#125;&#125;</code> 或 v-bind:属性 = “xxx | 过滤器名”</li>
+</ol>
+<p>备注：</p>
+<ol>
+<li>过滤器也可以接收额外的参数、多个过滤器也可以串联。</li>
+<li>并没有改变原本的数据，是产生新的对应的数据。</li>
+</ol>
+<h3 id="015-——-内置指令">015 —— 内置指令</h3>
+<p>我们学过的指令</p>
+<ol>
+<li>v-bind：单向绑定解析表达式，可简写成 :xxx</li>
+<li>v-model：双向数据绑定</li>
+<li>v-for：遍历数组/对象/字符串</li>
+<li>v-on：绑定事件监听，可简写成 @xxx</li>
+<li>v-if：条件渲染（动态控制节点是否存在）</li>
+<li>v-else：条件渲染（动态控制节点是否存在）</li>
+<li>v-show：条件渲染（动态控制节点是否显示）</li>
+</ol>
+<p>v-text 指令：</p>
+<ol>
+<li>作用：向其所在节点中渲染文本内容。</li>
+<li>与插值语法的区别：v-text 会替换掉节点中的内容， 则不会。</li>
+</ol>
+<p>v-html 指令：</p>
+<ol>
+<li>作用：向指定节点中渲染包含 html 结构的内容。</li>
+<li>与插值语法的区别：
+<ol>
+<li>v-html 会替换掉节点中所有内容， 则不会。</li>
+<li>v-html 可以识别 html 结构。</li>
+</ol>
+</li>
+<li>严重注意：v-html 有安全性问题！！！
+<ol>
+<li>在网站上动态渲染任意 HTML 是非常危险的，容易导致 XSS 攻击。</li>
+<li>一定要在可信的内容上使用 v-html，永不要用在用户提交的内容上！</li>
+</ol>
+</li>
+</ol>
+<p>v-cloak 指令（没有值）：</p>
+<ol>
+<li>本质是一个特殊属性，Vue 实例创建完毕并接管容器后，会删掉 v-cloak 属性。</li>
+<li>使用 css 属性选择器配合 v-cloak 可以解决网速慢时页面展示出  等未解析模板的问题。</li>
+</ol>
+<p>v-once 指令：</p>
+<ol>
+<li>v-once 所在节点在初次动态渲染后，就视为静态内容了。</li>
+<li>以后数据的改变不会引起 v-once 所在结构的更新，可以用于优化性能。</li>
+</ol>
+<p>v-pre 指令：</p>
+<ol>
+<li>跳过其所在节点的编译过程。</li>
+<li>可利用它跳过没有使用指令语法、没有使用插值语法的节点，会加快编译。</li>
+</ol>
+<h3 id="016-——-自定义指令">016 —— 自定义指令</h3>
+<p>自定义指令总结：</p>
+<ol>
+<li>
+<p>定义语法：</p>
+<ol>
+<li>
+<p>局部指令：<br>
+new Vue({<br>
+directives:{指令名:配置对象}<br>
+})<br>
+或<br>
+new Vue({directives:{指令名:回调函数}})</p>
+</li>
+<li>
+<p>全局指令<br>
+Vue.directive(指令名,配置对象)<br>
+或<br>
+Vue.directive(指令名,回调函数)</p>
+</li>
+</ol>
+</li>
+<li>
+<p>配置对象中常用的的 3 个回调：</p>
+<ol>
+<li>bind：指令与元素成功绑定时调用。</li>
+<li>insert：指令所在元素被插入页面时调用。</li>
+<li>update：指令所在模板被重新解析时调用。</li>
+</ol>
+</li>
+<li>
+<p>备注：</p>
+<ol>
+<li>指令定义时不加 v- 但使用时要加 v-</li>
+<li>指令名如果是多个单词，要使用 kebab-case 命名方式，不要用 camelCase 命名。</li>
+</ol>
+</li>
+</ol>
+<h3 id="017-——-生命周期">017 —— 生命周期</h3>
+<p>生命周期：</p>
+<ol>
+<li>是什么： Vue 在关键时刻帮我们调用的一些特殊名称的函数。</li>
+<li>生命周期函数的名字不可更改，但函数的具体内容是程序员根据需求编写的。</li>
+<li>生命周期函数的 this 指向的是 vm 或组件实例对象。</li>
+</ol>
+<p>常用的生命周期钩子：</p>
+<ol>
+<li>mounted：发送 ajax 请求、启动定时器、绑定自定义事件、订阅消息等【初始化操作】。</li>
+<li>beforeDestroy：清除定时器、解绑自定义事件、取消订阅信息等【收尾工作】</li>
+</ol>
+<p>关于销毁 Vue 实例</p>
+<ol>
+<li>销毁后借助 Vue 开发者工具看不到任何信息。</li>
+<li>销毁后自定义事件会失效，但原生 DOM 事件依然有效。</li>
+<li>一般不会在 beforeDestroy 操作数据，因为即使操作数据，也不会再触发更新流程了。</li>
+</ol>
+<h3 id="018-——-组件">018 —— 组件</h3>
+<p>Vue 中使用组件的三大步骤：</p>
+<ol>
+<li>定义组件（创建组件）</li>
+<li>注册组件</li>
+<li>使用组件（写组件标签）</li>
+</ol>
+<p>一、如何定义一个组件？<br>
+使用 Vue.extend(options) 创建，其中的 options 和 new Vue(options) 时传入的 options 几乎一样，但也有点区别：<br>
+区别如下：</p>
+<ol>
+<li>el 不要写，为什么？ —— 最终所有组件都要经过一个 vm 的管理，由 vm 的 el 决定服务哪个容器。</li>
+<li>data 必须写成函数，为什么？ —— 避免组件被复用时，数据存在引用关系。<br>
+备注：使用 template 可以配置组件结构。</li>
+</ol>
+<p>二、如何注册组件？</p>
+<ol>
+<li>局部注册：靠 new Vue 的时候传入 components 选项</li>
+<li>全局注册：靠 Vue.component(‘组件名’，组件)</li>
+</ol>
+<p>三、编写组件标签<br>
+<school></school></p>
+<p>几个注意点：</p>
+<ol>
+<li>
+<p>关于组件名：<br>
+一个单词组成（首字母小写）：school<br>
+多个单词组成（CamelCase命名）：MySchool</p>
+</li>
+<li>
+<p>关于组件标签<br>
+一个单词组成：<school></school><br>
+多个单词组成（kebab-case命名）：<my-school></my-school></p>
+</li>
+<li>
+<p>注册组件的简写方式：<br>
+const school = Vue.extend(options) 可简写为：const school = options</p>
+</li>
+</ol>
+<h3 id="Vue-CLI-脚手架">Vue-CLI 脚手架</h3>
+<h4 id="脚手架文件结构">脚手架文件结构</h4>
+<p>├─node_modules<br>
+├─public<br>
+│   ├─favicon.ico：页签图标<br>
+│   └─index.html：主页面<br>
+├─src<br>
+│   ├─assets：存放静态资源<br>
+│   │   └─logo.png<br>
+│   ├─components：存放组件<br>
+│   │   └─HelloWorld.vue<br>
+│   ├─App.vue：汇总所有组件<br>
+│   └─main.js：入口文件<br>
+├─.gitignore：git版本管制忽略的配置<br>
+├─babel.config.js：babel的配置文件<br>
+├─package.json：应用包配置文件<br>
+<a href="http://xn--README-2n7cpi.md">├─README.md</a>：应用描述文件<br>
+└─package-lock.json：包版本控制文件</p>
+<h4 id="关于不同版本的-Vue-说明">关于不同版本的 Vue 说明</h4>
+<ol>
+<li>
+<p>vue.js 和 vue.runtime.xxx.js 的区别：</p>
+<ol>
+<li>vue.js 是完整版的 Vue，包含：核心功能 + 模板解析器。</li>
+<li>vue.runtime.xxx.js 是运行版的 Vue，只包含核心功能，没有模板解析器。</li>
+</ol>
+</li>
+<li>
+<p>因为 vue.runtime.xxx.js 没有模板解析器，所以不能使用 template 配置项，需要使用 render 函数接收到的 createElement 函数去指定具体内容。</p>
+</li>
+</ol>
+<h4 id="vue-config-js-配置文件">vue.config.js 配置文件</h4>
+<p>使用 vue inspect &gt; output.js 可以查看到 Vue 脚手架的默认配置。<br>
+使用 vue.config.js 可以对脚手架进行个性化定制，详情见 <a href="https://cli.vuejs.org/zh">https://cli.vuejs.org/zh</a></p>
+<h3 id="ref-属性">ref 属性</h3>
+<ol>
+<li>被用来给元素或子组件注册引用信息（id的替代者）</li>
+<li>应用在 html 标签上获取的是真实 DOM 元素，应用在组件标签上是组件实例对象（vc）</li>
+<li>使用方式：<br>
+打标识：<h1 ref="xxx">…</h1> 或 <School ref="xxx"></School><br>
+获取：<a href="http://this.$refs.xxx">this.$refs.xxx</a></li>
+</ol>
 ]]></content>
       <tags>
-        <tag>杂货</tag>
+        <tag>学习</tag>
       </tags>
   </entry>
   <entry>
