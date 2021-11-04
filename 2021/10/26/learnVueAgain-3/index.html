@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css" integrity="sha256-no0c5ccDODBwp+9hSmV5VvPpKwHCpbVzXHexIkupM6U=" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/config.min.js"></script>
+<meta name="description" content="mixin 混入 功能：可以把多个组件公用的配置提取成一个混入对象。 使用方式： 第一步定义混合，例如：   12345&amp;#123;  data()&amp;#123;...&amp;#125;,  methods:&amp;#123;...&amp;#125;  ....&amp;#125; 第二步使用混合，例如：  全局混入：Vue.mixin(xxx) 局部混入：mixins:[&#39;xxx&#39;]  插件 功能：用于增强 Vue 本质：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue2 学习笔记 —— 3">
+<meta property="og:url" content="https://wbxyy.github.io/2021/10/26/learnVueAgain-3/index.html">
+<meta property="og:site_name" content="这里是苏苏的小屋">
+<meta property="og:description" content="mixin 混入 功能：可以把多个组件公用的配置提取成一个混入对象。 使用方式： 第一步定义混合，例如：   12345&amp;#123;  data()&amp;#123;...&amp;#125;,  methods:&amp;#123;...&amp;#125;  ....&amp;#125; 第二步使用混合，例如：  全局混入：Vue.mixin(xxx) 局部混入：mixins:[&#39;xxx&#39;]  插件 功能：用于增强 Vue 本质：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-26T09:59:24.000Z">
+<meta property="article:modified_time" content="2021-11-04T02:18:01.001Z">
+<meta property="article:author" content="wanbaoxiaoyiyi">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wbxyy.github.io/2021/10/26/learnVueAgain-3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wbxyy.github.io/2021/10/26/learnVueAgain-3/","path":"2021/10/26/learnVueAgain-3/","title":"Vue2 学习笔记 —— 3"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vue2 学习笔记 —— 3 | 这里是苏苏的小屋</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?b7cf140e77c3362eecc3f9309c2791de"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">这里是苏苏的小屋</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">这里藏了条森蚺哦</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mixin-%E6%B7%B7%E5%85%A5"><span class="nav-number">1.</span> <span class="nav-text">mixin 混入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scoped-%E6%A0%B7%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">scoped 样式</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wanbaoxiaoyiyi"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wanbaoxiaoyiyi</p>
+  <div class="site-description" itemprop="description">王者的鼓动，现在就展现给你看</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/10/26/learnVueAgain-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue2 学习笔记 —— 3
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-26 09:59:24" itemprop="dateCreated datePublished" datetime="2021-10-26T09:59:24Z">2021-10-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-04 02:18:01" itemprop="dateModified" datetime="2021-11-04T02:18:01Z">2021-11-04</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="mixin-混入">mixin 混入</h3>
+<p>功能：可以把多个组件公用的配置提取成一个混入对象。<br>
+使用方式：<br>
+第一步定义混合，例如：</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="title">data</span>(<span class="params"></span>)</span>&#123;...&#125;,</span><br><span class="line">  <span class="attr">methods</span>:&#123;...&#125;</span><br><span class="line">  ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第二步使用混合，例如：</p>
+<ol>
+<li>全局混入：<code>Vue.mixin(xxx)</code></li>
+<li>局部混入：<code>mixins:['xxx']</code></li>
+</ol>
+<h3 id="插件">插件</h3>
+<p>功能：用于增强 Vue<br>
+本质：包含一个 install 方法的对象，install 的第一个参数是 Vue，第二个以后的参数是插件的使用者传递的数据。<br>
+定义插件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">对象.install = <span class="function"><span class="keyword">function</span>(<span class="params">Vue,options</span>)</span>&#123;</span><br><span class="line">  <span class="comment">//1. 添加全局过滤器</span></span><br><span class="line">  Vue.filter(...)</span><br><span class="line"></span><br><span class="line">  <span class="comment">//2. 添加全局指令</span></span><br><span class="line">  Vue.directive(...)</span><br><span class="line"></span><br><span class="line">  <span class="comment">//3. 配置全局混入</span></span><br><span class="line">  Vue.mixin(...)</span><br><span class="line"></span><br><span class="line">  <span class="comment">//4. 添加实例方法</span></span><br><span class="line">  Vue.prototype.$myMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;</span><br><span class="line">  Vue.prototype.$myProperty = xxxx</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用插件：Vue.use()</p>
+<span id="more"></span>
+<h3 id="scoped-样式">scoped 样式</h3>
+<p>作用：让样式在局部生效，防止冲突。<br>
+写法：<style scoped></p>
+<h3 id="TodoList-案例">TodoList 案例</h3>
+<ol>
+<li>组件化编码流程：
+<ol>
+<li>拆分静态组件：组件按功能点拆分，命名不要与 html 元素冲突。</li>
+<li>实现动态组件：考虑好数据存放的位置，数据是一个组件在用，还是一些组件在用：
+<ol>
+<li>一个组件在用：放在组件自身即可</li>
+<li>一些组件在用：放在他们共同的父组件上（状态提升）</li>
+</ol>
+</li>
+<li>实现交互：从绑定事件开始。</li>
+</ol>
+</li>
+<li>props 适用于：
+<ol>
+<li>父组件==&gt;子组件 通信</li>
+<li>子组件==&gt;父组件 通信（要求 父先给子一个函数）</li>
+</ol>
+</li>
+<li>使用 v-model 时要切记：v-model 绑定的值不能是 props 传过来的值，因为 props 是不可以修改的！</li>
+<li>props 传过来的若是对象类型的值，修改对象中的属性时 Vue 不会报错，但是不推荐这样做。</li>
+</ol>
+<h3 id="webStorage">webStorage</h3>
+<ol>
+<li>存储内容大小一般支持 5MB 左右（不同浏览器可能还不一样）</li>
+<li>浏览器端通过 Window.localStorage 和 Window.sessionStorage 属性来实现本地存储机制。</li>
+<li>相关 API：
+<ol>
+<li>xxxxxStorage.setItem(‘key’,‘value’) 该方法接受一个键和值作为参数，会把键值对添加到存储中，如何键名存在，则更新其对应的值。</li>
+<li>xxxxxStorage.getItem(‘key’) 该方法接受一个键名作为参数，返回键名对应的值。</li>
+<li>xxxxxStorage.removeItem(‘key’) 该方法接受一个键名作为参数，并把该键名从浏览器中删除。</li>
+<li>xxxxxStorage.clear() 该方法会清空存储中的所有数据。</li>
+</ol>
+</li>
+<li>备注：
+<ol>
+<li>sessionStorage 存储的内容会随着浏览器窗口关闭而消失。</li>
+<li>localStorage 存储的内容，需要手动清除才会消失。</li>
+<li>xxxxxStorage.getItem(xxx) 如果 xxx 对应的 value 获取不到，则 getItem 的返回值是 null。</li>
+<li>JSON.parse(null) 的结果依然是 null。</li>
+</ol>
+</li>
+</ol>
+<h3 id="组件自定义事件">组件自定义事件</h3>
+<ol>
+<li>一种组件间的通信方式，适用于：子组件 ===&gt; 父组件</li>
+<li>使用场景：A 是父组件，B 是子组件，B 想给 A 传数据，那么就要在 A 中给 B 绑定自定义事件（事件的回调在 A 中）</li>
+<li>绑定自定义事件：
+<ol>
+<li>第一种方式，在父组件中<code>&lt;Demo @atguigu=&quot;test&quot;/&gt; </code> 或 <code>&lt;Demo v-on:atguigu=&quot;test&quot;&gt;</code></li>
+<li>第二种方式，在父组件中：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;Demo ref=<span class="string">&quot;demo&quot;</span>/&gt;</span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="title">mounted</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.$refs.xxx.$on(<span class="string">&#x27;atguigu&#x27;</span>,<span class="built_in">this</span>.test)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>若想让事件只触发一次可以使用 once 修饰符 或 $once 方法</li>
+</ol>
+</li>
+<li>触发自定义事件：this.$emit(‘atguigu’,数据)</li>
+<li>解绑自定义事件：this.$off(‘atguigu’)</li>
+<li>组件上也可以绑定原生 DOM 事件，需要使用 native 修饰符。</li>
+<li>注意：通过 this.$refs.xxx.$on(‘atguigu’,回调) 绑定自定义事件时，回调要么配置在 methods 中，要么用箭头函数，否则 this 的指向会出问题。</li>
+</ol>
+<h3 id="全局事件总线">全局事件总线</h3>
+<ol>
+<li>
+<p>一种组件间通信方式，适用于任意组件间通信。</p>
+</li>
+<li>
+<p>安装全局事件总线：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="function"><span class="title">beforeCreate</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Vue.prototype.$bus = <span class="built_in">this</span></span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用事件总线</p>
+<ol>
+<li>接收数据：A 组件想要接收数据，则在 A 组件中给 $bus 绑定自定义事件，事件的回调留在 A 组件自身。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">methods:&#123;</span><br><span class="line">  <span class="function"><span class="title">demo</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line"><span class="function"><span class="title">mounted</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.$bus.$on(<span class="string">&#x27;xxxx&#x27;</span>,<span class="built_in">this</span>.demo)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>提供数据：this.$bus.$emit(‘xxxx’,数据)</li>
+</ol>
+</li>
+<li>
+<p>最好在 beforeDestroy 钩子中，用 $off 去解绑当前组件所用到的事件。</p>
+</li>
+</ol>
+<h3 id="消息订阅与发布（pubsub）">消息订阅与发布（pubsub）</h3>
+<ol>
+<li>一种组件间通信方式，适用于任意组件间通信。</li>
+<li>使用步骤：
+<ol>
+<li>安装 pubsub：npm i pubsub-js</li>
+<li>引入：import pubsub from ‘pubsub-js’</li>
+<li>接收数据：A 组件想接收数据，则在 A 组件中订阅消息，订阅的回调留在 A 组件自身。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">methods</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="function"><span class="title">demo</span>(<span class="params">data</span>)</span>&#123;...&#125;</span><br><span class="line">  ......</span><br><span class="line">  <span class="function"><span class="title">mounted</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.pid = pubsub.subscribe(<span class="string">&#x27;xxx&#x27;</span>,<span class="built_in">this</span>.demo)<span class="comment">//订阅消息</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>提供数据：pubsub.publish(‘xxx’,数据)</li>
+<li>最好在 beforeDestroy 钩子中，用 Pubsub.unsubscribe(pid) 去取消订阅。</li>
+</ol>
+</li>
+</ol>
+<h3 id="Vue-脚手架配置代理">Vue 脚手架配置代理</h3>
+<ol>
+<li>方法一：<br>
+在 vue.config.js 中添加如下配置：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">devServer&#123;</span><br><span class="line">  <span class="attr">proxy</span>:<span class="string">&quot;http://localhost:5000&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>说明：</p>
+<ol>
+<li>
+<p>优点：配置简单，请求资源时直接发给前端（8080）即可。</p>
+</li>
+<li>
+<p>缺点：不能配置多个代理，不能灵活地控制是否走代理。</p>
+</li>
+<li>
+<p>工作方式：若按照上述配置代理，若请求了前端不存在地资源时，那么该请求会转发给服务器（即优先匹配前端资源）。</p>
+</li>
+<li>
+<p>方法二：<br>
+编写 vue.config.js 配置具体代理规则：</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="attr">devServer</span>:&#123;</span><br><span class="line">    <span class="attr">proxy</span>:&#123;</span><br><span class="line">      <span class="string">&#x27;/api1&#x27;</span>:&#123; <span class="comment">//匹配所有以 &#x27;/api&#x27; 开头的请求路径</span></span><br><span class="line">        <span class="attr">target</span>:<span class="string">&#x27;http://localhost:5000&#x27;</span>, <span class="comment">//目标代理服务器</span></span><br><span class="line">        <span class="attr">pathRewrite</span>:&#123;<span class="string">&#x27;^/api1&#x27;</span>:<span class="string">&#x27;&#x27;</span>&#125;,</span><br><span class="line">        <span class="attr">changeOrigin</span>:<span class="literal">true</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="string">&#x27;/api2&#x27;</span>:&#123; <span class="comment">//匹配所有以 &#x27;/api&#x27; 开头的请求路径</span></span><br><span class="line">        <span class="attr">target</span>:<span class="string">&#x27;http://localhost:5001&#x27;</span>, <span class="comment">//目标代理服务器</span></span><br><span class="line">        <span class="attr">pathRewrite</span>:&#123;<span class="string">&#x27;^/api2&#x27;</span>:<span class="string">&#x27;&#x27;</span>&#125;</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  changeOrigin 设置为 true 时，服务器收到的请求头 hosts 为：localhost:5000</span></span><br><span class="line"><span class="comment">  changeOrigin 设置为 false 时，服务器收到的请求头 hosts 为：localhost:8080</span></span><br><span class="line"><span class="comment">  changeOrigin 的默认值为 true</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<ol>
+<li>优点：可以配置多个代理，且可以灵活地控制请求是否走代理。</li>
+<li>缺点：配置略繁琐，请求资源时必须加前缀。</li>
+</ol>
+</li>
+</ol>
+<h3 id="插槽">插槽</h3>
+<ol>
+<li>作用：让父组件可以向子组件指定位置插入 html 结构，也是一种组件间通信的方式，适用于 父组件 ===&gt; 子组件</li>
+<li>分类：默认插槽、具名插槽、作用域插槽</li>
+<li>使用方式：</li>
+</ol>
+<p>默认插槽<br>
+父组件中:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Catagory&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>html结构1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/Catagory&gt;</span><br></pre></td></tr></table></figure>
+<p>子组件中:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!--定义插槽--&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">slot</span>&gt;</span>插槽默认内容...<span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<p>具名插槽<br>
+父组件中:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Catagory&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">template</span> <span class="attr">slot</span>=<span class="string">&quot;center&quot;</span>&gt;</span>html结构1<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot:footer</span>&gt;</span>html结构2<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line">&lt;/Catagory&gt;</span><br></pre></td></tr></table></figure>
+<p>子组件中:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!--定义插槽--&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;center&quot;</span>&gt;</span>插槽默认内容...<span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;footer&quot;</span>&gt;</span>插槽默认内容...<span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<p>作用域插槽</p>
+<ol>
+<li>理解：数据在组件的自身，但根据数据生成的结构需要组件的使用者来决定。（games 的数据在 Catagory 组件中，但使用数据所遍历出的结构由 App 组件决定）</li>
+<li>具体编码如下：<br>
+父组件中:</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;Catagory&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">template</span> <span class="attr">scope</span>=<span class="string">&quot;scopeData&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!--生成的是 ul 列表 --&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;g in scopedData.games&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;g&quot;</span>&gt;</span>&#123;&#123;g&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot:footer</span>&gt;</span>html结构2<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line">&lt;/Catagory&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">Catagory</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">template</span> <span class="attr">scope</span>=<span class="string">&quot;&#123;games&#125;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!--生成的是 ul 列表 --&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">h4</span> <span class="attr">v-for</span>=<span class="string">&quot;g in games&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;g&quot;</span>&gt;</span>&#123;&#123;g&#125;&#125;<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot:footer</span>&gt;</span>html结构2<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">Catagory</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>子组件中:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!--定义插槽--&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">slot</span> <span class="attr">:games</span>=<span class="string">&quot;games&quot;</span>&gt;</span>插槽默认内容...<span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">export</span> <span class="keyword">default</span> = &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">name</span>:<span class="string">&#x27;Catagory&#x27;</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="function"><span class="title">data</span>(<span class="params"></span>)</span>&#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="keyword">return</span>&#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">games</span>:[<span class="string">&#x27;红色警戒&#x27;</span>,<span class="string">&#x27;劲舞团&#x27;</span>,<span class="string">&#x27;穿越火线&#x27;</span>,<span class="string">&#x27;超级玛丽&#x27;</span>]</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/22/learnVueAgain-2/" rel="prev" title="Vue2 学习笔记 —— 2">
+                  <i class="fa fa-chevron-left"></i> Vue2 学习笔记 —— 2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/04/learnVueAgain-4/" rel="next" title="Vue2 学习笔记 —— 4">
+                  Vue2 学习笔记 —— 4 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-gift"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanbaoxiaoyiyi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">69k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:03</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/bookmark.min.js"></script>
+
+  
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js","integrity":"sha256-sVAx+v/Q7v0Q2xm5vN7h5ccSna6gaLREhG9sF8pKT6I="}}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/tags/mermaid.min.js"></script>
+
+  <script class="next-config" data-name="nprogress" type="application/json">{"enable":true,"spinner":true}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/nprogress.min.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

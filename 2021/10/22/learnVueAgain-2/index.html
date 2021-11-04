@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css" integrity="sha256-no0c5ccDODBwp+9hSmV5VvPpKwHCpbVzXHexIkupM6U=" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/config.min.js"></script>
+<meta name="description" content="常见问题：react、vue 中的 key 有什么作用？（key的内部原理）   虚拟 DOM 中 key 的作用 key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【新数据】生成【新的虚拟 DOM】 随后 Vue 进行【新虚拟 DOM】和【旧虚拟 DOM】的差异比较，比较规则如下：   对比规则： 旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key：  若虚拟 DOM 内">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue2 学习笔记 —— 2">
+<meta property="og:url" content="https://wbxyy.github.io/2021/10/22/learnVueAgain-2/index.html">
+<meta property="og:site_name" content="这里是苏苏的小屋">
+<meta property="og:description" content="常见问题：react、vue 中的 key 有什么作用？（key的内部原理）   虚拟 DOM 中 key 的作用 key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【新数据】生成【新的虚拟 DOM】 随后 Vue 进行【新虚拟 DOM】和【旧虚拟 DOM】的差异比较，比较规则如下：   对比规则： 旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key：  若虚拟 DOM 内">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-21T16:55:53.000Z">
+<meta property="article:modified_time" content="2021-11-04T02:17:50.581Z">
+<meta property="article:author" content="wanbaoxiaoyiyi">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wbxyy.github.io/2021/10/22/learnVueAgain-2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wbxyy.github.io/2021/10/22/learnVueAgain-2/","path":"2021/10/22/learnVueAgain-2/","title":"Vue2 学习笔记 —— 2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vue2 学习笔记 —— 2 | 这里是苏苏的小屋</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?b7cf140e77c3362eecc3f9309c2791de"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">这里是苏苏的小屋</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">这里藏了条森蚺哦</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%EF%BC%9Areact%E3%80%81vue-%E4%B8%AD%E7%9A%84-key-%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F%EF%BC%88key%E7%9A%84%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">常见问题：react、vue 中的 key 有什么作用？（key的内部原理）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%EF%BC%9AVue-%E7%9B%91%E8%A7%86%E6%95%B0%E6%8D%AE%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">常见问题：Vue 监视数据的原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#014-%E2%80%94%E2%80%94-%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number"></span> <span class="nav-text">014 —— 过滤器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#015-%E2%80%94%E2%80%94-%E5%86%85%E7%BD%AE%E6%8C%87%E4%BB%A4"><span class="nav-number"></span> <span class="nav-text">015 —— 内置指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#016-%E2%80%94%E2%80%94-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4"><span class="nav-number"></span> <span class="nav-text">016 —— 自定义指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#017-%E2%80%94%E2%80%94-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number"></span> <span class="nav-text">017 —— 生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#018-%E2%80%94%E2%80%94-%E7%BB%84%E4%BB%B6"><span class="nav-number"></span> <span class="nav-text">018 —— 组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-CLI-%E8%84%9A%E6%89%8B%E6%9E%B6"><span class="nav-number"></span> <span class="nav-text">Vue-CLI 脚手架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%84%9A%E6%89%8B%E6%9E%B6%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">脚手架文件结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84-Vue-%E8%AF%B4%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">关于不同版本的 Vue 说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vue-config-js-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">vue.config.js 配置文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref-%E5%B1%9E%E6%80%A7"><span class="nav-number"></span> <span class="nav-text">ref 属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">…</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%A1%B9-props"><span class="nav-number"></span> <span class="nav-text">配置项 props</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wanbaoxiaoyiyi"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wanbaoxiaoyiyi</p>
+  <div class="site-description" itemprop="description">王者的鼓动，现在就展现给你看</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/10/22/learnVueAgain-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue2 学习笔记 —— 2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-21 16:55:53" itemprop="dateCreated datePublished" datetime="2021-10-21T16:55:53Z">2021-10-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-04 02:17:50" itemprop="dateModified" datetime="2021-11-04T02:17:50Z">2021-11-04</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="常见问题：react、vue-中的-key-有什么作用？（key的内部原理）">常见问题：react、vue 中的 key 有什么作用？（key的内部原理）</h4>
+<ol>
+<li>
+<p>虚拟 DOM 中 key 的作用<br>
+key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【新数据】生成【新的虚拟 DOM】<br>
+随后 Vue 进行【新虚拟 DOM】和【旧虚拟 DOM】的差异比较，比较规则如下：</p>
+</li>
+<li>
+<p>对比规则：<br>
+旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key：</p>
+<ol>
+<li>若虚拟 DOM 内容没变，直接使用之前的真实 DOM！</li>
+<li>若虚拟 DOM 中内容变了，则生成新的真实 DOM，随后替换掉页面中之前的真实 DOM。<br>
+旧虚拟 DOM 中未找到与新虚拟 DOM 相同的 key<br>
+创建新的真实 DOM，随后渲染到页面。</li>
+</ol>
+</li>
+<li>
+<p>用 index 作为 key 可能会引发的问题：</p>
+<ol>
+<li>若对数据进行：逆序添加、逆序删除等破坏顺序操作：会产生没有必要的真实 DOM 更新 ==&gt; 界面效果没问题，但效率低。</li>
+<li>如果结构中还包含输入类 DOM：会产生错误 DOM 更新 ==&gt; 界面有问题。</li>
+</ol>
+</li>
+<li>
+<p>开发中如何选择 key?</p>
+<ol>
+<li>最好使用每条数据的唯一标识作为 key,比如 id、手机号、身份证号、学号等唯一值。</li>
+<li>如果不存在对数据的逆序添加、逆序删除等破坏顺序操作，仅用于渲染列表用于展示，使用 index 作为 key 是没有问题的。</li>
+</ol>
+</li>
+</ol>
+<span id="more"></span>
+<h4 id="常见问题：Vue-监视数据的原理">常见问题：Vue 监视数据的原理</h4>
+<ol>
+<li>
+<p>Vue 会监视 data 中所有层次的数据。</p>
+</li>
+<li>
+<p>如何监测对象中的数据？<br>
+通过 setter 实现监视，且在 new Vue 时就传入要监测的数据。</p>
+<ol>
+<li>对象中后追加的属性，Vue 默认不做响应式处理。</li>
+<li>如需给后追加的属性做响应式，请使用如下 API:<br>
+Vue.set(target, propertyName/index, value) 或 vm.$set(target, propertyName/index, value)</li>
+</ol>
+</li>
+<li>
+<p>如何监测数组中的数据？<br>
+通过包裹更新元素的方法实现，本质就是做了两件事：</p>
+<ol>
+<li>调用原生对应的方法对数组进行更新。</li>
+<li>重新解析模板，进而更新页面。</li>
+</ol>
+</li>
+<li>
+<p>在 Vue 中修改数组中的某个元素一定要用如下方法：</p>
+<ol>
+<li>使用这些 API: push()、pop()、shift()、unshift()、splice()、sort()、reverse()</li>
+<li>Vue.set() 或 vm.$set()</li>
+</ol>
+</li>
+</ol>
+<p>特别注意：Vue.set() 或 vm.$set() 不能给 vm 或 vm 的根数据对象添加属性！！！</p>
+<h3 id="014-——-过滤器">014 —— 过滤器</h3>
+<p>定义：对要显示的数据进行特定格式化后再显示（适用于一些简单逻辑的处理）</p>
+<p>语法：</p>
+<ol>
+<li>注册过滤器：Vue.filter(name,callback) 或 new Vue{filters:{}}</li>
+<li>使用过滤器：<code>&#123;&#123; xxx | 过滤器名 &#125;&#125;</code> 或 v-bind:属性 = “xxx | 过滤器名”</li>
+</ol>
+<p>备注：</p>
+<ol>
+<li>过滤器也可以接收额外的参数、多个过滤器也可以串联。</li>
+<li>并没有改变原本的数据，是产生新的对应的数据。</li>
+</ol>
+<h3 id="015-——-内置指令">015 —— 内置指令</h3>
+<p>我们学过的指令</p>
+<ol>
+<li>v-bind：单向绑定解析表达式，可简写成 :xxx</li>
+<li>v-model：双向数据绑定</li>
+<li>v-for：遍历数组/对象/字符串</li>
+<li>v-on：绑定事件监听，可简写成 @xxx</li>
+<li>v-if：条件渲染（动态控制节点是否存在）</li>
+<li>v-else：条件渲染（动态控制节点是否存在）</li>
+<li>v-show：条件渲染（动态控制节点是否显示）</li>
+</ol>
+<p>v-text 指令：</p>
+<ol>
+<li>作用：向其所在节点中渲染文本内容。</li>
+<li>与插值语法的区别：v-text 会替换掉节点中的内容， 则不会。</li>
+</ol>
+<p>v-html 指令：</p>
+<ol>
+<li>作用：向指定节点中渲染包含 html 结构的内容。</li>
+<li>与插值语法的区别：
+<ol>
+<li>v-html 会替换掉节点中所有内容， 则不会。</li>
+<li>v-html 可以识别 html 结构。</li>
+</ol>
+</li>
+<li>严重注意：v-html 有安全性问题！！！
+<ol>
+<li>在网站上动态渲染任意 HTML 是非常危险的，容易导致 XSS 攻击。</li>
+<li>一定要在可信的内容上使用 v-html，永不要用在用户提交的内容上！</li>
+</ol>
+</li>
+</ol>
+<p>v-cloak 指令（没有值）：</p>
+<ol>
+<li>本质是一个特殊属性，Vue 实例创建完毕并接管容器后，会删掉 v-cloak 属性。</li>
+<li>使用 css 属性选择器配合 v-cloak 可以解决网速慢时页面展示出  等未解析模板的问题。</li>
+</ol>
+<p>v-once 指令：</p>
+<ol>
+<li>v-once 所在节点在初次动态渲染后，就视为静态内容了。</li>
+<li>以后数据的改变不会引起 v-once 所在结构的更新，可以用于优化性能。</li>
+</ol>
+<p>v-pre 指令：</p>
+<ol>
+<li>跳过其所在节点的编译过程。</li>
+<li>可利用它跳过没有使用指令语法、没有使用插值语法的节点，会加快编译。</li>
+</ol>
+<h3 id="016-——-自定义指令">016 —— 自定义指令</h3>
+<p>自定义指令总结：</p>
+<ol>
+<li>
+<p>定义语法：</p>
+<ol>
+<li>
+<p>局部指令：<br>
+new Vue({<br>
+directives:{指令名:配置对象}<br>
+})<br>
+或<br>
+new Vue({directives:{指令名:回调函数}})</p>
+</li>
+<li>
+<p>全局指令<br>
+Vue.directive(指令名,配置对象)<br>
+或<br>
+Vue.directive(指令名,回调函数)</p>
+</li>
+</ol>
+</li>
+<li>
+<p>配置对象中常用的的 3 个回调：</p>
+<ol>
+<li>bind：指令与元素成功绑定时调用。</li>
+<li>insert：指令所在元素被插入页面时调用。</li>
+<li>update：指令所在模板被重新解析时调用。</li>
+</ol>
+</li>
+<li>
+<p>备注：</p>
+<ol>
+<li>指令定义时不加 v- 但使用时要加 v-</li>
+<li>指令名如果是多个单词，要使用 kebab-case 命名方式，不要用 camelCase 命名。</li>
+</ol>
+</li>
+</ol>
+<h3 id="017-——-生命周期">017 —— 生命周期</h3>
+<p>生命周期：</p>
+<ol>
+<li>是什么： Vue 在关键时刻帮我们调用的一些特殊名称的函数。</li>
+<li>生命周期函数的名字不可更改，但函数的具体内容是程序员根据需求编写的。</li>
+<li>生命周期函数的 this 指向的是 vm 或组件实例对象。</li>
+</ol>
+<p>常用的生命周期钩子：</p>
+<ol>
+<li>mounted：发送 ajax 请求、启动定时器、绑定自定义事件、订阅消息等【初始化操作】。</li>
+<li>beforeDestroy：清除定时器、解绑自定义事件、取消订阅信息等【收尾工作】</li>
+</ol>
+<p>关于销毁 Vue 实例</p>
+<ol>
+<li>销毁后借助 Vue 开发者工具看不到任何信息。</li>
+<li>销毁后自定义事件会失效，但原生 DOM 事件依然有效。</li>
+<li>一般不会在 beforeDestroy 操作数据，因为即使操作数据，也不会再触发更新流程了。</li>
+</ol>
+<h3 id="018-——-组件">018 —— 组件</h3>
+<p>Vue 中使用组件的三大步骤：</p>
+<ol>
+<li>定义组件（创建组件）</li>
+<li>注册组件</li>
+<li>使用组件（写组件标签）</li>
+</ol>
+<p>一、如何定义一个组件？<br>
+使用 Vue.extend(options) 创建，其中的 options 和 new Vue(options) 时传入的 options 几乎一样，但也有点区别：<br>
+区别如下：</p>
+<ol>
+<li>el 不要写，为什么？ —— 最终所有组件都要经过一个 vm 的管理，由 vm 的 el 决定服务哪个容器。</li>
+<li>data 必须写成函数，为什么？ —— 避免组件被复用时，数据存在引用关系。<br>
+备注：使用 template 可以配置组件结构。</li>
+</ol>
+<p>二、如何注册组件？</p>
+<ol>
+<li>局部注册：靠 new Vue 的时候传入 components 选项</li>
+<li>全局注册：靠 Vue.component(‘组件名’，组件)</li>
+</ol>
+<p>三、编写组件标签<br>
+<school></school></p>
+<p>几个注意点：</p>
+<ol>
+<li>
+<p>关于组件名：<br>
+一个单词组成（首字母小写）：school<br>
+多个单词组成（CamelCase命名）：MySchool</p>
+</li>
+<li>
+<p>关于组件标签<br>
+一个单词组成：<school></school><br>
+多个单词组成（kebab-case命名）：<my-school></my-school></p>
+</li>
+<li>
+<p>注册组件的简写方式：<br>
+const school = Vue.extend(options) 可简写为：const school = options</p>
+</li>
+</ol>
+<h3 id="Vue-CLI-脚手架">Vue-CLI 脚手架</h3>
+<h4 id="脚手架文件结构">脚手架文件结构</h4>
+<p>├─node_modules<br>
+├─public<br>
+│   ├─favicon.ico：页签图标<br>
+│   └─index.html：主页面<br>
+├─src<br>
+│   ├─assets：存放静态资源<br>
+│   │   └─logo.png<br>
+│   ├─components：存放组件<br>
+│   │   └─HelloWorld.vue<br>
+│   ├─App.vue：汇总所有组件<br>
+│   └─main.js：入口文件<br>
+├─.gitignore：git版本管制忽略的配置<br>
+├─babel.config.js：babel的配置文件<br>
+├─package.json：应用包配置文件<br>
+<a target="_blank" rel="noopener" href="http://xn--README-2n7cpi.md">├─README.md</a>：应用描述文件<br>
+└─package-lock.json：包版本控制文件</p>
+<h4 id="关于不同版本的-Vue-说明">关于不同版本的 Vue 说明</h4>
+<ol>
+<li>
+<p>vue.js 和 vue.runtime.xxx.js 的区别：</p>
+<ol>
+<li>vue.js 是完整版的 Vue，包含：核心功能 + 模板解析器。</li>
+<li>vue.runtime.xxx.js 是运行版的 Vue，只包含核心功能，没有模板解析器。</li>
+</ol>
+</li>
+<li>
+<p>因为 vue.runtime.xxx.js 没有模板解析器，所以不能使用 template 配置项，需要使用 render 函数接收到的 createElement 函数去指定具体内容。</p>
+</li>
+</ol>
+<h4 id="vue-config-js-配置文件">vue.config.js 配置文件</h4>
+<p>使用 vue inspect &gt; output.js 可以查看到 Vue 脚手架的默认配置。<br>
+使用 vue.config.js 可以对脚手架进行个性化定制，详情见 <a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh">https://cli.vuejs.org/zh</a></p>
+<h3 id="ref-属性">ref 属性</h3>
+<ol>
+<li>被用来给元素或子组件注册引用信息（id的替代者）</li>
+<li>应用在 html 标签上获取的是真实 DOM 元素，应用在组件标签上是组件实例对象（vc）</li>
+<li>使用方式：<br>
+打标识：<h1 ref="xxx">…</h1> 或 <School ref="xxx"></School><br>
+获取：<a target="_blank" rel="noopener" href="http://this.$refs.xxx">this.$refs.xxx</a></li>
+</ol>
+<h3 id="配置项-props">配置项 props</h3>
+<p>功能：让组件接收外部传进来的数据。</p>
+<ol>
+<li>
+<p>传递数据：通过在组件标签上添加 key - value 属性<br>
+<Demo name="xxx"/></p>
+</li>
+<li>
+<p>接收数据：<br>
+第一种方式（只接收）：<code>props:['name']</code><br>
+第二种方式（限制类型）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">props:&#123;</span><br><span class="line">  <span class="attr">name</span>:<span class="built_in">String</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第三种方式（限制类型、限制必要性、指定默认值）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">props:&#123;</span><br><span class="line">  <span class="attr">name</span>:&#123;</span><br><span class="line">     <span class="attr">type</span>:<span class="built_in">String</span>,<span class="comment">//类型</span></span><br><span class="line">     <span class="attr">required</span>:<span class="literal">true</span>,<span class="comment">//必要性</span></span><br><span class="line">     <span class="attr">default</span>:<span class="string">&#x27;老王&#x27;</span><span class="comment">//默认值</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>备注：props只是只读，Vue 底层会检测你对 props 的修改，如果进行了修改，就会发出警告；若业务需求确实需要修改，那么请复制 props 的内容到 data 中一份，然后去修改 data 中的数据。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/19/discussOfYgoCardProfiteer/" rel="prev" title="详谈游戏王实卡集换社小程序寄存仓——实卡圈最大倒爷撕破了自己的面具">
+                  <i class="fa fa-chevron-left"></i> 详谈游戏王实卡集换社小程序寄存仓——实卡圈最大倒爷撕破了自己的面具
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/26/learnVueAgain-3/" rel="next" title="Vue2 学习笔记 —— 3">
+                  Vue2 学习笔记 —— 3 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-gift"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanbaoxiaoyiyi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">69k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:03</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/bookmark.min.js"></script>
+
+  
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js","integrity":"sha256-sVAx+v/Q7v0Q2xm5vN7h5ccSna6gaLREhG9sF8pKT6I="}}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/tags/mermaid.min.js"></script>
+
+  <script class="next-config" data-name="nprogress" type="application/json">{"enable":true,"spinner":true}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/nprogress.min.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
