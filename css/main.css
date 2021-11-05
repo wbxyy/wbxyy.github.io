@@ -2882,12 +2882,15 @@ blockquote {
   margin: 0;
   padding: 0 15px;
 }
+.post-body {
+  letter-spacing: 0.016rem;
+}
+.post-body .note {
+  font-size: 0.98rem;
+}
 .post-body h1,
 .post-body h2,
-.post-body h3,
-.post-body h4,
-.post-body h5,
-.post-body h6 {
+.post-body h3 {
   position: relative;
   padding-left: 1.3rem;
   -webkit-transition: all 0.2s ease-out;
@@ -2895,44 +2898,34 @@ blockquote {
   -o-transition: all 0.2s ease-out;
   -ms-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
+  margin-bottom: 28px;
+  margin-top: 38px;
 }
 .post-body h1 a,
 .post-body h2 a,
-.post-body h3 a,
-.post-body h4 a,
-.post-body h5 a,
-.post-body h6 a {
+.post-body h3 a {
   color: inherit;
   text-decoration: none;
   border: none;
 }
 .post-body h1:hover,
 .post-body h2:hover,
-.post-body h3:hover,
-.post-body h4:hover,
-.post-body h5:hover,
-.post-body h6:hover {
+.post-body h3:hover {
   transform: translateX(0.15rem);
 }
 .post-body h1:hover::before,
 .post-body h2:hover::before,
-.post-body h3:hover::before,
-.post-body h4:hover::before,
-.post-body h5:hover::before,
-.post-body h6:hover::before {
+.post-body h3:hover::before {
   color: #0593d3;
 }
 .post-body h1::before,
 .post-body h2::before,
-.post-body h3::before,
-.post-body h4::before,
-.post-body h5::before,
-.post-body h6::before {
+.post-body h3::before {
   position: absolute;
   top: 42%;
   color: #ffb821;
   content: '\f0e7';
-  font-family: "Font Awesome 5 Free";
+  font-family: 'Font Awesome 5 Free';
   line-height: 1;
   margin-left: -2.2rem;
   font-size: 1.2rem;
