@@ -22,15 +22,15 @@
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/config.min.js"></script>
-<meta name="description" content="常见问题：react、vue 中的 key 有什么作用？（key的内部原理） 虚拟 DOM 中 key 的作用 key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【新数据】生成【新的虚拟 DOM】 随后 Vue 进行【新虚拟 DOM】和【旧虚拟 DOM】的差异比较，比较规则如下： 对比规则： 旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key：  若虚拟 DOM 内容没变，">
+<meta name="description" content="常见问题：react、vue 中的 key 有什么作用？（key的内部原理） 虚拟 DOM 中 key 的作用 key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【新数据】生成【新的虚拟 DOM】 随后 Vue 进行【新虚拟 DOM】和【旧虚拟 DOM】的差异比较，比较规则如下： 对比规则： 旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key： 1. 若虚拟 DOM 内容没">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue2 第二弹 —— 数据劫持、生命周期、组件、props">
 <meta property="og:url" content="https://wbxyy.github.io/2021/10/22/learnVueAgain-2/index.html">
 <meta property="og:site_name" content="这里是苏苏的小屋">
-<meta property="og:description" content="常见问题：react、vue 中的 key 有什么作用？（key的内部原理） 虚拟 DOM 中 key 的作用 key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【新数据】生成【新的虚拟 DOM】 随后 Vue 进行【新虚拟 DOM】和【旧虚拟 DOM】的差异比较，比较规则如下： 对比规则： 旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key：  若虚拟 DOM 内容没变，">
+<meta property="og:description" content="常见问题：react、vue 中的 key 有什么作用？（key的内部原理） 虚拟 DOM 中 key 的作用 key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【新数据】生成【新的虚拟 DOM】 随后 Vue 进行【新虚拟 DOM】和【旧虚拟 DOM】的差异比较，比较规则如下： 对比规则： 旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key： 1. 若虚拟 DOM 内容没">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-10-21T16:55:53.000Z">
-<meta property="article:modified_time" content="2021-11-05T05:54:59.975Z">
+<meta property="article:modified_time" content="2021-11-10T08:02:20.118Z">
 <meta property="article:author" content="wanbaoxiaoyiyi">
 <meta property="article:tag" content="学习">
 <meta name="twitter:card" content="summary">
@@ -140,14 +140,14 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -240,7 +240,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-05 05:54:59" itemprop="dateModified" datetime="2021-11-05T05:54:59Z">2021-11-05</time>
+        <time title="修改时间：2021-11-10 08:02:20" itemprop="dateModified" datetime="2021-11-10T08:02:20Z">2021-11-10</time>
       </span>
 
   
@@ -274,13 +274,11 @@
 key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【新数据】生成【新的虚拟 DOM】<br>
 随后 Vue 进行【新虚拟 DOM】和【旧虚拟 DOM】的差异比较，比较规则如下：</p>
 <p><strong>对比规则：</strong><br>
-旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key：</p>
-<ol>
-<li>若虚拟 DOM 内容没变，直接使用之前的真实 DOM！</li>
-<li>若虚拟 DOM 中内容变了，则生成新的真实 DOM，随后替换掉页面中之前的真实 DOM。<br>
-旧虚拟 DOM 中未找到与新虚拟 DOM 相同的 key<br>
-创建新的真实 DOM，随后渲染到页面。</li>
-</ol>
+旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key：<br>
+1. 若虚拟 DOM 内容没变，直接使用之前的真实 DOM！<br>
+2. 若虚拟 DOM 中内容变了，则生成新的真实 DOM，随后替换掉页面中之前的真实 DOM。</p>
+<p>旧虚拟 DOM 中未找到与新虚拟 DOM 相同的 key<br>
+创建新的真实 DOM，随后渲染到页面。</p>
 <span id="more"></span>
 <p><strong>用 index 作为 key 可能会引发的问题：</strong></p>
 <ol>
@@ -551,14 +549,14 @@ props只是只读，Vue 底层会检测你对 props 的修改，如果进行了�
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">73k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:04</span>
+    <span title="站点阅读时长">1:06</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

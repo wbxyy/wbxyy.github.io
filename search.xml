@@ -45,6 +45,36 @@
       </tags>
   </entry>
   <entry>
+    <title>前端常见问题</title>
+    <url>/2021/11/10/importantQuestion/</url>
+    <content><![CDATA[<p>1、Vue 给标签绑定 key 属性的作用（第一层）<br>
+key 是虚拟 dom 的唯一标识。它的存在是在告诉 diff ,在更改前后它们是同一个DOM节点。<br>
+只有是同一个虚拟节点，才进行精细化比较，否则就是暴力删除旧的、插入新的。<br>
+当数据发生改变时，Vue 会根据新数据生成新的虚拟 dom，然后进行虚拟 dom 的新旧比较，规则如下：<br>
+如果新旧 VN 能匹配到相同 key，则比较内容。内容修改了，生成新的真实 dom 进行替换；内容没改，复用旧的真实 dom。<br>
+如果没有匹配到，则生成新的真实 dom 然后渲染到页面。<br>
+当页面使用 v-for 渲染时，使用 index 作为 key 会出现问题：<br>
+对数据数组进行逆序增加、逆序删除等操作时，会打乱 key 的顺序，使得后面新旧 VN 比较时，会出现频繁的真实 dom 替换现象，无法复用旧的真实 dom，虽然界面效果没有影响，但会造成效率问题。<br>
+如果模板中还携带了输入类 dom，则会出现错误复用的现象，对界面效果造成影响。</p>
+<p>第二层（diff算法）<br>
+Vue 在进行新旧节点比较时，首先通过patch来确定节点是否值得比较，通过比较 key,tag,input_type 等属性是否相同来决定是否进行精细化比较。</p>
+<p>2、说一下 Vue 双向数据绑定的原理。</p>
+<p>当旧列表的头一个节点 oldStartNode 与新列表的头一个节点 newStartNode 对比时 key 相同。那么旧列表的头指针 oldStartIndex 与新列表的头指针 newStartIndex 同时向后移动一位。</p>
+<p>当旧列表的最后一个节点 oldEndNode 与新列表的最后一个节点 newEndNode 对比时 key 相同。那么旧列表的尾指针 oldEndIndex 与新列表的尾指针 newEndIndex 同时向前移动一位。<br>
+当旧列表的头一个节点 oldStartNode 与新列表的最后一个节点 newEndNode 对比时 key 相同。那么旧列表的头指针 oldStartIndex 向后移动一位；新列表的尾指针 newEndIndex 向前移动一位。</p>
+<p>当旧列表的最后一个节点 oldEndNode 与新列表的头一个节点 newStartNode 对比时 key 相同。那么旧列表的尾指针 oldEndIndex 向前移动一位；新列表的头指针 newStartIndex 向后移动一位。</p>
+<p>React、Vue2、Vue3三种diff算法的思路解析：<a href="https://juejin.cn/post/6919376064833667080">https://juejin.cn/post/6919376064833667080</a><br>
+Vue2 diff源码解析：<a href="https://juejin.cn/post/6970960193181974559#comment">https://juejin.cn/post/6970960193181974559#comment</a></p>
+<p>vue2 diff的流程解析<br>
+当 Vue 检测到数据改变时，会调用 _update 方法，这个方法内部有一个 patch 函数，它会先用 sameVNode 判断新老节点是否为相同类型的节点，如果为 false 则直接销毁 oldVnode，渲染 newVnode。<br>
+如果判断为相同，则进入 patchVnode 方法。</p>
+<p>patchVnode 方法</p>
+]]></content>
+      <tags>
+        <tag>前端问题</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2021/07/15/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -131,6 +161,32 @@
       </tags>
   </entry>
   <entry>
+    <title>前端 remake 计划之 ———— 学习 html</title>
+    <url>/2021/11/07/learnHtml-1/</url>
+    <content><![CDATA[<p>html 文档骨架<br>
+文档声明标签（我不是html标签哦）<br>
+语言标签（猥琐发育，别lang）<br>
+字符集标签(不理我就让你乱码，你造吗)</p>
+<p>标题标签（6个兄弟，老大和老四用得多）<br>
+段落标签（别以为按个回车就能换行哦）<br>
+强制换行标签（我叫break，大家都叫我贝哥）</p>
+<p>文字格式化标签（4兄弟里也就加粗用得多）</p>
+<p>块级元素：一行放一个，可以设置宽高，默认宽度是容器的100%，可以包含任何标签<br>
+行内元素：一行放多个，不可以设置宽高，默认宽度是内容宽度，只能包含行内标签<br>
+行内块元素：一行放多个（有间隙），可以设置宽高，默认宽度是内容宽度，可以包含任何标签。高度会被line-height影响。</p>
+<p>PC网页布局的三种方式：标准流、浮动、定位</p>
+<p>浮动特性：1、脱离标准流，不再保留原位置，只影响后面的标准流。2、浮动元素相互贴靠，顶端对齐。3、具有行内块元素的特性。</p>
+<p>静态定位：无定位，标准流。<br>
+相对定位：不脱离标准流，相对于自己原来的位置移动位置。<br>
+绝对定位：脱离标准流，具有行内块特性。相对于自己最近的带定位父元素移动位置，没有时以document做参考。<br>
+固定定位：脱离标准流，具有行内块特性。相对于视窗移动位置。</p>
+<p>绝对定位和固定定位具有</p>
+]]></content>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浅谈 typescript 装饰器</title>
     <url>/2021/07/21/learnDescriptor1/</url>
     <content><![CDATA[<h1>浅谈 typescript 装饰器</h1>
@@ -165,6 +221,18 @@
 ]]></content>
       <tags>
         <tag>杂货</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>跟我一起手撕 Promise</title>
+    <url>/2021/11/19/learnPromise/</url>
+    <content><![CDATA[<p>Promise 是 ES6 新增的规范，它是 JS 中进行异步编程的新解决方案，可以很好地解决异步编程中回调地狱问题，让代码更加优雅。</p>
+<p>JS 中常见的异步编程出现在各种请求、IO 和定时器中。比如数据库 IO，文件 IO，网络请求，定时器等。常见的有 NodeJs 中的 readFile，AJAX 请求，setTimeout 等。</p>
+<p>当我们调用这些异步函数时，由于我们无法准确得知函数何时具有返回值，因此通过 JS 顺序语句的执行是无法访问到函数结果的。这时我们的解决办法是给它们传入回调函数，当异步函数给出返回值时，通过调用回调函数，我们可以获取返回值并执行后面一系列操作，比如把返回值渲染到 DOM，把返回值写入文件，或者用返回值发起新一轮的网络请求。</p>
+<p>在没有 Promise 时，我们的生活是怎么样的呢，下面给出例子。</p>
+]]></content>
+      <tags>
+        <tag>学习</tag>
       </tags>
   </entry>
   <entry>
@@ -255,6 +323,32 @@
       </tags>
   </entry>
   <entry>
+    <title>vue-route杂谈</title>
+    <url>/2021/07/19/learnRouter/</url>
+    <content><![CDATA[<h2 id="vue-router杂谈"><a href="#vue-router%E6%9D%82%E8%B0%88">vue-router杂谈</a></h2>
+<p>说到 <code>vue-router</code> ，我会有联系到下面几个对象： <code>router,routes,route</code>，还有下面几个属性： <code>path,component,name</code>，还有下面几个方法： <code>BeforeRouteUpdate()，BeforeRouteEnter()，BeforeRouteLeave()，router.beforeEach()</code></p>
+<p><code>router</code> 是一个路由器，他的功能是根据自身记录的路由表，完成路由和组件的映射，并通过 <code>go()，replace()，push()</code> 方法提供可编程的路由切换。</p>
+<p><code>routes</code> 是路由表，是一个路由对象数组，他将被登记在路由器中。</p>
+<p><code>route</code> 就是路由，路由表中的一个元素，是一个拥有地址 path、路由参数 params、查询串 query、路由名 name、组件 component 等信息的对象。根据这个路由对象，就能让地址栏中的地址 path 和组件 component 形成映射关系，路由名 name 和 component 形成映射关系。</p>
+<span id="more"></span>
+<h3 id="这些玩意怎么使用？">这些玩意怎么使用？</h3>
+<p>地址栏输入地址后，router 通过 path 查找路由表中的路由，确定 path 和 component 的映射关系，从而实现输入指定地址显示指定组件。而使用 <code>router.push()</code> 等方法切换路由时，router 通过传入的参数 name，确定 name 和 component 的映射关系，确定参数 name 对应的 component 完成路由切换。</p>
+<p><code>BeforeRouteWhatTheFuck()</code>，根据文档的说法，这个玩意称作导航守卫。“导航”意为路由发生变化，“守卫”意为回调。</p>
+<p>当参数或查询改变时，不会触发进入/离开的导航守卫，而会触发更新的导航守卫</p>
+<p>所以，进入/离开守卫与更新守卫是互斥的。</p>
+<p>当path的查询和参数被修改时，进入 <code>BeforeRouteUpdate()</code></p>
+<p>当查询和参数未被修改，或path被修改时，进入 <code>BeforeRouteEnter()</code> 和 <code>BeforeRouteLeave()</code></p>
+<h3 id="由此可见">由此可见</h3>
+<p>路由变更有两种：<strong>路由修改</strong>和<strong>路由切换</strong></p>
+<p>前者复用实例，后者销毁并创建新实例</p>
+<div class="note info"><p>关于路由切换时，watch route 无法触发这个问题，我的解释是这样的：组件实例被销毁，是对响应式对象的直接销毁，watch 无法追踪。</p>
+</div>
+]]></content>
+      <tags>
+        <tag>杂货</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浅谈 vue3 响应式原理 第三篇 ref、computed</title>
     <url>/2021/07/21/learnReactivity3/</url>
     <content><![CDATA[<h1>浅谈 vue3 响应式原理 第三篇 ref、computed</h1>
@@ -294,32 +388,6 @@
       </tags>
   </entry>
   <entry>
-    <title>vue-route杂谈</title>
-    <url>/2021/07/19/learnRouter/</url>
-    <content><![CDATA[<h2 id="vue-router杂谈"><a href="#vue-router%E6%9D%82%E8%B0%88">vue-router杂谈</a></h2>
-<p>说到 <code>vue-router</code> ，我会有联系到下面几个对象： <code>router,routes,route</code>，还有下面几个属性： <code>path,component,name</code>，还有下面几个方法： <code>BeforeRouteUpdate()，BeforeRouteEnter()，BeforeRouteLeave()，router.beforeEach()</code></p>
-<p><code>router</code> 是一个路由器，他的功能是根据自身记录的路由表，完成路由和组件的映射，并通过 <code>go()，replace()，push()</code> 方法提供可编程的路由切换。</p>
-<p><code>routes</code> 是路由表，是一个路由对象数组，他将被登记在路由器中。</p>
-<p><code>route</code> 就是路由，路由表中的一个元素，是一个拥有地址 path、路由参数 params、查询串 query、路由名 name、组件 component 等信息的对象。根据这个路由对象，就能让地址栏中的地址 path 和组件 component 形成映射关系，路由名 name 和 component 形成映射关系。</p>
-<span id="more"></span>
-<h3 id="这些玩意怎么使用？">这些玩意怎么使用？</h3>
-<p>地址栏输入地址后，router 通过 path 查找路由表中的路由，确定 path 和 component 的映射关系，从而实现输入指定地址显示指定组件。而使用 <code>router.push()</code> 等方法切换路由时，router 通过传入的参数 name，确定 name 和 component 的映射关系，确定参数 name 对应的 component 完成路由切换。</p>
-<p><code>BeforeRouteWhatTheFuck()</code>，根据文档的说法，这个玩意称作导航守卫。“导航”意为路由发生变化，“守卫”意为回调。</p>
-<p>当参数或查询改变时，不会触发进入/离开的导航守卫，而会触发更新的导航守卫</p>
-<p>所以，进入/离开守卫与更新守卫是互斥的。</p>
-<p>当path的查询和参数被修改时，进入 <code>BeforeRouteUpdate()</code></p>
-<p>当查询和参数未被修改，或path被修改时，进入 <code>BeforeRouteEnter()</code> 和 <code>BeforeRouteLeave()</code></p>
-<h3 id="由此可见">由此可见</h3>
-<p>路由变更有两种：<strong>路由修改</strong>和<strong>路由切换</strong></p>
-<p>前者复用实例，后者销毁并创建新实例</p>
-<div class="note info"><p>关于路由切换时，watch route 无法触发这个问题，我的解释是这样的：组件实例被销毁，是对响应式对象的直接销毁，watch 无法追踪。</p>
-</div>
-]]></content>
-      <tags>
-        <tag>杂货</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>是时候学习 vue3 了</title>
     <url>/2021/07/15/learnVue3/</url>
     <content><![CDATA[<div class="note info"><p><strong>适用日期：2021-7</strong></p>
@@ -328,7 +396,10 @@
 <div class="note info"><p>Vite requires Node.js version &gt;=12.0.0.</p>
 </div>
 <h3 id="创建-vue3-项目">创建 vue3 项目</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yarn create @vitejs/app</span><br></pre></td></tr></table></figure>
+<p><strong>使用 @vue/cli 创建 vue2/3 项目</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vue create xxxx </span><br></pre></td></tr></table></figure>
+<p><strong>使用 vite 创建 vue3 项目</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">##创建工程</span></span><br><span class="line">npm init vite-app xxxx</span><br><span class="line"><span class="comment">## 进入工程目录</span></span><br><span class="line"><span class="built_in">cd</span> xxxx</span><br><span class="line"><span class="comment">## 安装依赖</span></span><br><span class="line">npm install</span><br><span class="line"><span class="comment">## 运行</span></span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
 <h3 id="进入-vue3-项目">进入 vue3 项目</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;项目名称&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="基本命令">基本命令</h3>
@@ -345,7 +416,10 @@
 <p>在 src 目录下新建 store/index.ts</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; InjectionKey &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; createStore, Store &#125; <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> interface State &#123;</span><br><span class="line">  <span class="attr">count</span>: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> key: InjectionKey&lt;Store&lt;State&gt;&gt; = <span class="built_in">Symbol</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> store = createStore&lt;State&gt;(&#123;</span><br><span class="line">  <span class="function"><span class="title">state</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">mutations</span>: &#123;</span><br><span class="line">    <span class="function"><span class="title">increment</span>(<span class="params">state : State</span>)</span> &#123;</span><br><span class="line">      state.count++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h1>三、CSS 预处理器</h1>
+<p><strong>安装最新版less</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yarn add less less-loader --dev</span><br></pre></td></tr></table></figure>
+<p><strong>兼容 vue2 的版本（vue2 无法使用最新版 less）</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yarn add less less-loader@5 --save-dev</span><br></pre></td></tr></table></figure>
 <h1>四、配置路径别名</h1>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yarn add @types/node --dev</span><br></pre></td></tr></table></figure>
 <p><code>vite.config.ts</code> 配置如下</p>
@@ -420,6 +494,16 @@
     <title>Vue2 第一弹 —— 模板语法、数据绑定、计算属性、条件渲染</title>
     <url>/2021/10/09/learnVueAgain-1/</url>
     <content><![CDATA[<h1>001 —— 初识 Vue</h1>
+<h2 id="vue">vue</h2>
+<p><strong>查看 @vue/cli 版本，确保 @vue/cli 版本在 4.5.0 以上</strong><br>
+<code>vue --version</code><br>
+<strong>安装或升级你的 @vue/cli （全局覆盖安装）</strong><br>
+<code>npm install -g @vue/cli</code><br>
+<strong>创建</strong><br>
+<code>vue create xxxx</code><br>
+<strong>启动</strong><br>
+<code>cd xxxx</code><br>
+<code>npm run serve</code></p>
 <h4 id="使用方法">使用方法</h4>
 <ol>
 <li>准备好一个容器</li>
@@ -655,13 +739,11 @@ v-model 收集 value 值，且要给标签配置 value 值。</p>
 key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【新数据】生成【新的虚拟 DOM】<br>
 随后 Vue 进行【新虚拟 DOM】和【旧虚拟 DOM】的差异比较，比较规则如下：</p>
 <p><strong>对比规则：</strong><br>
-旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key：</p>
-<ol>
-<li>若虚拟 DOM 内容没变，直接使用之前的真实 DOM！</li>
-<li>若虚拟 DOM 中内容变了，则生成新的真实 DOM，随后替换掉页面中之前的真实 DOM。<br>
-旧虚拟 DOM 中未找到与新虚拟 DOM 相同的 key<br>
-创建新的真实 DOM，随后渲染到页面。</li>
-</ol>
+旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key：<br>
+1. 若虚拟 DOM 内容没变，直接使用之前的真实 DOM！<br>
+2. 若虚拟 DOM 中内容变了，则生成新的真实 DOM，随后替换掉页面中之前的真实 DOM。</p>
+<p>旧虚拟 DOM 中未找到与新虚拟 DOM 相同的 key<br>
+创建新的真实 DOM，随后渲染到页面。</p>
 <span id="more"></span>
 <p><strong>用 index 作为 key 可能会引发的问题：</strong></p>
 <ol>
@@ -1012,6 +1094,23 @@ props 传过来的若是对象类型的值，修改对象中的属性时 Vue 不
       </tags>
   </entry>
   <entry>
+    <title>小学数学复习</title>
+    <url>/2021/11/21/primarySchoolMath/</url>
+    <content><![CDATA[<p>把剩余时间的总秒数转化为天、时、分、秒（时间戳转化为时分秒）<br>
+d = parseInt(总秒数/60/60/24)<br>
+h = parseInt(总秒数/60/60%24)<br>
+m = parseInt(总秒数/60%60)<br>
+s = parseInt(总秒数%60)</p>
+<p>求 n-m 之间的随机数（包括 n 和 m，n 和 m 是整数）<br>
+function getRamdon(min,max){<br>
+return Math.floor(Math.ramdon() * ( max-min+1 ))+min<br>
+}</p>
+]]></content>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue2 第四弹 —— Vuex、Vue-router</title>
     <url>/2021/11/04/learnVueAgain-4/</url>
     <content><![CDATA[<h1>Vuex</h1>
@@ -1181,93 +1280,6 @@ hash 值不会包含在 HTTP 请求中，即：hash 值不会带给服务器。<
       </tags>
   </entry>
   <entry>
-    <title>vue3.2 —— setup script</title>
-    <url>/2021/11/04/vue3-setupscript/</url>
-    <content><![CDATA[<h3 id="Script-setup-语法糖下-组件-的使用">Script setup 语法糖下 组件 的使用</h3>
-<ol>
-<li>自动的组件名推断<br>
-Vue 会依据它的<strong>文件名</strong>来自动推断组件名称<br>
-通过普通 <code>&lt;setup&gt;</code> 标签可以显式更改组件名称(不推荐)</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span><br><span class="line">  <span class="attr">name</span>:<span class="string">&#x27;Bar&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>普通组件的使用<br>
-不再需要 components 注册，引入直接使用。<br>
-原理：setup script 在编译的时候把 template 的内容变成 vNode 后继而由 setup 函数中返回。</li>
-</ol>
-<span id="more"></span>
-<ol start="3">
-<li>
-<p>动态组件<br>
-和 Vue2 相同<br>
-<component :is="Bar"/></p>
-</li>
-<li>
-<p>递归组件<br>
-名为 <code>Foo.vue</code> 的组件可以在其模板中用 <code>&lt;Foo/&gt;</code> 引用它自己</p>
-</li>
-<li>
-<p>命名空间组件<br>
-<code>Components/index.ts</code> 用于导出组件<br>
-<code>index.vue</code> 基于命名组件使用组件</p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=<span class="string">&#x27;ts&#x27;</span>&gt;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Form <span class="keyword">from</span> <span class="string">&#x27;../Components&#x27;</span></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;Form.Foo&gt;</span><br><span class="line">  &lt;Form.Bar&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="Script-setup-语法糖下-props-的使用">Script setup 语法糖下 props 的使用</h3>
-<ol>
-<li>props 的使用 ———— defineProps</li>
-</ol>
-<ul>
-<li>
-<p>运行时声明和类型声明<br>
-运行时声明会在运行后给出提示，是 Vue 提供给我们的。<br>
-缺点：无法对数组中的对象进行校验。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">defineProps:&#123;</span><br><span class="line">  <span class="attr">height</span>:<span class="built_in">Number</span>,</span><br><span class="line">  <span class="attr">title</span>:<span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>类型声明基于 ts 类型检查，可在编译时类型检查</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">defineProps&lt;&#123;</span><br><span class="line">  <span class="attr">height</span>:number</span><br><span class="line">  title?:string</span><br><span class="line">  <span class="attr">list</span>:&#123;<span class="attr">id</span>:number,<span class="attr">content</span>:string&#125;[]</span><br><span class="line">&#125;&gt;() </span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ol start="2">
-<li>
-<p>Compiler Macros（编译时宏命令）<br>
-<code>&lt;setup script&gt;</code> 在运行前会经过一个编译的过程，这个语法糖提供了一系列宏命令供开发者使用，在编译阶段会进行替换。</p>
-</li>
-<li>
-<p>props 的默认值 ———— withDefaults<br>
-类型声明可以用 ? 来确定 props 是否 require，但是没有决定默认值的语法。</p>
-</li>
-</ol>
-<ul>
-<li>基本用法<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> props = withDefaults(definedProps&lt;&#123;</span><br><span class="line">  title?:string,</span><br><span class="line">  <span class="attr">list</span>:&#123;<span class="attr">id</span>:number,<span class="attr">content</span>:string&#125;</span><br><span class="line">&#125;&gt;(),&#123;</span><br><span class="line">  <span class="attr">title</span>:<span class="string">&#x27;类型声明的默认值&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="Script-setup-语法糖下-emit-的使用">Script setup 语法糖下 emit 的使用</h3>
-<ol>
-<li>
-<p>自定义事件的使用 defineEmits<br>
-普通写法和类型声明式<br>
-普通写法对传参没有类型提示</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> emits = defineEmits([<span class="string">&#x27;parentClick&#x27;</span>,<span class="string">&#x27;parentChange&#x27;</span>])</span><br></pre></td></tr></table></figure>
-<p>类型声明基于 ts 类型检查，可在编译时类型检查</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> emits = defineEmits&lt;&#123;</span><br><span class="line">  <span class="function">(<span class="params">e:<span class="string">&#x27;parentClick&#x27;</span>,data:number</span>)=&gt;</span><span class="keyword">void</span>,</span><br><span class="line">  <span class="function">(<span class="params">e:<span class="string">&#x27;parentChange&#x27;</span></span>)=&gt;</span><span class="keyword">void</span></span><br><span class="line">&#125;&gt;()</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>显示暴露 ———— defineExpose<br>
-在 setup script 中，默认情况下无法通过 ref 来获取子组件的属性和方法，需要通过 defineExpose 宏命令显式暴露出子组件的属性和方法。<br>
-单独暴露</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">defineExpose(&#123;</span><br><span class="line">  count,</span><br><span class="line">  handle</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>全部暴露(普通 <code>&lt;sripct&gt;</code> 下书写)</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="Script-setup-和-普通-script-一起使用">Script setup 和 普通 script 一起使用</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"><span class="comment">// 普通 script 在模块范围下执行（只执行一次）</span></span><br><span class="line">runSideEffectOnce()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明额外的选项（会被迫暴露组件，打破 script setup 的默认关闭）</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">name</span>:<span class="string">&#x27;Bar&#x27;</span> <span class="comment">// 显式声明组件名</span></span><br><span class="line">  <span class="attr">inheritAttrs</span>:<span class="literal">false</span></span><br><span class="line">  <span class="attr">customOptions</span>:&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="comment">// 在 setup() 作用域中执行（对每个实例皆是如此）</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>学习</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 vue3 写一个登录页</title>
     <url>/2021/08/05/login-practise/</url>
     <content><![CDATA[<h1>前言</h1>
@@ -1369,6 +1381,93 @@ status：用来保存 ACCESS_TOKEN。</p>
 ]]></content>
       <tags>
         <tag>干货</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue3.2 —— setup script</title>
+    <url>/2021/11/04/vue3-setupscript/</url>
+    <content><![CDATA[<h3 id="Script-setup-语法糖下-组件-的使用">Script setup 语法糖下 组件 的使用</h3>
+<ol>
+<li>自动的组件名推断<br>
+Vue 会依据它的<strong>文件名</strong>来自动推断组件名称<br>
+通过普通 <code>&lt;setup&gt;</code> 标签可以显式更改组件名称(不推荐)</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span><br><span class="line">  <span class="attr">name</span>:<span class="string">&#x27;Bar&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>普通组件的使用<br>
+不再需要 components 注册，引入直接使用。<br>
+原理：setup script 在编译的时候把 template 的内容变成 vNode 后继而由 setup 函数中返回。</li>
+</ol>
+<span id="more"></span>
+<ol start="3">
+<li>
+<p>动态组件<br>
+和 Vue2 相同<br>
+<component :is="Bar"/></p>
+</li>
+<li>
+<p>递归组件<br>
+名为 <code>Foo.vue</code> 的组件可以在其模板中用 <code>&lt;Foo/&gt;</code> 引用它自己</p>
+</li>
+<li>
+<p>命名空间组件<br>
+<code>Components/index.ts</code> 用于导出组件<br>
+<code>index.vue</code> 基于命名组件使用组件</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=<span class="string">&#x27;ts&#x27;</span>&gt;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Form <span class="keyword">from</span> <span class="string">&#x27;../Components&#x27;</span></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;Form.Foo&gt;</span><br><span class="line">  &lt;Form.Bar&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Script-setup-语法糖下-props-的使用">Script setup 语法糖下 props 的使用</h3>
+<ol>
+<li>props 的使用 ———— defineProps</li>
+</ol>
+<ul>
+<li>
+<p>运行时声明和类型声明<br>
+运行时声明会在运行后给出提示，是 Vue 提供给我们的。<br>
+缺点：无法对数组中的对象进行校验。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">defineProps:&#123;</span><br><span class="line">  <span class="attr">height</span>:<span class="built_in">Number</span>,</span><br><span class="line">  <span class="attr">title</span>:<span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类型声明基于 ts 类型检查，可在编译时类型检查</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">defineProps&lt;&#123;</span><br><span class="line">  <span class="attr">height</span>:number</span><br><span class="line">  title?:string</span><br><span class="line">  <span class="attr">list</span>:&#123;<span class="attr">id</span>:number,<span class="attr">content</span>:string&#125;[]</span><br><span class="line">&#125;&gt;() </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="2">
+<li>
+<p>Compiler Macros（编译时宏命令）<br>
+<code>&lt;setup script&gt;</code> 在运行前会经过一个编译的过程，这个语法糖提供了一系列宏命令供开发者使用，在编译阶段会进行替换。</p>
+</li>
+<li>
+<p>props 的默认值 ———— withDefaults<br>
+类型声明可以用 ? 来确定 props 是否 require，但是没有决定默认值的语法。</p>
+</li>
+</ol>
+<ul>
+<li>基本用法<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> props = withDefaults(definedProps&lt;&#123;</span><br><span class="line">  title?:string,</span><br><span class="line">  <span class="attr">list</span>:&#123;<span class="attr">id</span>:number,<span class="attr">content</span>:string&#125;</span><br><span class="line">&#125;&gt;(),&#123;</span><br><span class="line">  <span class="attr">title</span>:<span class="string">&#x27;类型声明的默认值&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Script-setup-语法糖下-emit-的使用">Script setup 语法糖下 emit 的使用</h3>
+<ol>
+<li>
+<p>自定义事件的使用 defineEmits<br>
+普通写法和类型声明式<br>
+普通写法对传参没有类型提示</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> emits = defineEmits([<span class="string">&#x27;parentClick&#x27;</span>,<span class="string">&#x27;parentChange&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<p>类型声明基于 ts 类型检查，可在编译时类型检查</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> emits = defineEmits&lt;&#123;</span><br><span class="line">  <span class="function">(<span class="params">e:<span class="string">&#x27;parentClick&#x27;</span>,data:number</span>)=&gt;</span><span class="keyword">void</span>,</span><br><span class="line">  <span class="function">(<span class="params">e:<span class="string">&#x27;parentChange&#x27;</span></span>)=&gt;</span><span class="keyword">void</span></span><br><span class="line">&#125;&gt;()</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>显示暴露 ———— defineExpose<br>
+在 setup script 中，默认情况下无法通过 ref 来获取子组件的属性和方法，需要通过 defineExpose 宏命令显式暴露出子组件的属性和方法。<br>
+单独暴露</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">defineExpose(&#123;</span><br><span class="line">  count,</span><br><span class="line">  handle</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>全部暴露(普通 <code>&lt;sripct&gt;</code> 下书写)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Script-setup-和-普通-script-一起使用">Script setup 和 普通 script 一起使用</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"><span class="comment">// 普通 script 在模块范围下执行（只执行一次）</span></span><br><span class="line">runSideEffectOnce()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明额外的选项（会被迫暴露组件，打破 script setup 的默认关闭）</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">name</span>:<span class="string">&#x27;Bar&#x27;</span> <span class="comment">// 显式声明组件名</span></span><br><span class="line">  <span class="attr">inheritAttrs</span>:<span class="literal">false</span></span><br><span class="line">  <span class="attr">customOptions</span>:&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="comment">// 在 setup() 作用域中执行（对每个实例皆是如此）</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>学习</tag>
       </tags>
   </entry>
 </search>

@@ -136,14 +136,14 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -195,6 +195,418 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/08/05/login-practise/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/05/login-practise/" class="post-title-link" itemprop="url">使用 vue3 写一个登录页</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-05 11:46:38" itemprop="dateCreated datePublished" datetime="2021-08-05T11:46:38Z">2021-08-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-10-19 08:08:09" itemprop="dateModified" datetime="2021-10-19T08:08:09Z">2021-10-19</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>16k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1>前言</h1>
+<p>对初学 web 前端的人来说，一个登录页面可能会是他们前端打怪生涯中的最初遇到的几个 Boss 之一。几乎任何系统都需要登录功能，因为登录功能是系统实现身份认证和访问控制的第一步。</p>
+<p>很久以前，前端大牛们写一个登录页，都是新建一个 html 文件手撸一遍页面模板，新建一个 css 文件手撸一遍页面样式，再新建一个 js 文件手撸一遍登录逻辑。而现在，这种方式显得十分古老。我作为一个初探前端的新手，在经历各种尝试后，给大家介绍如何使用 vite+vue3+<ruby> typescript<rt>anyscript </rt></ruby> 写一个登录页。</p>
+<h1>介绍登录</h1>
+<p>一个登录页中应该有什么，这应该是很多初学者需要面对的问题。在我看来，完成一次登录需要以下几个步骤：</p>
+<blockquote>
+<ol>
+<li>对于未持有令牌的匿名访客，只能允许其访问公共页面，否则跳转登录页。</li>
+<li>在登录页中提交身份认证的信息，例如账号、密码。</li>
+<li>后端通过后，返回一个标识身份的令牌，例如 token。</li>
+<li>使用令牌从后端获取用户信息，例如角色、权限。</li>
+<li>通过角色、权限为用户量身定做一个路由表。</li>
+<li>用户可以自由访问所给路由表中的全部网页</li>
+</ol>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/08/05/login-practise/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/07/21/learnDescriptor1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/21/learnDescriptor1/" class="post-title-link" itemprop="url">浅谈 typescript 装饰器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-07-21 13:54:27" itemprop="dateCreated datePublished" datetime="2021-07-21T13:54:27Z">2021-07-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-07-26 06:50:54" itemprop="dateModified" datetime="2021-07-26T06:50:54Z">2021-07-26</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1>浅谈 typescript 装饰器</h1>
+<p>typescript 的装饰器，是个很尴尬的存在，从这个概念被提出以来，就一直在经历各种规范上的修改，直到现在还没有一种公认、稳定的规范拿上台。</p>
+<p>装饰器是和 class 的概念相关的，从尤大的话来说，前端页面的交互逻辑使用 class 来写，可能并不是那么顺手。从 vue3 放出的 api 来看，vue3 最终还是选择了开放函数式编程的接口。用尤大的话来讲：设计一个 class 编程接口，要踩的坑实在是太多。</p>
+<p>不过即使是冷门的语法，也阻止不了<ruby> 好奇<rt>得闲 </rt></ruby>的我去<ruby> 科研<rt>玩耍 </rt></ruby>一下。</p>
+<h3 id="什么是装饰器">什么是装饰器</h3>
+<p>说到装饰器，我们首先联想到的是 css。在编写 html 文档时，我们使用 css 写好页面的样式，然后通过 css 选择器将这些样式绑定到 html 标签。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/21/learnDescriptor1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/07/21/learnReactivity3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/21/learnReactivity3/" class="post-title-link" itemprop="url">浅谈 vue3 响应式原理 第三篇 ref、computed</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-07-21 10:34:13" itemprop="dateCreated datePublished" datetime="2021-07-21T10:34:13Z">2021-07-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-07-23 08:58:49" itemprop="dateModified" datetime="2021-07-23T08:58:49Z">2021-07-23</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1>浅谈 vue3 响应式原理 第三篇 ref、computed</h1>
+<p>能够坚持看到这里，实属不易，vue3 响应式的原理在前两篇已经讲得差不多了。</p>
+<p>本篇作为一个补充，结合前面的内容，带大家了解 vue3 开放的2个 api：</p>
+<div class="note info"><p>ref 函数和 computed 函数</p>
+</div>
+<h2 id="ref-和-computed-的由来"><a href="#ref-%E5%92%8C-computed-%E7%9A%84%E7%94%B1%E6%9D%A5">ref 和 computed 的由来</a></h2>
+<p>回想起上一篇，我们把 <strong>Proxy</strong> 封装成了 <strong>Reactive 函数</strong></p>
+<p>通过它，我们对对象的<strong>读取、写入</strong>进行<strong>拦截</strong>，在拦截中插入<strong>记录</strong>和<strong>重放</strong>的操作，就能把普通的 javascript 对象变成响应式对象。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/21/learnReactivity3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/07/19/learnReactivity2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/19/learnReactivity2/" class="post-title-link" itemprop="url">浅谈 vue3 响应式原理 第二篇 记录与重放</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-07-19 11:38:35" itemprop="dateCreated datePublished" datetime="2021-07-19T11:38:35Z">2021-07-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-07-23 09:53:02" itemprop="dateModified" datetime="2021-07-23T09:53:02Z">2021-07-23</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <style>
+  <%- fa_inline('twitter', {prefix: 'fab'}) %>
+</style>
+<h1>浅谈 vue3 响应式原理 第二篇 记录与重放</h1>
+<p>上一篇简单讲了一下什么是响应式，实现响应式的基本套路：在变量被设置新值的时候，重新执行一次副作用。</p>
+<p>但是副作用有很多，我们不可能把每个副作用的执行都在 <code>Proxy</code> 中硬编码一遍，如何设计才能管理这么多副作用，这次来讲 vue3 实现响应式需要的数据结构。</p>
+<h3 id="副作用的存储">副作用的存储</h3>
+<p>要完成响应式，我们上一篇讲了在变量执行 <code>set</code> 操作时将副作用重放一遍。但是一个程序有这么多变量，这么多副作用，vue3 是如何管理的呢？</p>
+<div class="note info"><p>首先这里引入一个<strong>新名词：depsMap</strong></p>
+</div>
+<p><code>depsMap</code> 是一个绑定属性与副作用的 <code>Map</code>。他的 key 是变量的属性名，他的 value 是属性对应的副作用。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/19/learnReactivity2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -432,7 +844,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-07-23 08:43:38" itemprop="dateModified" datetime="2021-07-23T08:43:38Z">2021-07-23</time>
+        <time title="修改时间：2021-11-16 01:39:39" itemprop="dateModified" datetime="2021-11-16T01:39:39Z">2021-11-16</time>
       </span>
 
   
@@ -467,7 +879,10 @@
 <div class="note info"><p>Vite requires Node.js version &gt;=12.0.0.</p>
 </div>
 <h3 id="创建-vue3-项目">创建 vue3 项目</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn create @vitejs/app</span><br></pre></td></tr></table></figure>
+<p><strong>使用 @vue/cli 创建 vue2/3 项目</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create xxxx </span><br></pre></td></tr></table></figure>
+<p><strong>使用 vite 创建 vue3 项目</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##创建工程</span></span><br><span class="line">npm init vite-app xxxx</span><br><span class="line"><span class="comment">## 进入工程目录</span></span><br><span class="line"><span class="built_in">cd</span> xxxx</span><br><span class="line"><span class="comment">## 安装依赖</span></span><br><span class="line">npm install</span><br><span class="line"><span class="comment">## 运行</span></span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
 <h3 id="进入-vue3-项目">进入 vue3 项目</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;项目名称&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="基本命令">基本命令</h3>
@@ -636,14 +1051,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">73k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:04</span>
+    <span title="站点阅读时长">1:06</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

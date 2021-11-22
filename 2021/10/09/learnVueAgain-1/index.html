@@ -22,15 +22,15 @@
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/config.min.js"></script>
-<meta name="description" content="001 —— 初识 Vue 使用方法  准备好一个容器 创建 Vue 实例。 el 用于指定当前 Vue 实例为哪个容器服务，值通常为 css 选择器字符串。 data 用于存储数据，数据供 el 所指定的容器去使用，值我们暂时写成一个对象.  详细解答 1. 想让 Vue 工作，就必须创建一个 Vue 实例，且传入一个配置对象； 2. root 容器里的代码依然符合 html 规范，只不过混入了">
+<meta name="description" content="001 —— 初识 Vue vue 查看 @vue&#x2F;cli 版本，确保 @vue&#x2F;cli 版本在 4.5.0 以上 vue --version 安装或升级你的 @vue&#x2F;cli （全局覆盖安装） npm install -g @vue&#x2F;cli 创建 vue create xxxx 启动 cd xxxx npm run serve 使用方法  准备好一个容器 创建 Vue 实例。 el 用于指定当前">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue2 第一弹 —— 模板语法、数据绑定、计算属性、条件渲染">
 <meta property="og:url" content="https://wbxyy.github.io/2021/10/09/learnVueAgain-1/index.html">
 <meta property="og:site_name" content="这里是苏苏的小屋">
-<meta property="og:description" content="001 —— 初识 Vue 使用方法  准备好一个容器 创建 Vue 实例。 el 用于指定当前 Vue 实例为哪个容器服务，值通常为 css 选择器字符串。 data 用于存储数据，数据供 el 所指定的容器去使用，值我们暂时写成一个对象.  详细解答 1. 想让 Vue 工作，就必须创建一个 Vue 实例，且传入一个配置对象； 2. root 容器里的代码依然符合 html 规范，只不过混入了">
+<meta property="og:description" content="001 —— 初识 Vue vue 查看 @vue&#x2F;cli 版本，确保 @vue&#x2F;cli 版本在 4.5.0 以上 vue --version 安装或升级你的 @vue&#x2F;cli （全局覆盖安装） npm install -g @vue&#x2F;cli 创建 vue create xxxx 启动 cd xxxx npm run serve 使用方法  准备好一个容器 创建 Vue 实例。 el 用于指定当前">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-10-09T15:15:46.000Z">
-<meta property="article:modified_time" content="2021-11-05T05:55:03.476Z">
+<meta property="article:modified_time" content="2021-11-16T01:21:31.952Z">
 <meta property="article:author" content="wanbaoxiaoyiyi">
 <meta property="article:tag" content="学习">
 <meta name="twitter:card" content="summary">
@@ -124,7 +124,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">001 —— 初识 Vue</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E8%A7%A3%E7%AD%94"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">详细解答</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">002 —— Vue 的模板语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E5%80%BC%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">插值语法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">指令语法：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">003 —— Vue 的数据绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue-%E4%B8%AD%E6%9C%892%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">Vue 中有2种数据绑定的方式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">004 —— el 和 data 的两种写法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#data-%E4%B8%8E-el-%E7%9A%84-2-%E7%A7%8D%E5%86%99%E6%B3%95"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">data 与 el 的 2 种写法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">005 —— MVVM 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVVM-%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">MVVM 模型</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">006 —— Vue 中的数据代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue-%E4%B8%AD%E6%95%B0%E6%8D%AE%E4%BB%A3%E7%90%86%E7%9A%84%E5%A5%BD%E5%A4%84%EF%BC%9A"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">Vue 中数据代理的好处：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="nav-number">6.0.0.2.</span> <span class="nav-text">基本原理：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">007 —— 事件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%EF%BC%9A"><span class="nav-number">7.0.0.1.</span> <span class="nav-text">事件的基本使用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue-%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6%EF%BC%9A"><span class="nav-number">7.0.0.2.</span> <span class="nav-text">Vue 中的事件修饰符：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue-%E4%B8%AD%E7%9A%84%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6%EF%BC%9A"><span class="nav-number">7.0.0.3.</span> <span class="nav-text">Vue 中的键盘事件：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">008 —— 计算属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#get-%E5%87%BD%E6%95%B0%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E6%89%A7%E8%A1%8C%EF%BC%9F"><span class="nav-number">8.0.0.1.</span> <span class="nav-text">get 函数什么时候执行？</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">009 —— 监视属性 watch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%91%E8%A7%86%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95%EF%BC%9A"><span class="nav-number">9.0.0.1.</span> <span class="nav-text">监视的两种写法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%9B%91%E8%A7%86"><span class="nav-number">9.0.0.2.</span> <span class="nav-text">深度监视</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">010 —— 绑定样式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">11.</span> <span class="nav-text">011 —— 条件渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-if"><span class="nav-number">11.0.0.1.</span> <span class="nav-text">v-if</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-show"><span class="nav-number">11.0.0.2.</span> <span class="nav-text">v-show</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">12.</span> <span class="nav-text">012 —— 列表渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-for-%E6%8C%87%E4%BB%A4"><span class="nav-number">12.0.0.1.</span> <span class="nav-text">v-for 指令</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">13.</span> <span class="nav-text">013 —— 收集表单数据</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">001 —— 初识 Vue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vue"><span class="nav-number">1.1.</span> <span class="nav-text">vue</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E8%A7%A3%E7%AD%94"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">详细解答</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">002 —— Vue 的模板语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E5%80%BC%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">插值语法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">指令语法：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">003 —— Vue 的数据绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue-%E4%B8%AD%E6%9C%892%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">Vue 中有2种数据绑定的方式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">004 —— el 和 data 的两种写法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#data-%E4%B8%8E-el-%E7%9A%84-2-%E7%A7%8D%E5%86%99%E6%B3%95"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">data 与 el 的 2 种写法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">005 —— MVVM 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVVM-%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">MVVM 模型</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">006 —— Vue 中的数据代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue-%E4%B8%AD%E6%95%B0%E6%8D%AE%E4%BB%A3%E7%90%86%E7%9A%84%E5%A5%BD%E5%A4%84%EF%BC%9A"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">Vue 中数据代理的好处：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="nav-number">6.0.0.2.</span> <span class="nav-text">基本原理：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">007 —— 事件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%EF%BC%9A"><span class="nav-number">7.0.0.1.</span> <span class="nav-text">事件的基本使用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue-%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6%EF%BC%9A"><span class="nav-number">7.0.0.2.</span> <span class="nav-text">Vue 中的事件修饰符：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue-%E4%B8%AD%E7%9A%84%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6%EF%BC%9A"><span class="nav-number">7.0.0.3.</span> <span class="nav-text">Vue 中的键盘事件：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">008 —— 计算属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#get-%E5%87%BD%E6%95%B0%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E6%89%A7%E8%A1%8C%EF%BC%9F"><span class="nav-number">8.0.0.1.</span> <span class="nav-text">get 函数什么时候执行？</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">009 —— 监视属性 watch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%91%E8%A7%86%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95%EF%BC%9A"><span class="nav-number">9.0.0.1.</span> <span class="nav-text">监视的两种写法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%9B%91%E8%A7%86"><span class="nav-number">9.0.0.2.</span> <span class="nav-text">深度监视</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">010 —— 绑定样式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">11.</span> <span class="nav-text">011 —— 条件渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-if"><span class="nav-number">11.0.0.1.</span> <span class="nav-text">v-if</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-show"><span class="nav-number">11.0.0.2.</span> <span class="nav-text">v-show</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">12.</span> <span class="nav-text">012 —— 列表渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-for-%E6%8C%87%E4%BB%A4"><span class="nav-number">12.0.0.1.</span> <span class="nav-text">v-for 指令</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">13.</span> <span class="nav-text">013 —— 收集表单数据</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -140,14 +140,14 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -240,7 +240,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-05 05:55:03" itemprop="dateModified" datetime="2021-11-05T05:55:03Z">2021-11-05</time>
+        <time title="修改时间：2021-11-16 01:21:31" itemprop="dateModified" datetime="2021-11-16T01:21:31Z">2021-11-16</time>
       </span>
 
   
@@ -251,14 +251,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.8k</span>
+      <span>4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -270,6 +270,16 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1>001 —— 初识 Vue</h1>
+<h2 id="vue">vue</h2>
+<p><strong>查看 @vue/cli 版本，确保 @vue/cli 版本在 4.5.0 以上</strong><br>
+<code>vue --version</code><br>
+<strong>安装或升级你的 @vue/cli （全局覆盖安装）</strong><br>
+<code>npm install -g @vue/cli</code><br>
+<strong>创建</strong><br>
+<code>vue create xxxx</code><br>
+<strong>启动</strong><br>
+<code>cd xxxx</code><br>
+<code>npm run serve</code></p>
 <h4 id="使用方法">使用方法</h4>
 <ol>
 <li>准备好一个容器</li>
@@ -548,14 +558,14 @@ v-model 收集 value 值，且要给标签配置 value 值。</p>
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">73k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:04</span>
+    <span title="站点阅读时长">1:06</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
