@@ -143,7 +143,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -204,7 +204,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/11/21/primarySchoolMath/">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/12/07/learnJsonServer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -217,7 +217,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/21/primarySchoolMath/" class="post-title-link" itemprop="url">小学数学复习</a>
+          <a href="/2021/12/07/learnJsonServer/" class="post-title-link" itemprop="url">试玩一个 Json 服务器 —— json-server</a>
         </h2>
 
         <div class="post-meta-container">
@@ -227,16 +227,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2021-11-20 17:34:09" itemprop="dateCreated datePublished" datetime="2021-11-20T17:34:09Z">2021-11-20</time>
+      <time title="创建时间：2021-12-07 11:24:56 / 修改时间：06:45:09" itemprop="dateCreated datePublished" datetime="2021-12-07T11:24:56Z">2021-12-07</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-22 01:17:06" itemprop="dateModified" datetime="2021-11-22T01:17:06Z">2021-11-22</time>
-      </span>
 
   
       </div>
@@ -246,7 +240,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>216</span>
+      <span>582</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -264,15 +258,288 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>把剩余时间的总秒数转化为天、时、分、秒（时间戳转化为时分秒）<br>
-d = parseInt(总秒数/60/60/24)<br>
-h = parseInt(总秒数/60/60%24)<br>
-m = parseInt(总秒数/60%60)<br>
-s = parseInt(总秒数%60)</p>
-<p>求 n-m 之间的随机数（包括 n 和 m，n 和 m 是整数）<br>
-function getRamdon(min,max){<br>
-return Math.floor(Math.ramdon() * ( max-min+1 ))+min<br>
-}</p>
+          <p>当我们前端需要数据调试的时候，除了使用 mock，或者通过 node express 开启服务监听返回数据外，还有一种模拟数据的方法，那就是今天试玩的 json-server</p>
+<p>安装命令（全局安装）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g json-server</span><br></pre></td></tr></table></figure>
+<p>create a json file，名字随便起个 db.json，里面装个示例数据。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;posts&quot;</span>: [</span><br><span class="line">    &#123; <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>, <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;json-server&quot;</span>, <span class="attr">&quot;author&quot;</span>: <span class="string">&quot;typicode&quot;</span> &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;comments&quot;</span>: [</span><br><span class="line">    &#123; <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>, <span class="attr">&quot;body&quot;</span>: <span class="string">&quot;some comment&quot;</span>, <span class="attr">&quot;postId&quot;</span>: <span class="number">1</span> &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;profile&quot;</span>: &#123; <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;typicode&quot;</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 db.json 相同文件目录下使用启动命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">json-server --watch db.json</span><br></pre></td></tr></table></figure>
+<p>设置响应延时</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">json-server --watch db.json --delay 2000</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/12/06/LearnExpress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/06/LearnExpress/" class="post-title-link" itemprop="url">初识 express</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-06 09:28:42" itemprop="dateCreated datePublished" datetime="2021-12-06T09:28:42Z">2021-12-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-15 07:30:50" itemprop="dateModified" datetime="2022-01-15T07:30:50Z">2022-01-15</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="前言">前言</h3>
+<p>虽说在下是 springboot 新手，但是作为前端接口调试而言，springboot 实在太过重量级。现在发现了一个作为测试服务器相当好用的玩意： NodeJs。话不多说，开搞。</p>
+<p>首先安装 nodejs ，百度一下，下载安装即可。</p>
+<p>新建文件夹，cd 进去，然后 <code>npm init --yes</code></p>
+<p>安装 express <code>npm i express</code></p>
+<h3 id="设置url-映射，并开启服务器监听">设置url 映射，并开启服务器监听</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1、引入 express</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、创建应用对象</span></span><br><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、创建路由规则</span></span><br><span class="line"><span class="comment">// request 是对请求报文的封装</span></span><br><span class="line"><span class="comment">// response 是对响应报文的封装</span></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>,<span class="function">(<span class="params">request,response</span>)=&gt;</span>&#123;</span><br><span class="line">  response.send(<span class="string">&#x27;Hello Express&#x27;</span>)</span><br><span class="line">  </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4、监听端口启动服务</span></span><br><span class="line">app.listen(<span class="number">8000</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;服务已经启动，8000 端口监听中 ...&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>将上述代码写入 helloExpress.js 文件中，通过命令 <code>node helloExpress.js</code> 即可启动服务器。<br>
+随后打开浏览器，地址栏输入 <code>localhost:8000</code> 显示页面。</p>
+<p>express 可以轻松地帮我们开启一个服务端。使用发现，当服务端代码发生改变，我们需要重新启动服务，有点麻烦，接下来介绍一个热重载工具。</p>
+<p>nodemon 可以帮助我们热重载服务端代码，安装命令 <code>npm i -g nodemon</code></p>
+<p>后面不再使用 <code>node helloExpress.js</code> 来启动，而是换成 <code>nodemon helloExpress.js</code> 来启动服务端程序。</p>
+<h3 id="处理跨域">处理跨域</h3>
+<p>既然开启了服务器，那就一定要提一下 CORS 跨域。</p>
+<p>跨域，意思是违反浏览器的同源策略。浏览器为了用户安全，在前端和服务器端使用不同的协议、端口、主机名进行通信时，会将 <code>response</code> 给 <code>block</code> 掉。</p>
+<p>CORS 是一个官方的标准，通过在服务器中设置响应头提供跨域服务。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这次使用的是 `app.all` 他表示 get/post/put/delete/patch 方法都可以进入到该 controller 中。</span></span><br><span class="line">app.all(<span class="string">&#x27;cross_origin_server&#x27;</span>,<span class="function">(<span class="params">request,response</span>)=&gt;</span>&#123;</span><br><span class="line">  response.setHeader(<span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>,<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">  <span class="keyword">let</span> data = &#123;</span><br><span class="line">    <span class="attr">greeting</span>:<span class="string">&#x27;hello! I have crossed origin&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  data = <span class="built_in">JSON</span>.stringify(data)</span><br><span class="line">  response.send(data)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面的 <code>url controller</code> 中通过设置响应头 <code>Access-Control-Allow-Origin</code> 为 <code>*</code> 实现跨域，<code>*</code> 的含义是对所有浏览器请求提供服务。</p>
+<p>常见的跨域相关响应头还有:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Headers: * </span><br><span class="line">Access-Control-Allow-Methods: * </span><br></pre></td></tr></table></figure>
+<p>它们设置的分别是允许发送自定义请求头，允许所有方法（默认只允许 get 和 post 跨域）跨域。</p>
+<h3 id="介绍基础概念">介绍基础概念</h3>
+<p>通过上面的例子，我们可以开启一个 express 服务器来做响应了，但是还不够，我们了解一些基础概念才能更好地使用它。</p>
+<h4 id="请求对象">请求对象</h4>
+<p>express 的请求对象是继承自 Http 请求对象的 IncomingMessage，我们下面介绍一下请求对象 request 的属性和方法，并稍做区分。</p>
+<p><strong>原 IncomingMessage 上的属性和方法：</strong></p>
+<ul>
+<li>request.method</li>
+<li>request.url</li>
+<li>request.headers</li>
+<li>request.ip</li>
+</ul>
+<p><strong>express 扩展的属性和方法</strong></p>
+<ul>
+<li>req.query 获取查询字符串的对象形式</li>
+<li>req.params 获取请求参数的对象形式</li>
+<li>req.body 获取请求体</li>
+</ul>
+<h4 id="响应对象">响应对象</h4>
+<p>express 的响应对象是继承自 Http 响应对象的 ServerResponse，我们也像稍作区分地介绍一下 response 的属性和方法。</p>
+<p><strong>原 ServerResponse 上的属性和方法：</strong></p>
+<ul>
+<li>response.statusCode = 200</li>
+<li>response.setHeader()</li>
+<li>response.end() 添加最后一次数据并结束响应</li>
+<li>response.write() 往缓冲区添加数据</li>
+</ul>
+<p><strong>express 扩展的属性和方法</strong></p>
+<ul>
+<li>res.send() 添加最后一次数据并结束响应（支持 buffer -&gt; Buffer.from()，自动 stringify，发送 html 文档，发送普通字符串）</li>
+<li>res.json() 添加一次数据，不会结束响应（自动 stringify）</li>
+<li>res.status() 设置 statusCode</li>
+<li>res.cookie(key,value[,config]) 发送 cookie</li>
+</ul>
+<h3 id="配套的数据存储方案">配套的数据存储方案</h3>
+<p>express 作为服务器，它的作用是处理请求，发出响应。</p>
+<p>在实际开发中，我们更多通过服务器来存储数据，下面介绍一下数据存储方案。</p>
+<ol>
+<li>使用 .json 文件存储 javascript 对象数据</li>
+<li>通过 nodejs 的 fs 模块对 json 文件进行读取和写入</li>
+<li>使用 promisify 封装 fs 的函数（readFile和writeFile）</li>
+</ol>
+<p>通过 db.js 封装文件读写操作</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;promisify&#125; = <span class="built_in">require</span>(<span class="string">&#x27;util&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> readFile = promisify(fs.readFile)</span><br><span class="line"><span class="keyword">const</span> writeFile = promisify(fs.whiteFile)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dbPath = path.join(__dirname,<span class="string">&#x27;./db.json&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//读取</span></span><br><span class="line"><span class="built_in">exports</span>.getDb = <span class="keyword">async</span> ()=&gt;&#123;</span><br><span class="line">  <span class="keyword">const</span> data = readFile(dbPath)</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(data)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//写入</span></span><br><span class="line"><span class="built_in">exports</span>.saveDb = <span class="keyword">async</span> (data)=&gt;&#123;</span><br><span class="line">  <span class="comment">//这里stringify的参数可以生成带缩进的json字符串</span></span><br><span class="line">  writeFile(dbPath,<span class="built_in">JSON</span>.stringify(data,<span class="literal">null</span>,<span class="string">&#x27;  &#x27;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/12/02/learnGit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/02/learnGit/" class="post-title-link" itemprop="url">学习 Git ——— 最基础的命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-02 11:30:17" itemprop="dateCreated datePublished" datetime="2021-12-02T11:30:17Z">2021-12-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-12 08:36:27" itemprop="dateModified" datetime="2022-01-12T08:36:27Z">2022-01-12</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="git-简介">git 简介</h3>
+<p>git 是一个分布式的版本控制软件，通过仓库管理文件，通过提交和回滚管理版本，可以更好地管理项目开发。</p>
+<p>git 本地仓库是一个隐藏的文件夹 <code>.git</code>，里面存放着每个版本中对应文件的完整快照。</p>
+<p>每次提交，git 都会新增一个版本，然后将修改过的文件完整地保存在该版本中。未被修改的则保存上一版本的引用。</p>
+<p>我们使用 git 通常是为了管理某个目录下的文件。这个被管理的目录我们称为 <code>工作区</code>，目录下的文件则为 <code>工作区的文件</code></p>
+<p>工作区的文件有 4 种状态：<code>未追踪、未修改、已修改、已暂存</code>。我们操作本地仓库的最终目的，就是让所有文件处在<code>未修改</code>状态，即工作区文件和本地仓库的最新版本保持一致。</p>
+<p>接下来我们来操作本地仓库。</p>
+<h3 id="从零开始的-git-使用">从零开始的 git 使用</h3>
+<p><strong>首先第一步，创建仓库</strong></p>
+<p>在需要 git 管理的目录下使用 <code>git init</code> 命令创建本地仓库。该命令会在当前目录下新建 <code>.git</code> 文件夹，这个就是我们的本地仓库。</p>
+<p><code>.git</code> 所处的目录就是工作区，工作区内所有层级下的文件都会被 git 管理。</p>
+<p><strong>然后第二步，将工作区内未追踪、已修改的文件添加进暂存区</strong></p>
+<p>将文件添加进 git 仓库之前，需要一个暂存的操作，此时使用 <code>git add .</code> 将目录下所有未追踪、已修改的文件添加到暂存区。</p>
+<p>也可以使用 <code>git add filename</code> 添加指定文件，实际操作中不常用。</p>
+<p><strong>最后第三步，将暂存区的文件放进仓库</strong></p>
+<p>执行 <code>git commit -m &quot;完成一次提交&quot;</code> 命令，会把已暂存、未修改的文件作为一个新的版本放进 git 仓库。</p>
+<p>已暂存的文件会在新的版本中以完整快照存储，未修改的文件则存储上一个版本的索引。</p>
+<p><strong>完成</strong></p>
+<p>使用上述的 3 条命令，我们完成了最简单的本地仓库创建，还有文件版本迭代。</p>
+<h3 id="状态命令">状态命令</h3>
+<p><strong>显示文件状态</strong></p>
+<p>除了操作文件，我们还需要获取文件的状态来指导我们接下来的操作。</p>
+<p>使用 <code>git status</code> 可以查看当前工作区的文件正处在什么状态。最开始状态呈红色显示，其中 ?? 代表未跟踪，M 代表已修改。</p>
+<p>如果使用了 <code>git add</code> 命令，则将<code>未跟踪、已修改</code>的文件加入暂存区，状态呈绿色显示。其中 A 代表已暂存<code>未跟踪</code>文件，M 代表已暂存<code>已修改</code>文件。</p>
+<p><code>未修改</code> 的文件不会显示。</p>
+<p>使用 <code>git status --short</code> 或 <code>git status -s</code> 来查看短格式。</p>
+<p><strong>显示版本记录</strong></p>
+<p>如果想查看当前仓库提交了多少个版本，使用 <code>git log</code> 可以查看提交信息，按 q 退出。</p>
+<p>提交信息包含了：版本的唯一标识 hash，提交的日期 date，提交的作者及邮箱 author，提交时的文本commit</p>
+<p><code>git log -2</code> 查看最新的两个版本</p>
+<p><code>git log --pretty=oneline</code> 查看短格式，只保留 hash 和 commit</p>
+<p><code>git log --pretty=</code></p>
+<p><strong>初始配置 git</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>三、首次提交时，进入项目根目录，初始化本地仓库</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> yourApp</span><br><span class="line">git init</span><br><span class="line">touch README.md</span><br><span class="line">git add README.md</span><br><span class="line">git commit -m <span class="string">&quot;first-commit&quot;</span></span><br><span class="line">git remote add origin 仓库地址（不加引号）</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<p>四、将本地文件提交到 github 或 gitee(码云)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add . // 将文件添加到本地文件缓存区</span><br><span class="line">git commit -m <span class="string">&#x27;注释&#x27;</span> // 将缓存区文件添加到本地仓库</span><br><span class="line">git remote add origin 仓库地址（不加双引号） // 链接远程仓库</span><br><span class="line">git push -u origin master // 将本地仓库文件同步到远程仓库</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -330,7 +597,7 @@ return Math.floor(Math.ramdon() * ( max-min+1 ))+min<br>
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-20 09:33:33" itemprop="dateModified" datetime="2021-11-20T09:33:33Z">2021-11-20</time>
+        <time title="修改时间：2022-01-06 06:56:19" itemprop="dateModified" datetime="2022-01-06T06:56:19Z">2022-01-06</time>
       </span>
 
   
@@ -341,14 +608,14 @@ return Math.floor(Math.ramdon() * ( max-min+1 ))+min<br>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>340</span>
+      <span>2.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -360,117 +627,41 @@ return Math.floor(Math.ramdon() * ( max-min+1 ))+min<br>
     
     <div class="post-body" itemprop="articleBody">
           <p>Promise 是 ES6 新增的规范，它是 JS 中进行异步编程的新解决方案，可以很好地解决异步编程中回调地狱问题，让代码更加优雅。</p>
-<p>JS 中常见的异步编程出现在各种请求、IO 和定时器中。比如数据库 IO，文件 IO，网络请求，定时器等。常见的有 NodeJs 中的 readFile，AJAX 请求，setTimeout 等。</p>
-<p>当我们调用这些异步函数时，由于我们无法准确得知函数何时具有返回值，因此通过 JS 顺序语句的执行是无法访问到函数结果的。这时我们的解决办法是给它们传入回调函数，当异步函数给出返回值时，通过调用回调函数，我们可以获取返回值并执行后面一系列操作，比如把返回值渲染到 DOM，把返回值写入文件，或者用返回值发起新一轮的网络请求。</p>
+<p>JS 中常见的异步编程出现在各种请求、IO 和定时器中。比如数据库 IO，文件 IO，网络请求，定时器等。常见的有 NodeJs 中的 readFile，浏览器的 AJAX 请求，setTimeout 等。</p>
+<p>当我们调用这些异步函数时，我们无法准确得知函数何时具有返回值，因此通过 JS 顺序语句的执行是无法访问到函数结果的。这时我们的解决办法是给它们传入回调函数，当异步函数给出返回值时，通过调用回调函数，我们可以获取返回值并执行后面一系列操作，比如把返回值渲染到 DOM，把返回值写入文件，或者用返回值发起新一轮的网络请求。</p>
 <p>在没有 Promise 时，我们的生活是怎么样的呢，下面给出例子。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/11/10/importantQuestion/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wanbaoxiaoyiyi">
-      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="这里是苏苏的小屋">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/10/importantQuestion/" class="post-title-link" itemprop="url">前端常见问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-10 09:14:56" itemprop="dateCreated datePublished" datetime="2021-11-10T09:14:56Z">2021-11-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-22 01:20:52" itemprop="dateModified" datetime="2021-11-22T01:20:52Z">2021-11-22</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>1、Vue 给标签绑定 key 属性的作用（第一层）<br>
-key 是虚拟 dom 的唯一标识。它的存在是在告诉 diff ,在更改前后它们是同一个DOM节点。<br>
-只有是同一个虚拟节点，才进行精细化比较，否则就是暴力删除旧的、插入新的。<br>
-当数据发生改变时，Vue 会根据新数据生成新的虚拟 dom，然后进行虚拟 dom 的新旧比较，规则如下：<br>
-如果新旧 VN 能匹配到相同 key，则比较内容。内容修改了，生成新的真实 dom 进行替换；内容没改，复用旧的真实 dom。<br>
-如果没有匹配到，则生成新的真实 dom 然后渲染到页面。<br>
-当页面使用 v-for 渲染时，使用 index 作为 key 会出现问题：<br>
-对数据数组进行逆序增加、逆序删除等操作时，会打乱 key 的顺序，使得后面新旧 VN 比较时，会出现频繁的真实 dom 替换现象，无法复用旧的真实 dom，虽然界面效果没有影响，但会造成效率问题。<br>
-如果模板中还携带了输入类 dom，则会出现错误复用的现象，对界面效果造成影响。</p>
-<p>第二层（diff算法）<br>
-Vue 在进行新旧节点比较时，首先通过patch来确定节点是否值得比较，通过比较 key,tag,input_type 等属性是否相同来决定是否进行精细化比较。</p>
-<p>2、说一下 Vue 双向数据绑定的原理。</p>
-<p>当旧列表的头一个节点 oldStartNode 与新列表的头一个节点 newStartNode 对比时 key 相同。那么旧列表的头指针 oldStartIndex 与新列表的头指针 newStartIndex 同时向后移动一位。</p>
-<p>当旧列表的最后一个节点 oldEndNode 与新列表的最后一个节点 newEndNode 对比时 key 相同。那么旧列表的尾指针 oldEndIndex 与新列表的尾指针 newEndIndex 同时向前移动一位。<br>
-当旧列表的头一个节点 oldStartNode 与新列表的最后一个节点 newEndNode 对比时 key 相同。那么旧列表的头指针 oldStartIndex 向后移动一位；新列表的尾指针 newEndIndex 向前移动一位。</p>
-<p>当旧列表的最后一个节点 oldEndNode 与新列表的头一个节点 newStartNode 对比时 key 相同。那么旧列表的尾指针 oldEndIndex 向前移动一位；新列表的头指针 newStartIndex 向后移动一位。</p>
-<p>React、Vue2、Vue3三种diff算法的思路解析：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6919376064833667080">https://juejin.cn/post/6919376064833667080</a><br>
-Vue2 diff源码解析：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6970960193181974559#comment">https://juejin.cn/post/6970960193181974559#comment</a></p>
-<p>vue2 diff的流程解析<br>
-当 Vue 检测到数据改变时，会调用 _update 方法，这个方法内部有一个 patch 函数，它会先用 sameVNode 判断新老节点是否为相同类型的节点，如果为 false 则直接销毁 oldVnode，渲染 newVnode。<br>
-如果判断为相同，则进入 patchVnode 方法。</p>
-<p>patchVnode 方法</p>
+<p>假如有3个异步任务，他们之间形成了依赖关系，每个异步任务的请求参数需要上一个异步任务的结果值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">getSomeData(params,<span class="function"><span class="keyword">function</span>(<span class="params">data,err</span>)</span>&#123;</span><br><span class="line">  getOtherData(data,<span class="function"><span class="keyword">function</span>(<span class="params">otherData,err</span>)</span>&#123;</span><br><span class="line">    getThirdData(otherData,<span class="function"><span class="keyword">function</span>(<span class="params">thirdData,err</span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;I have got the ThirdData&#x27;</span> + thirdData)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>可以看出，如果使用纯回调函数的方式完成这3个带依赖关系的异步任务，就会出现层层嵌套的书写格式。其中嵌套地异步任务越多，代码就会持续向右缩进，给我们阅读和维护造成影响。我们称这种书写格式为回调地狱</p>
+<p>那么 promise 是怎么完成上述过程的呢</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// promisify 是一个能将异步任务转变为 promise 风格的函数</span></span><br><span class="line"><span class="comment">// 这里是 async function 内的代码</span></span><br><span class="line"><span class="keyword">const</span> forSomeData = promisify(getSomeData)</span><br><span class="line"><span class="keyword">const</span> forOtherData = promisify(getOtherData)</span><br><span class="line"><span class="keyword">const</span> forThirdData = promisify(getThirdData)</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> someData = <span class="keyword">await</span> forSomeData(params)</span><br><span class="line">  <span class="keyword">const</span> otherData = <span class="keyword">await</span> forOtherData(someData)</span><br><span class="line">  <span class="keyword">const</span> thirdData = <span class="keyword">await</span> forThirdData(otherData)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;I have got the ThirdData&#x27;</span> + thirdData)</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.message)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了使用 promise，我们通常会将异步任务封装成 promise 风格的异步任务，然后通过 async 和 await 获取他们的值，这样我们的书写格式可以从原来层层的花括号嵌套，转变为线性的书写的格式。而且处理异常也十分容易。</p>
+<p>体验了 promise 的用法后，大家是不是开始对 promise 感兴趣了，接下来我们开始学习 promise，从最基础的概念开始说起。</p>
+<p>promise 是 javascript 异步编程的最流行的解决方案，它的三个特点是：异步指定回调函数，异常穿透，链式调用。</p>
+<p>promise 对象拥有 2 个重要的属性，一个是 promise 的状态，一个是 promise 的结果值。作为一个未完成的 promise 对象，它的状态为 <code>pending</code> ，它的结果值为 <code>null</code></p>
+<p>通过 Promise 构造函数我们可以创建一个 promise 对象：<code>new Promise(()=&gt;&#123;&#125;)</code></p>
+<p>Promise 构造函数接收一个函数作为参数，我们称这个函数为执行器函数：<code>executor</code></p>
+<p>执行器函数 <code>executor</code> 接收两个参数：<code>resolve</code> 和 <code>reject</code>。这是 Promise 构造函数的内部函数。其作用是修改 promise 的状态和结果值。</p>
+<p>因此创建 promise 对象时我们通常写成： <code>new Promise((resolve,reject)=&gt;&#123;&#125;)</code></p>
+<p>在执行器函数中，我们通常会书写异步任务的代码。</p>
+<p>在执行器函数中调用 <code>resolve(value)</code>，则将 promise 对象的状态由 <code>pending</code> 更改为 <code>resolved</code>，并设置结果值为 value</p>
+<p>在执行器函数中调用 <code>reject(reason)</code>，则将 promise 对象的状态由 <code>pending</code> 更改为 <code>rejected</code>，并设置结果值为 reason</p>
+<p>一个 promise 对象的状态只能变更一次，即从 <code>pending</code> 变更为 <code>resolved</code>，或者从 <code>pending</code> 变更为 <code>rejected</code></p>
+<p>promise 对象的结果值和状态是同时改变的，所以 promise 的结果值也只能变更一次</p>
+<p>我们可以通过 promise 对象的 then 方法设置回调函数，通过设置回调函数来获取异步任务的结果或失败的原因。</p>
+<p>then 方法接收两个参数： <code>onResolved</code> 和 <code>onRejected</code></p>
+<p>其中 <code>onResolved</code> 是成功的回调函数，我们通常写成 <code>(value)=&gt;&#123;&#125;</code></p>
+<p>其中 <code>onRejected</code> 是失败的回调函数，我们通常写成 <code>(reason)=&gt;&#123;&#125;</code></p>
+<p>因此使用 then 方法指定回调函数时，我们通常写成：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">p.then(<span class="function">(<span class="params">value</span>)=&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;,<span class="function">(<span class="params">reason</span>)=&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>then 方法会返回一个新的 promise 对象，不管是执行成功的回调，还是失败的回调，这个 promise 对象的状态和结果值，会根据其执行的回调函数的返回值来确定。</p>
+<p>假如 result 是回调函数的返回值</p>
+<ul>
+<li>result 是一个非 promise 对象，返回一个成功的 promise，结果值为 result</li>
+<li>result 是一个 promise 对象，返回一个 promise，其状态和结果值与 result 的状态和结果值相同</li>
+<li>在 then 方法中抛出了错误，返回一个失败的 promise，结果值为抛出的内容</li>
+</ul>
+<p>以上就是 promise 最核心的概念，是不是听得有些枯燥乏味。</p>
 
       
     </div>
@@ -528,7 +719,7 @@ Vue2 diff源码解析：<a target="_blank" rel="noopener" href="https://juejin.c
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-13 13:32:31" itemprop="dateModified" datetime="2021-11-13T13:32:31Z">2021-11-13</time>
+        <time title="修改时间：2022-01-04 01:08:53" itemprop="dateModified" datetime="2022-01-04T01:08:53Z">2022-01-04</time>
       </span>
 
   
@@ -1014,107 +1205,6 @@ key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【�
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/10/19/discussOfYgoCardProfiteer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wanbaoxiaoyiyi">
-      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="这里是苏苏的小屋">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/19/discussOfYgoCardProfiteer/" class="post-title-link" itemprop="url">详谈游戏王实卡集换社小程序寄存仓——实卡圈最大倒爷撕破了自己的面具</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-10-19 15:43:18" itemprop="dateCreated datePublished" datetime="2021-10-19T15:43:18Z">2021-10-19</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-04 05:32:30" itemprop="dateModified" datetime="2021-11-04T05:32:30Z">2021-11-04</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="前言">前言</h3>
-<p>圈里老人基本不用看别人的什么分析，但是圈里总还是些新人，毕竟<code>付叔叔（鹏鹏卡牌屋）</code>，<code>乐通（乐通天下，来来）</code>，<code>小豆丁（正版游戏王卡牌专门店）</code>这些乐色都有那么多月销量。所以还是开个贴细说下这玩意儿吧，哪怕能多帮到一个人也算是好的</p>
-<h3 id="先说说个人卖家">先说说个人卖家</h3>
-<div class="note info"><p>寄件</p>
-</div>
-<p>先说说作为散户卖家，给他们寄存，他们的可操作性吧</p>
-<p>从你寄出去卡的那一刻起，所有的主动权都从你的手中转移到了集换社的手中。</p>
-<p>寄过去卡，他可以告诉你你的卡损了他们不要，然后退给你一张损卡。你若是没拍封箱那集换社说什么就是什么。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/19/discussOfYgoCardProfiteer/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/10/09/learnVueAgain-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1239,8 +1329,8 @@ key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【�
 
 
 <div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-gift"></i>
   </span>
@@ -1252,14 +1342,14 @@ key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【�
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">73k</span>
+    <span title="站点总字数">77k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:06</span>
+    <span title="站点阅读时长">1:10</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

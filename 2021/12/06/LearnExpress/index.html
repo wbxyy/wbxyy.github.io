@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css" integrity="sha256-no0c5ccDODBwp+9hSmV5VvPpKwHCpbVzXHexIkupM6U=" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/config.min.js"></script>
+<meta name="description" content="前言 虽说在下是 springboot 新手，但是作为前端接口调试而言，springboot 实在太过重量级。现在发现了一个作为测试服务器相当好用的玩意： NodeJs。话不多说，开搞。 首先安装 nodejs ，百度一下，下载安装即可。 新建文件夹，cd 进去，然后 npm init --yes 安装 express npm i express 设置url 映射，并开启服务器监听 1234567">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识 express">
+<meta property="og:url" content="https://wbxyy.github.io/2021/12/06/LearnExpress/index.html">
+<meta property="og:site_name" content="这里是苏苏的小屋">
+<meta property="og:description" content="前言 虽说在下是 springboot 新手，但是作为前端接口调试而言，springboot 实在太过重量级。现在发现了一个作为测试服务器相当好用的玩意： NodeJs。话不多说，开搞。 首先安装 nodejs ，百度一下，下载安装即可。 新建文件夹，cd 进去，然后 npm init --yes 安装 express npm i express 设置url 映射，并开启服务器监听 1234567">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-06T09:28:42.000Z">
+<meta property="article:modified_time" content="2022-01-15T07:30:50.188Z">
+<meta property="article:author" content="wanbaoxiaoyiyi">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wbxyy.github.io/2021/12/06/LearnExpress/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wbxyy.github.io/2021/12/06/LearnExpress/","path":"2021/12/06/LearnExpress/","title":"初识 express"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>初识 express | 这里是苏苏的小屋</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?b7cf140e77c3362eecc3f9309c2791de"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">这里是苏苏的小屋</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">这里藏了条森蚺哦</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEurl-%E6%98%A0%E5%B0%84%EF%BC%8C%E5%B9%B6%E5%BC%80%E5%90%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E5%90%AC"><span class="nav-number">2.</span> <span class="nav-text">设置url 映射，并开启服务器监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">3.</span> <span class="nav-text">处理跨域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">4.</span> <span class="nav-text">介绍基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.1.</span> <span class="nav-text">请求对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.2.</span> <span class="nav-text">响应对象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E5%A5%97%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88"><span class="nav-number">5.</span> <span class="nav-text">配套的数据存储方案</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wanbaoxiaoyiyi"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wanbaoxiaoyiyi</p>
+  <div class="site-description" itemprop="description">王者的鼓动，现在就展现给你看</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/12/06/LearnExpress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初识 express
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-06 09:28:42" itemprop="dateCreated datePublished" datetime="2021-12-06T09:28:42Z">2021-12-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-15 07:30:50" itemprop="dateModified" datetime="2022-01-15T07:30:50Z">2022-01-15</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="前言">前言</h3>
+<p>虽说在下是 springboot 新手，但是作为前端接口调试而言，springboot 实在太过重量级。现在发现了一个作为测试服务器相当好用的玩意： NodeJs。话不多说，开搞。</p>
+<p>首先安装 nodejs ，百度一下，下载安装即可。</p>
+<p>新建文件夹，cd 进去，然后 <code>npm init --yes</code></p>
+<p>安装 express <code>npm i express</code></p>
+<h3 id="设置url-映射，并开启服务器监听">设置url 映射，并开启服务器监听</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1、引入 express</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、创建应用对象</span></span><br><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、创建路由规则</span></span><br><span class="line"><span class="comment">// request 是对请求报文的封装</span></span><br><span class="line"><span class="comment">// response 是对响应报文的封装</span></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>,<span class="function">(<span class="params">request,response</span>)=&gt;</span>&#123;</span><br><span class="line">  response.send(<span class="string">&#x27;Hello Express&#x27;</span>)</span><br><span class="line">  </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4、监听端口启动服务</span></span><br><span class="line">app.listen(<span class="number">8000</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;服务已经启动，8000 端口监听中 ...&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>将上述代码写入 helloExpress.js 文件中，通过命令 <code>node helloExpress.js</code> 即可启动服务器。<br>
+随后打开浏览器，地址栏输入 <code>localhost:8000</code> 显示页面。</p>
+<p>express 可以轻松地帮我们开启一个服务端。使用发现，当服务端代码发生改变，我们需要重新启动服务，有点麻烦，接下来介绍一个热重载工具。</p>
+<p>nodemon 可以帮助我们热重载服务端代码，安装命令 <code>npm i -g nodemon</code></p>
+<p>后面不再使用 <code>node helloExpress.js</code> 来启动，而是换成 <code>nodemon helloExpress.js</code> 来启动服务端程序。</p>
+<h3 id="处理跨域">处理跨域</h3>
+<p>既然开启了服务器，那就一定要提一下 CORS 跨域。</p>
+<p>跨域，意思是违反浏览器的同源策略。浏览器为了用户安全，在前端和服务器端使用不同的协议、端口、主机名进行通信时，会将 <code>response</code> 给 <code>block</code> 掉。</p>
+<p>CORS 是一个官方的标准，通过在服务器中设置响应头提供跨域服务。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这次使用的是 `app.all` 他表示 get/post/put/delete/patch 方法都可以进入到该 controller 中。</span></span><br><span class="line">app.all(<span class="string">&#x27;cross_origin_server&#x27;</span>,<span class="function">(<span class="params">request,response</span>)=&gt;</span>&#123;</span><br><span class="line">  response.setHeader(<span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>,<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">  <span class="keyword">let</span> data = &#123;</span><br><span class="line">    <span class="attr">greeting</span>:<span class="string">&#x27;hello! I have crossed origin&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  data = <span class="built_in">JSON</span>.stringify(data)</span><br><span class="line">  response.send(data)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面的 <code>url controller</code> 中通过设置响应头 <code>Access-Control-Allow-Origin</code> 为 <code>*</code> 实现跨域，<code>*</code> 的含义是对所有浏览器请求提供服务。</p>
+<p>常见的跨域相关响应头还有:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Headers: * </span><br><span class="line">Access-Control-Allow-Methods: * </span><br></pre></td></tr></table></figure>
+<p>它们设置的分别是允许发送自定义请求头，允许所有方法（默认只允许 get 和 post 跨域）跨域。</p>
+<h3 id="介绍基础概念">介绍基础概念</h3>
+<p>通过上面的例子，我们可以开启一个 express 服务器来做响应了，但是还不够，我们了解一些基础概念才能更好地使用它。</p>
+<h4 id="请求对象">请求对象</h4>
+<p>express 的请求对象是继承自 Http 请求对象的 IncomingMessage，我们下面介绍一下请求对象 request 的属性和方法，并稍做区分。</p>
+<p><strong>原 IncomingMessage 上的属性和方法：</strong></p>
+<ul>
+<li>request.method</li>
+<li>request.url</li>
+<li>request.headers</li>
+<li>request.ip</li>
+</ul>
+<p><strong>express 扩展的属性和方法</strong></p>
+<ul>
+<li>req.query 获取查询字符串的对象形式</li>
+<li>req.params 获取请求参数的对象形式</li>
+<li>req.body 获取请求体</li>
+</ul>
+<h4 id="响应对象">响应对象</h4>
+<p>express 的响应对象是继承自 Http 响应对象的 ServerResponse，我们也像稍作区分地介绍一下 response 的属性和方法。</p>
+<p><strong>原 ServerResponse 上的属性和方法：</strong></p>
+<ul>
+<li>response.statusCode = 200</li>
+<li>response.setHeader()</li>
+<li>response.end() 添加最后一次数据并结束响应</li>
+<li>response.write() 往缓冲区添加数据</li>
+</ul>
+<p><strong>express 扩展的属性和方法</strong></p>
+<ul>
+<li>res.send() 添加最后一次数据并结束响应（支持 buffer -&gt; Buffer.from()，自动 stringify，发送 html 文档，发送普通字符串）</li>
+<li>res.json() 添加一次数据，不会结束响应（自动 stringify）</li>
+<li>res.status() 设置 statusCode</li>
+<li>res.cookie(key,value[,config]) 发送 cookie</li>
+</ul>
+<h3 id="配套的数据存储方案">配套的数据存储方案</h3>
+<p>express 作为服务器，它的作用是处理请求，发出响应。</p>
+<p>在实际开发中，我们更多通过服务器来存储数据，下面介绍一下数据存储方案。</p>
+<ol>
+<li>使用 .json 文件存储 javascript 对象数据</li>
+<li>通过 nodejs 的 fs 模块对 json 文件进行读取和写入</li>
+<li>使用 promisify 封装 fs 的函数（readFile和writeFile）</li>
+</ol>
+<p>通过 db.js 封装文件读写操作</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;promisify&#125; = <span class="built_in">require</span>(<span class="string">&#x27;util&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> readFile = promisify(fs.readFile)</span><br><span class="line"><span class="keyword">const</span> writeFile = promisify(fs.whiteFile)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dbPath = path.join(__dirname,<span class="string">&#x27;./db.json&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//读取</span></span><br><span class="line"><span class="built_in">exports</span>.getDb = <span class="keyword">async</span> ()=&gt;&#123;</span><br><span class="line">  <span class="keyword">const</span> data = readFile(dbPath)</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(data)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//写入</span></span><br><span class="line"><span class="built_in">exports</span>.saveDb = <span class="keyword">async</span> (data)=&gt;&#123;</span><br><span class="line">  <span class="comment">//这里stringify的参数可以生成带缩进的json字符串</span></span><br><span class="line">  writeFile(dbPath,<span class="built_in">JSON</span>.stringify(data,<span class="literal">null</span>,<span class="string">&#x27;  &#x27;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/02/learnGit/" rel="prev" title="学习 Git ——— 最基础的命令">
+                  <i class="fa fa-chevron-left"></i> 学习 Git ——— 最基础的命令
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/07/learnJsonServer/" rel="next" title="试玩一个 Json 服务器 —— json-server">
+                  试玩一个 Json 服务器 —— json-server <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-gift"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanbaoxiaoyiyi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">77k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:10</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/bookmark.min.js"></script>
+
+  
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js","integrity":"sha256-sVAx+v/Q7v0Q2xm5vN7h5ccSna6gaLREhG9sF8pKT6I="}}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/tags/mermaid.min.js"></script>
+
+  <script class="next-config" data-name="nprogress" type="application/json">{"enable":true,"spinner":true}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/nprogress.min.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

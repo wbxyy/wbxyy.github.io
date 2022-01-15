@@ -22,25 +22,28 @@
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/config.min.js"></script>
-<meta name="description" content="王者的鼓动，现在就展现给你看">
-<meta property="og:type" content="website">
-<meta property="og:title" content="这里是苏苏的小屋">
-<meta property="og:url" content="https://wbxyy.github.io/tags/%E5%89%8D%E7%AB%AF%E9%97%AE%E9%A2%98/index.html">
+<meta name="description" content="当我们前端需要数据调试的时候，除了使用 mock，或者通过 node express 开启服务监听返回数据外，还有一种模拟数据的方法，那就是今天试玩的 json-server 安装命令（全局安装） 1npm install -g json-server create a json file，名字随便起个 db.json，里面装个示例数据。 123456789&amp;#123;  &quot;posts&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="试玩一个 Json 服务器 —— json-server">
+<meta property="og:url" content="https://wbxyy.github.io/2021/12/07/learnJsonServer/index.html">
 <meta property="og:site_name" content="这里是苏苏的小屋">
-<meta property="og:description" content="王者的鼓动，现在就展现给你看">
+<meta property="og:description" content="当我们前端需要数据调试的时候，除了使用 mock，或者通过 node express 开启服务监听返回数据外，还有一种模拟数据的方法，那就是今天试玩的 json-server 安装命令（全局安装） 1npm install -g json-server create a json file，名字随便起个 db.json，里面装个示例数据。 123456789&amp;#123;  &quot;posts&amp;">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-07T11:24:56.000Z">
+<meta property="article:modified_time" content="2021-12-07T06:45:09.868Z">
 <meta property="article:author" content="wanbaoxiaoyiyi">
+<meta property="article:tag" content="学习">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://wbxyy.github.io/tags/%E5%89%8D%E7%AB%AF%E9%97%AE%E9%A2%98/">
+<link rel="canonical" href="https://wbxyy.github.io/2021/12/07/learnJsonServer/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"tags/前端问题/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wbxyy.github.io/2021/12/07/learnJsonServer/","path":"2021/12/07/learnJsonServer/","title":"试玩一个 Json 服务器 —— json-server"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>标签: 前端问题 | 这里是苏苏的小屋</title>
+<title>试玩一个 Json 服务器 —— json-server | 这里是苏苏的小屋</title>
   
 
   <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/analytics/baidu-analytics.min.js"></script>
@@ -143,7 +146,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -194,50 +197,110 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">前端问题
-          <small>标签</small>
-        </h2>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/12/07/learnJsonServer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          试玩一个 Json 服务器 —— json-server
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+
+      <time title="创建时间：2021-12-07 11:24:56 / 修改时间：06:45:09" itemprop="dateCreated datePublished" datetime="2021-12-07T11:24:56Z">2021-12-07</time>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>582</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>当我们前端需要数据调试的时候，除了使用 mock，或者通过 node express 开启服务监听返回数据外，还有一种模拟数据的方法，那就是今天试玩的 json-server</p>
+<p>安装命令（全局安装）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g json-server</span><br></pre></td></tr></table></figure>
+<p>create a json file，名字随便起个 db.json，里面装个示例数据。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;posts&quot;</span>: [</span><br><span class="line">    &#123; <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>, <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;json-server&quot;</span>, <span class="attr">&quot;author&quot;</span>: <span class="string">&quot;typicode&quot;</span> &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;comments&quot;</span>: [</span><br><span class="line">    &#123; <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>, <span class="attr">&quot;body&quot;</span>: <span class="string">&quot;some comment&quot;</span>, <span class="attr">&quot;postId&quot;</span>: <span class="number">1</span> &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;profile&quot;</span>: &#123; <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;typicode&quot;</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 db.json 相同文件目录下使用启动命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">json-server --watch db.json</span><br></pre></td></tr></table></figure>
+<p>设置响应延时</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">json-server --watch db.json --delay 2000</span><br></pre></td></tr></table></figure>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-11-10T09:14:56Z"
-              content="2021-11-10">
-          11-10
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/11/10/importantQuestion/" itemprop="url">
-            <span itemprop="name">前端常见问题</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 学习</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/06/LearnExpress/" rel="prev" title="初识 express">
+                  <i class="fa fa-chevron-left"></i> 初识 express
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 </div>
   </main>
@@ -247,8 +310,8 @@
 
 
 <div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-gift"></i>
   </span>
@@ -260,14 +323,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">73k</span>
+    <span title="站点总字数">77k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:06</span>
+    <span title="站点阅读时长">1:10</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
