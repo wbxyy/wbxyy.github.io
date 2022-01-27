@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -195,6 +195,140 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2022/01/27/dockerMysql8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/27/dockerMysql8/" class="post-title-link" itemprop="url">在学习环境中 如何优雅地启动 mysql8 的 docker 镜像</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-27 15:35:23 / 修改时间：12:03:45" itemprop="dateCreated datePublished" datetime="2022-01-27T15:35:23Z">2022-01-27</time>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="前言">前言</h3>
+<p>直接在 win10 上安装 mysql 其实不怎么优雅，毕竟要携带许多依赖环境。既然学了 docker，不用怎么行呢，接下来探讨如何用 docker 启动一个学习用的 mysql</p>
+<h3 id="环境准备">环境准备</h3>
+<p>操作系统：win10<br>
+Docker版本：基于 wsl2 的 docker-desktop v19.03.13<br>
+docker-compose版本：1.27.4</p>
+<h3 id="目录结构">目录结构</h3>
+<p>.<br>
+├── config<br>
+│   ├── master.cnf<br>
+│<br>
+├── mysql-volumes<br>
+│   ├── data<br>
+│   ├── logs<br>
+│   ├── conf<br>
+├── .env<br>
+└── docker-compose.yml</p>
+<h3 id="配置">配置</h3>
+<ol>
+<li>修改 <code>.env</code> 文件</li>
+</ol>
+<p>该文件为 docker-compose.yml 提供变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># default environment arguments for docker-compose.yml</span><br><span class="line"># set master volumes dir</span><br><span class="line">MASTER_DATA=./mysql-volumes/data/master</span><br><span class="line">MASTER_LOGS=./mysql-volumes/logs/master</span><br><span class="line">MASTER_CONF=./mysql-volumes/conf/master</span><br><span class="line"></span><br><span class="line"># set master root password</span><br><span class="line">MASTER_PASSWD=P@ssw0rd</span><br></pre></td></tr></table></figure>
+<ul>
+<li>MASTER_DATA 是挂载到宿主机上的数据目录</li>
+<li>MASTER_LOGS 是挂载到宿主机上的日志目录</li>
+<li>MASTER_CONF 是挂载到宿主机上的配置目录</li>
+</ul>
+<ol start="2">
+<li>修改 mysql 配置文件 master.cnf</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">max_connections = 2000</span><br><span class="line">default-time_zone=&#x27;+8:00&#x27;</span><br><span class="line"></span><br><span class="line">sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION</span><br><span class="line"></span><br><span class="line">default_authentication_plugin = &#x27;mysql_native_password&#x27;  #更改加密方式</span><br><span class="line"></span><br><span class="line">[client]</span><br><span class="line">default-character-set = utf8mb4</span><br></pre></td></tr></table></figure>
+<p>修改完后，放在容器挂载的配置目录中，并设置成<strong>只读</strong>： <code>./mysql-volumes/conf/master/master.cnf</code></p>
+<ol start="3">
+<li>配置 docker-compose.yml</li>
+</ol>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">    <span class="attr">mysql:</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">registry.cn-shenzhen.aliyuncs.com/sugaral/mysql:8.0.20</span>  <span class="comment"># 自行选择 mysql 镜像</span></span><br><span class="line">        <span class="attr">container_name:</span> <span class="string">mysql</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="number">3306</span><span class="string">:3306</span></span><br><span class="line">            </span><br><span class="line">        <span class="attr">environment:</span></span><br><span class="line">            <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="attr">MYSQL_DATABASE:</span> <span class="string">my_db_1</span></span><br><span class="line">            <span class="attr">MYSQL_USER:</span> <span class="string">sugar</span> <span class="comment"># mysql 默认已有 root 用户，该属性是创建一个 root 以外的新用户</span></span><br><span class="line">            <span class="attr">MYSQL_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="comment">#MYSQL_ROOT_HOST: &#x27;%&#x27; # 远程连接通配符白名单，仅限本机使用则无需开启    </span></span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">        <span class="attr">command:</span> </span><br><span class="line">            <span class="comment"># yml 注释反人类，真的反人类，别吐槽注释位置</span></span><br><span class="line">            <span class="comment"># 为了防止出现同时存在大小写库表，这里设置表名在磁盘里以小写存储，只能配置在启动项里</span></span><br><span class="line">            <span class="comment"># 除了表明大小写设置外，后续的既可以配置在启动项，也能配置在 .cnf 文件中</span></span><br><span class="line">            <span class="comment"># 旧客户端不支持新的用户认证方式，为了照顾它们这里修改为旧方式密码加密</span></span><br><span class="line">            <span class="comment"># 默认的 timestamp 规则让人挠头，而且不同版本也不一样，这个选项让 timestamp 重归正常，和其他数据类型一样使用，如 dateTime </span></span><br><span class="line">            <span class="string">--lower_case_table_names=1</span></span><br><span class="line">            <span class="string">--default-authentication-plugin=mysql_native_password</span> </span><br><span class="line">            <span class="string">--character_set_server=utf8mb4</span></span><br><span class="line">            <span class="string">--collation-server=utf8mb4_general_ci</span></span><br><span class="line">            </span><br><span class="line">        <span class="attr">volumes:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_DATA&#125;:/var/lib/mysql</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_CONF&#125;:/etc/mysql/conf.d</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_LOGS&#125;:/var/log/mysql</span></span><br></pre></td></tr></table></figure>
+<h3 id="启动">启动</h3>
+<p>在 docker-compose.yml 文件夹下进入 powershell</p>
+<p>然后使用命令 <code>docker-compose up</code> 启动 mysql</p>
+<p>通过界面应用或者 docker 命令行可以进入容器内部调试 mysql</p>
+<h3 id="以下是一些方便调试的-sql-语句：">以下是一些方便调试的 sql 语句：</h3>
+<ol>
+<li>查看 mysql 编码设置</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;char%&#x27;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>获取 mysql 数据存储点</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;%data%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>查看数据库表名大小写敏感状态</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> variables <span class="keyword">like</span> <span class="string">&#x27;%lower_case%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -323,7 +457,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-15 07:30:50" itemprop="dateModified" datetime="2022-01-15T07:30:50Z">2022-01-15</time>
+        <time title="修改时间：2022-01-27 07:34:45" itemprop="dateModified" datetime="2022-01-27T07:34:45Z">2022-01-27</time>
       </span>
 
   
@@ -334,14 +468,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.8k</span>
+      <span>5.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -369,15 +503,39 @@
 <p>跨域，意思是违反浏览器的同源策略。浏览器为了用户安全，在前端和服务器端使用不同的协议、端口、主机名进行通信时，会将 <code>response</code> 给 <code>block</code> 掉。</p>
 <p>CORS 是一个官方的标准，通过在服务器中设置响应头提供跨域服务。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这次使用的是 `app.all` 他表示 get/post/put/delete/patch 方法都可以进入到该 controller 中。</span></span><br><span class="line">app.all(<span class="string">&#x27;cross_origin_server&#x27;</span>,<span class="function">(<span class="params">request,response</span>)=&gt;</span>&#123;</span><br><span class="line">  response.setHeader(<span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>,<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">  <span class="keyword">let</span> data = &#123;</span><br><span class="line">    <span class="attr">greeting</span>:<span class="string">&#x27;hello! I have crossed origin&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  data = <span class="built_in">JSON</span>.stringify(data)</span><br><span class="line">  response.send(data)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>上面的 <code>url controller</code> 中通过设置响应头 <code>Access-Control-Allow-Origin</code> 为 <code>*</code> 实现跨域，<code>*</code> 的含义是对所有浏览器请求提供服务。</p>
-<p>常见的跨域相关响应头还有:</p>
+<p>上面的 <code>url controller</code> 中通过设置响应头 <code>Access-Control-Allow-Origin=*</code> 实现跨域，<code>*</code> 的含义是对所有浏览器请求提供服务。<br>
+但是默认情况下，该响应头只会开放简单请求的跨域，即满足：</p>
+<ul>
+<li>请求方法为 GET、POST、HEAD 中的三种</li>
+<li>请求头不能超出预置的 9 种请求头</li>
+</ul>
+<p>如果想让 PUT、PATCH、DELETE 等请求方法也能跨域，或者在自定义请求头时跨域，需要设置如下两个 CORS 响应头</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Headers: * </span><br><span class="line">Access-Control-Allow-Methods: * </span><br></pre></td></tr></table></figure>
 <p>它们设置的分别是允许发送自定义请求头，允许所有方法（默认只允许 get 和 post 跨域）跨域。</p>
+<p>最后告诉大家一个好消息，有个 express 中间件帮我们解决了以上问题。<br>
+<code>npm i cors</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">&#x27;cors&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//...some initialize code</span></span><br><span class="line"></span><br><span class="line">app.use(cors())</span><br></pre></td></tr></table></figure>
+<h3 id="获取请求参数、查询字符串、请求体">获取请求参数、查询字符串、请求体</h3>
+<p>服务器端要完成有效的响应，就需要解析和处理请求过来的数据。</p>
+<p>常见的请求数据有三种：</p>
+<ul>
+<li>在 url 地址上的请求参数，我们叫 param</li>
+<li>在 ? 后面的查询字符串，我们叫 query 或 queryString</li>
+<li>请求体的数据，body</li>
+</ul>
+<p>获取 param 请求参数，我们通过在请求 url 上设置<strong>可变路径</strong>来捕获，然后使用 req.params 获取</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/userInfo/:id&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.params.id)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>获取查询字符串，使用 req.query 来获取</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/userInfo&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.query)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>获取请求体，这里需要用到内置的中间件 express.json() 还有 express.urlencoded()</p>
+<p>根据需要配置这 2 个中间件，一起配置也是没有冲突的。</p>
+<p>接着通过 req.body 获取请求体</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.use(express.json())</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">app.use(express.urlencoded())</span><br><span class="line">app.post(<span class="string">&#x27;/addUser&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.body)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h3 id="介绍基础概念">介绍基础概念</h3>
 <p>通过上面的例子，我们可以开启一个 express 服务器来做响应了，但是还不够，我们了解一些基础概念才能更好地使用它。</p>
 <h4 id="请求对象">请求对象</h4>
-<p>express 的请求对象是继承自 Http 请求对象的 IncomingMessage，我们下面介绍一下请求对象 request 的属性和方法，并稍做区分。</p>
-<p><strong>原 IncomingMessage 上的属性和方法：</strong></p>
+<p>express 的请求对象是对内置模块 http 的 IncomingMessage 进一步封装，我们下面介绍一下请求对象 request 的属性和方法，并稍做区分。</p>
+<p><strong>原内置模块 http 上的 IncomingMessage 的属性和方法：</strong></p>
 <ul>
 <li>request.method</li>
 <li>request.url</li>
@@ -388,11 +546,11 @@
 <ul>
 <li>req.query 获取查询字符串的对象形式</li>
 <li>req.params 获取请求参数的对象形式</li>
-<li>req.body 获取请求体</li>
+<li>req.body 获取请求体(只有在使用请求体解析中间件时才有)</li>
 </ul>
 <h4 id="响应对象">响应对象</h4>
-<p>express 的响应对象是继承自 Http 响应对象的 ServerResponse，我们也像稍作区分地介绍一下 response 的属性和方法。</p>
-<p><strong>原 ServerResponse 上的属性和方法：</strong></p>
+<p>express 的响应对象也是对内置模块 http 的 ServerResponse 进一步封装，我们也像稍作区分地介绍一下 response 的属性和方法。</p>
+<p><strong>原内置模块 http 上的 ServerResponse 的属性和方法：</strong></p>
 <ul>
 <li>response.statusCode = 200</li>
 <li>response.setHeader()</li>
@@ -401,7 +559,7 @@
 </ul>
 <p><strong>express 扩展的属性和方法</strong></p>
 <ul>
-<li>res.send() 添加最后一次数据并结束响应（支持 buffer -&gt; Buffer.from()，自动 stringify，发送 html 文档，发送普通字符串）</li>
+<li>res.send() 添加最后一次数据并结束响应（支持 buffer -&gt; Buffer.from()，json 的自动 stringify，发送 html 文档，发送普通字符串）</li>
 <li>res.json() 添加一次数据，不会结束响应（自动 stringify）</li>
 <li>res.status() 设置 statusCode</li>
 <li>res.cookie(key,value[,config]) 发送 cookie</li>
@@ -416,6 +574,52 @@
 </ol>
 <p>通过 db.js 封装文件读写操作</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;promisify&#125; = <span class="built_in">require</span>(<span class="string">&#x27;util&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> readFile = promisify(fs.readFile)</span><br><span class="line"><span class="keyword">const</span> writeFile = promisify(fs.whiteFile)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dbPath = path.join(__dirname,<span class="string">&#x27;./db.json&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//读取</span></span><br><span class="line"><span class="built_in">exports</span>.getDb = <span class="keyword">async</span> ()=&gt;&#123;</span><br><span class="line">  <span class="keyword">const</span> data = readFile(dbPath)</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(data)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//写入</span></span><br><span class="line"><span class="built_in">exports</span>.saveDb = <span class="keyword">async</span> (data)=&gt;&#123;</span><br><span class="line">  <span class="comment">//这里stringify的参数可以生成带缩进的json字符串</span></span><br><span class="line">  writeFile(dbPath,<span class="built_in">JSON</span>.stringify(data,<span class="literal">null</span>,<span class="string">&#x27;  &#x27;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="路由模块">路由模块</h3>
+<p>我们目前为止都是在 app 实例上绑定请求处理函数，如果接口变多，我们的 server.js 文件会越来越大，浏览和修改都变得不方便，如何将我们的请求处理函数模块化呢。</p>
+<p>我们可以通过 express.Router() 创建路由模块，它就相当于 app 的小弟。</p>
+<ol>
+<li>将我们的接口按业务做区分，分成多个 .js 路由模块文件</li>
+<li>在这些路由模块文件中，使用 express.Router() 创建路由实例 router。</li>
+<li>在 router 上绑定请求处理函数</li>
+<li>通过 module.exports 导出路由实例 router</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里是路由模块，比如是 userRouter.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> userRouter = express.Router()</span><br><span class="line"></span><br><span class="line">userRouter.get(<span class="string">&#x27;/getUserInfo&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">//查 user 数据并发送</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = userRouter</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里是 app 实例所处文件，比如是 server.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(express)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过模块的方式导入路由</span></span><br><span class="line"><span class="keyword">const</span> userRouter = <span class="built_in">require</span>(<span class="string">&#x27;./userRouter&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将路由当作中间件来加载，我们的 app 就拥有了该路由的所有url映射。 </span></span><br><span class="line">app.use(userRouter)</span><br><span class="line"></span><br><span class="line"><span class="comment">//... 其他代码</span></span><br></pre></td></tr></table></figure>
+<p>这样，我们就可以把 API 接口拆分到不同的文件中管理，是不是很方便呢。</p>
+<h3 id="中间件">中间件</h3>
+<p>在前面的案例中，无论是解决请求体，还是解决跨域问题，我们都使用到了中间件。</p>
+<p>中间件是什么呢？中间件是一个个处理函数，多个中间件函数和路由函数之间共享同一组 request 和 response 对象。</p>
+<p>如同废水处理厂处理废水时，需要将废水经过多个处理环节进行处理一样。我们的服务器得到请求后，也是能够分多个阶段来处理数据，中间件既能挂载数据留给下游的阶段，也能集中处理数据，或者起到拦截器或路由守卫的作用，这都取决于你的函数如何定义。</p>
+<p>中间件必须接收 3 个参数：request,response,next<br>
+比如下面这个中间件函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> middleware = <span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;有人来了&#x27;</span>)</span><br><span class="line">  next()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们有如下方式使用它</p>
+<p>通过 app.use 将其作为全局中间件。这样所有的请求进来时，都会优先执行中间件函数，然后再做路由匹配。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.use(middleware)</span><br><span class="line">app.get(<span class="string">&#x27;/userInfo&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">//...获取用户信息并发送</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>作为路由函数的形参，将其作为局部中间件。只有匹配到该路由时，才会执行中间件函数，然后才到路由函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/userInfo&#x27;</span>,middleware,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">//...获取用户信息并发送</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果想使用多个中间件，可以这样用喔</span></span><br><span class="line">app.get(<span class="string">&#x27;/userInfo&#x27;</span>,mw1,mw2,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">//...获取用户信息并发送</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>中间件的使用注意事项：</p>
+<ol>
+<li>中间件必须主动调用 next() 转交控制权。如果不转交控制权，就不会往下走。</li>
+<li>中间件必须配置在所有路由函数的前面，才能起作用。这是有顺序要求的。</li>
+</ol>
+<h3 id="错误级别的中间件">错误级别的中间件</h3>
+<p>在讲错误级别中间件之前，先看下官方定义的中间件分类：</p>
+<ul>
+<li>应用级别中间件：绑定在 app 上的中间件</li>
+<li>路由级别中间件：绑定在 router 上的中间件</li>
+<li>错误级别中间件：特殊中间件，要配置在所有路由函数之后。</li>
+<li>内置中间件：在 express 对象上的中间件</li>
+<li>第三方中间件：需要 npm install 的中间件</li>
+</ul>
+<p>不管怎么分类，其实它们的用法都是一样的，但唯独错误级别中间件不同。</p>
+<p>我们的路由处理函数，或者中间件函数，在执行发生错误时，会直接崩溃掉。为了防止崩溃，我们通常需要使用 try…catch… 语句来捕获错误。</p>
+<p>但是这么多的路由处理函数，这么多的中间件，每一个都去 try…catch… 未免太苦工了。</p>
+<p>为此，错误级别中间件油然而生，它专门用来捕获我们整个项目中发生的异常错误，从而防止项目异常崩溃。</p>
+<p>它必须接收 4 个参数：err,request,response,next，并且它需要放在所有中间件函数和路由函数的后面。</p>
+<p>当我们的路由处理函数和中间件函数发生错误时，不需要 try…catch… , 会直接跳到错误级别中间件做集中处理。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err,req,res,next</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err.message)</span><br><span class="line">  res.send(<span class="string">&#x27;Error:&#x27;</span> + err.message)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1197,126 +1401,6 @@ key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【�
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/10/09/learnVueAgain-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wanbaoxiaoyiyi">
-      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="这里是苏苏的小屋">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/09/learnVueAgain-1/" class="post-title-link" itemprop="url">Vue2 第一弹 —— 模板语法、数据绑定、计算属性、条件渲染</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-10-09 15:15:46" itemprop="dateCreated datePublished" datetime="2021-10-09T15:15:46Z">2021-10-09</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-16 01:21:31" itemprop="dateModified" datetime="2021-11-16T01:21:31Z">2021-11-16</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1>001 —— 初识 Vue</h1>
-<h2 id="vue">vue</h2>
-<p><strong>查看 @vue/cli 版本，确保 @vue/cli 版本在 4.5.0 以上</strong><br>
-<code>vue --version</code><br>
-<strong>安装或升级你的 @vue/cli （全局覆盖安装）</strong><br>
-<code>npm install -g @vue/cli</code><br>
-<strong>创建</strong><br>
-<code>vue create xxxx</code><br>
-<strong>启动</strong><br>
-<code>cd xxxx</code><br>
-<code>npm run serve</code></p>
-<h4 id="使用方法">使用方法</h4>
-<ol>
-<li>准备好一个容器</li>
-<li>创建 Vue 实例。</li>
-<li>el 用于指定当前 Vue 实例为哪个容器服务，值通常为 css 选择器字符串。</li>
-<li>data 用于存储数据，数据供 el 所指定的容器去使用，值我们暂时写成一个对象.</li>
-</ol>
-<h4 id="详细解答">详细解答</h4>
-<pre><code>1. 想让 Vue 工作，就必须创建一个 Vue 实例，且传入一个配置对象；
-2. root 容器里的代码依然符合 html 规范，只不过混入了一些特殊的 Vue 语法；
-3. root 容器里的代码被称为 [ Vue 模板 ]；
-4. Vue 实例和容器是一一对应的；
-5. 真实开发中只有一个 Vue 实例，并且会配合着组件一起使用；
-6. `&#123;&#123;xxx&#125;&#125;` 中的 xxx 要写 js 表达式，且 xxx 可以自动读取到 data 中的所有属性；
-7. 一旦 data 中的数据发生改变，那么模板中用到该数据的地方会自动更新；
-</code></pre>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/09/learnVueAgain-1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -1342,14 +1426,14 @@ key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【�
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">77k</span>
+    <span title="站点总字数">82k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:10</span>
+    <span title="站点阅读时长">1:15</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
