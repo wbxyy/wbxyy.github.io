@@ -227,10 +227,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-01-27 15:35:23 / 修改时间：12:04:55" itemprop="dateCreated datePublished" datetime="2022-01-27T15:35:23Z">2022-01-27</time>
+      <time title="创建时间：2022-01-27 15:35:23" itemprop="dateCreated datePublished" datetime="2022-01-27T15:35:23Z">2022-01-27</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-28 01:10:56" itemprop="dateModified" datetime="2022-01-28T01:10:56Z">2022-01-28</time>
+      </span>
 
   
       </div>
@@ -275,44 +281,14 @@ docker-compose版本：1.27.4</p>
 │   ├── conf<br>
 ├── .env<br>
 └── docker-compose.yml</p>
-<h3 id="配置">配置</h3>
-<ol>
-<li>修改 <code>.env</code> 文件</li>
-</ol>
-<p>该文件为 docker-compose.yml 提供变量</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># default environment arguments for docker-compose.yml</span><br><span class="line"># set master volumes dir</span><br><span class="line">MASTER_DATA=./mysql-volumes/data/master</span><br><span class="line">MASTER_LOGS=./mysql-volumes/logs/master</span><br><span class="line">MASTER_CONF=./mysql-volumes/conf/master</span><br><span class="line"></span><br><span class="line"># set master root password</span><br><span class="line">MASTER_PASSWD=P@ssw0rd</span><br></pre></td></tr></table></figure>
-<ul>
-<li>MASTER_DATA 是挂载到宿主机上的数据目录</li>
-<li>MASTER_LOGS 是挂载到宿主机上的日志目录</li>
-<li>MASTER_CONF 是挂载到宿主机上的配置目录</li>
-</ul>
-<ol start="2">
-<li>修改 mysql 配置文件 master.cnf</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">max_connections = 2000</span><br><span class="line">default-time_zone=&#x27;+8:00&#x27;</span><br><span class="line"></span><br><span class="line">sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION</span><br><span class="line"></span><br><span class="line">default_authentication_plugin = &#x27;mysql_native_password&#x27;  #更改加密方式</span><br><span class="line"></span><br><span class="line">[client]</span><br><span class="line">default-character-set = utf8mb4</span><br></pre></td></tr></table></figure>
-<p>修改完后，放在容器挂载的配置目录中，并设置成<strong>只读</strong>： <code>./mysql-volumes/conf/master/master.cnf</code></p>
-<ol start="3">
-<li>配置 docker-compose.yml</li>
-</ol>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">    <span class="attr">mysql:</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">registry.cn-shenzhen.aliyuncs.com/sugaral/mysql:8.0.20</span>  <span class="comment"># 自行选择 mysql 镜像</span></span><br><span class="line">        <span class="attr">container_name:</span> <span class="string">mysql</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="number">3306</span><span class="string">:3306</span></span><br><span class="line">            </span><br><span class="line">        <span class="attr">environment:</span></span><br><span class="line">            <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="attr">MYSQL_DATABASE:</span> <span class="string">my_db_1</span></span><br><span class="line">            <span class="attr">MYSQL_USER:</span> <span class="string">sugar</span> <span class="comment"># mysql 默认已有 root 用户，该属性是创建一个 root 以外的新用户</span></span><br><span class="line">            <span class="attr">MYSQL_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="comment">#MYSQL_ROOT_HOST: &#x27;%&#x27; # 远程连接通配符白名单，仅限本机使用则无需开启    </span></span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">        <span class="attr">command:</span> </span><br><span class="line">            <span class="comment"># yml 注释反人类，真的反人类，别吐槽注释位置</span></span><br><span class="line">            <span class="comment"># 为了防止出现同时存在大小写库表，这里设置表名在磁盘里以小写存储，只能配置在启动项里</span></span><br><span class="line">            <span class="comment"># 除了表明大小写设置外，后续的既可以配置在启动项，也能配置在 .cnf 文件中</span></span><br><span class="line">            <span class="comment"># 旧客户端不支持新的用户认证方式，为了照顾它们这里修改为旧方式密码加密</span></span><br><span class="line">            <span class="comment"># 默认的 timestamp 规则让人挠头，而且不同版本也不一样，这个选项让 timestamp 重归正常，和其他数据类型一样使用，如 dateTime </span></span><br><span class="line">            <span class="string">--lower_case_table_names=1</span></span><br><span class="line">            <span class="string">--default-authentication-plugin=mysql_native_password</span> </span><br><span class="line">            <span class="string">--character_set_server=utf8mb4</span></span><br><span class="line">            <span class="string">--collation-server=utf8mb4_general_ci</span></span><br><span class="line">            </span><br><span class="line">        <span class="attr">volumes:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_DATA&#125;:/var/lib/mysql</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_CONF&#125;:/etc/mysql/conf.d</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_LOGS&#125;:/var/log/mysql</span></span><br></pre></td></tr></table></figure>
-<h3 id="启动">启动</h3>
-<p>在 docker-compose.yml 文件夹下进入 powershell</p>
-<p>然后使用命令 <code>docker-compose up</code> 启动 mysql</p>
-<p>通过界面应用或者 docker 命令行可以进入容器内部调试 mysql</p>
-<h3 id="以下是一些方便调试的-sql-语句：">以下是一些方便调试的 sql 语句：</h3>
-<ol>
-<li>查看 mysql 编码设置</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;char%&#x27;</span></span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>获取 mysql 数据存储点</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;%data%&#x27;</span>;</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>查看数据库表名大小写敏感状态</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> variables <span class="keyword">like</span> <span class="string">&#x27;%lower_case%&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/27/dockerMysql8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -361,10 +337,16 @@ docker-compose版本：1.27.4</p>
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-12-07 11:24:56 / 修改时间：06:45:09" itemprop="dateCreated datePublished" datetime="2021-12-07T11:24:56Z">2021-12-07</time>
+      <time title="创建时间：2021-12-07 11:24:56" itemprop="dateCreated datePublished" datetime="2021-12-07T11:24:56Z">2021-12-07</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-28 01:11:35" itemprop="dateModified" datetime="2022-01-28T01:11:35Z">2022-01-28</time>
+      </span>
 
   
       </div>
@@ -397,10 +379,14 @@ docker-compose版本：1.27.4</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g json-server</span><br></pre></td></tr></table></figure>
 <p>create a json file，名字随便起个 db.json，里面装个示例数据。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;posts&quot;</span>: [</span><br><span class="line">    &#123; <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>, <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;json-server&quot;</span>, <span class="attr">&quot;author&quot;</span>: <span class="string">&quot;typicode&quot;</span> &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;comments&quot;</span>: [</span><br><span class="line">    &#123; <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>, <span class="attr">&quot;body&quot;</span>: <span class="string">&quot;some comment&quot;</span>, <span class="attr">&quot;postId&quot;</span>: <span class="number">1</span> &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;profile&quot;</span>: &#123; <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;typicode&quot;</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后在 db.json 相同文件目录下使用启动命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">json-server --watch db.json</span><br></pre></td></tr></table></figure>
-<p>设置响应延时</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">json-server --watch db.json --delay 2000</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/07/learnJsonServer/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -457,7 +443,7 @@ docker-compose版本：1.27.4</p>
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-27 07:34:45" itemprop="dateModified" datetime="2022-01-27T07:34:45Z">2022-01-27</time>
+        <time title="修改时间：2022-01-28 01:11:17" itemprop="dateModified" datetime="2022-01-28T01:11:17Z">2022-01-28</time>
       </span>
 
   
@@ -493,134 +479,14 @@ docker-compose版本：1.27.4</p>
 <p>安装 express <code>npm i express</code></p>
 <h3 id="设置url-映射，并开启服务器监听">设置url 映射，并开启服务器监听</h3>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1、引入 express</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、创建应用对象</span></span><br><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、创建路由规则</span></span><br><span class="line"><span class="comment">// request 是对请求报文的封装</span></span><br><span class="line"><span class="comment">// response 是对响应报文的封装</span></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>,<span class="function">(<span class="params">request,response</span>)=&gt;</span>&#123;</span><br><span class="line">  response.send(<span class="string">&#x27;Hello Express&#x27;</span>)</span><br><span class="line">  </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4、监听端口启动服务</span></span><br><span class="line">app.listen(<span class="number">8000</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;服务已经启动，8000 端口监听中 ...&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>将上述代码写入 helloExpress.js 文件中，通过命令 <code>node helloExpress.js</code> 即可启动服务器。<br>
-随后打开浏览器，地址栏输入 <code>localhost:8000</code> 显示页面。</p>
-<p>express 可以轻松地帮我们开启一个服务端。使用发现，当服务端代码发生改变，我们需要重新启动服务，有点麻烦，接下来介绍一个热重载工具。</p>
-<p>nodemon 可以帮助我们热重载服务端代码，安装命令 <code>npm i -g nodemon</code></p>
-<p>后面不再使用 <code>node helloExpress.js</code> 来启动，而是换成 <code>nodemon helloExpress.js</code> 来启动服务端程序。</p>
-<h3 id="处理跨域">处理跨域</h3>
-<p>既然开启了服务器，那就一定要提一下 CORS 跨域。</p>
-<p>跨域，意思是违反浏览器的同源策略。浏览器为了用户安全，在前端和服务器端使用不同的协议、端口、主机名进行通信时，会将 <code>response</code> 给 <code>block</code> 掉。</p>
-<p>CORS 是一个官方的标准，通过在服务器中设置响应头提供跨域服务。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这次使用的是 `app.all` 他表示 get/post/put/delete/patch 方法都可以进入到该 controller 中。</span></span><br><span class="line">app.all(<span class="string">&#x27;cross_origin_server&#x27;</span>,<span class="function">(<span class="params">request,response</span>)=&gt;</span>&#123;</span><br><span class="line">  response.setHeader(<span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>,<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">  <span class="keyword">let</span> data = &#123;</span><br><span class="line">    <span class="attr">greeting</span>:<span class="string">&#x27;hello! I have crossed origin&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  data = <span class="built_in">JSON</span>.stringify(data)</span><br><span class="line">  response.send(data)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>上面的 <code>url controller</code> 中通过设置响应头 <code>Access-Control-Allow-Origin=*</code> 实现跨域，<code>*</code> 的含义是对所有浏览器请求提供服务。<br>
-但是默认情况下，该响应头只会开放简单请求的跨域，即满足：</p>
-<ul>
-<li>请求方法为 GET、POST、HEAD 中的三种</li>
-<li>请求头不能超出预置的 9 种请求头</li>
-</ul>
-<p>如果想让 PUT、PATCH、DELETE 等请求方法也能跨域，或者在自定义请求头时跨域，需要设置如下两个 CORS 响应头</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Headers: * </span><br><span class="line">Access-Control-Allow-Methods: * </span><br></pre></td></tr></table></figure>
-<p>它们设置的分别是允许发送自定义请求头，允许所有方法（默认只允许 get 和 post 跨域）跨域。</p>
-<p>最后告诉大家一个好消息，有个 express 中间件帮我们解决了以上问题。<br>
-<code>npm i cors</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">&#x27;cors&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//...some initialize code</span></span><br><span class="line"></span><br><span class="line">app.use(cors())</span><br></pre></td></tr></table></figure>
-<h3 id="获取请求参数、查询字符串、请求体">获取请求参数、查询字符串、请求体</h3>
-<p>服务器端要完成有效的响应，就需要解析和处理请求过来的数据。</p>
-<p>常见的请求数据有三种：</p>
-<ul>
-<li>在 url 地址上的请求参数，我们叫 param</li>
-<li>在 ? 后面的查询字符串，我们叫 query 或 queryString</li>
-<li>请求体的数据，body</li>
-</ul>
-<p>获取 param 请求参数，我们通过在请求 url 上设置<strong>可变路径</strong>来捕获，然后使用 req.params 获取</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/userInfo/:id&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.params.id)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>获取查询字符串，使用 req.query 来获取</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/userInfo&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.query)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>获取请求体，这里需要用到内置的中间件 express.json() 还有 express.urlencoded()</p>
-<p>根据需要配置这 2 个中间件，一起配置也是没有冲突的。</p>
-<p>接着通过 req.body 获取请求体</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.use(express.json())</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">app.use(express.urlencoded())</span><br><span class="line">app.post(<span class="string">&#x27;/addUser&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.body)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="介绍基础概念">介绍基础概念</h3>
-<p>通过上面的例子，我们可以开启一个 express 服务器来做响应了，但是还不够，我们了解一些基础概念才能更好地使用它。</p>
-<h4 id="请求对象">请求对象</h4>
-<p>express 的请求对象是对内置模块 http 的 IncomingMessage 进一步封装，我们下面介绍一下请求对象 request 的属性和方法，并稍做区分。</p>
-<p><strong>原内置模块 http 上的 IncomingMessage 的属性和方法：</strong></p>
-<ul>
-<li>request.method</li>
-<li>request.url</li>
-<li>request.headers</li>
-<li>request.ip</li>
-</ul>
-<p><strong>express 扩展的属性和方法</strong></p>
-<ul>
-<li>req.query 获取查询字符串的对象形式</li>
-<li>req.params 获取请求参数的对象形式</li>
-<li>req.body 获取请求体(只有在使用请求体解析中间件时才有)</li>
-</ul>
-<h4 id="响应对象">响应对象</h4>
-<p>express 的响应对象也是对内置模块 http 的 ServerResponse 进一步封装，我们也像稍作区分地介绍一下 response 的属性和方法。</p>
-<p><strong>原内置模块 http 上的 ServerResponse 的属性和方法：</strong></p>
-<ul>
-<li>response.statusCode = 200</li>
-<li>response.setHeader()</li>
-<li>response.end() 添加最后一次数据并结束响应</li>
-<li>response.write() 往缓冲区添加数据</li>
-</ul>
-<p><strong>express 扩展的属性和方法</strong></p>
-<ul>
-<li>res.send() 添加最后一次数据并结束响应（支持 buffer -&gt; Buffer.from()，json 的自动 stringify，发送 html 文档，发送普通字符串）</li>
-<li>res.json() 添加一次数据，不会结束响应（自动 stringify）</li>
-<li>res.status() 设置 statusCode</li>
-<li>res.cookie(key,value[,config]) 发送 cookie</li>
-</ul>
-<h3 id="配套的数据存储方案">配套的数据存储方案</h3>
-<p>express 作为服务器，它的作用是处理请求，发出响应。</p>
-<p>在实际开发中，我们更多通过服务器来存储数据，下面介绍一下数据存储方案。</p>
-<ol>
-<li>使用 .json 文件存储 javascript 对象数据</li>
-<li>通过 nodejs 的 fs 模块对 json 文件进行读取和写入</li>
-<li>使用 promisify 封装 fs 的函数（readFile和writeFile）</li>
-</ol>
-<p>通过 db.js 封装文件读写操作</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;promisify&#125; = <span class="built_in">require</span>(<span class="string">&#x27;util&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> readFile = promisify(fs.readFile)</span><br><span class="line"><span class="keyword">const</span> writeFile = promisify(fs.whiteFile)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dbPath = path.join(__dirname,<span class="string">&#x27;./db.json&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//读取</span></span><br><span class="line"><span class="built_in">exports</span>.getDb = <span class="keyword">async</span> ()=&gt;&#123;</span><br><span class="line">  <span class="keyword">const</span> data = readFile(dbPath)</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(data)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//写入</span></span><br><span class="line"><span class="built_in">exports</span>.saveDb = <span class="keyword">async</span> (data)=&gt;&#123;</span><br><span class="line">  <span class="comment">//这里stringify的参数可以生成带缩进的json字符串</span></span><br><span class="line">  writeFile(dbPath,<span class="built_in">JSON</span>.stringify(data,<span class="literal">null</span>,<span class="string">&#x27;  &#x27;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="路由模块">路由模块</h3>
-<p>我们目前为止都是在 app 实例上绑定请求处理函数，如果接口变多，我们的 server.js 文件会越来越大，浏览和修改都变得不方便，如何将我们的请求处理函数模块化呢。</p>
-<p>我们可以通过 express.Router() 创建路由模块，它就相当于 app 的小弟。</p>
-<ol>
-<li>将我们的接口按业务做区分，分成多个 .js 路由模块文件</li>
-<li>在这些路由模块文件中，使用 express.Router() 创建路由实例 router。</li>
-<li>在 router 上绑定请求处理函数</li>
-<li>通过 module.exports 导出路由实例 router</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里是路由模块，比如是 userRouter.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> userRouter = express.Router()</span><br><span class="line"></span><br><span class="line">userRouter.get(<span class="string">&#x27;/getUserInfo&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">//查 user 数据并发送</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = userRouter</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里是 app 实例所处文件，比如是 server.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(express)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过模块的方式导入路由</span></span><br><span class="line"><span class="keyword">const</span> userRouter = <span class="built_in">require</span>(<span class="string">&#x27;./userRouter&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将路由当作中间件来加载，我们的 app 就拥有了该路由的所有url映射。 </span></span><br><span class="line">app.use(userRouter)</span><br><span class="line"></span><br><span class="line"><span class="comment">//... 其他代码</span></span><br></pre></td></tr></table></figure>
-<p>这样，我们就可以把 API 接口拆分到不同的文件中管理，是不是很方便呢。</p>
-<h3 id="中间件">中间件</h3>
-<p>在前面的案例中，无论是解决请求体，还是解决跨域问题，我们都使用到了中间件。</p>
-<p>中间件是什么呢？中间件是一个个处理函数，多个中间件函数和路由函数之间共享同一组 request 和 response 对象。</p>
-<p>如同废水处理厂处理废水时，需要将废水经过多个处理环节进行处理一样。我们的服务器得到请求后，也是能够分多个阶段来处理数据，中间件既能挂载数据留给下游的阶段，也能集中处理数据，或者起到拦截器或路由守卫的作用，这都取决于你的函数如何定义。</p>
-<p>中间件必须接收 3 个参数：request,response,next<br>
-比如下面这个中间件函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> middleware = <span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;有人来了&#x27;</span>)</span><br><span class="line">  next()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们有如下方式使用它</p>
-<p>通过 app.use 将其作为全局中间件。这样所有的请求进来时，都会优先执行中间件函数，然后再做路由匹配。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.use(middleware)</span><br><span class="line">app.get(<span class="string">&#x27;/userInfo&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">//...获取用户信息并发送</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>作为路由函数的形参，将其作为局部中间件。只有匹配到该路由时，才会执行中间件函数，然后才到路由函数。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/userInfo&#x27;</span>,middleware,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">//...获取用户信息并发送</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果想使用多个中间件，可以这样用喔</span></span><br><span class="line">app.get(<span class="string">&#x27;/userInfo&#x27;</span>,mw1,mw2,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">//...获取用户信息并发送</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>中间件的使用注意事项：</p>
-<ol>
-<li>中间件必须主动调用 next() 转交控制权。如果不转交控制权，就不会往下走。</li>
-<li>中间件必须配置在所有路由函数的前面，才能起作用。这是有顺序要求的。</li>
-</ol>
-<h3 id="错误级别的中间件">错误级别的中间件</h3>
-<p>在讲错误级别中间件之前，先看下官方定义的中间件分类：</p>
-<ul>
-<li>应用级别中间件：绑定在 app 上的中间件</li>
-<li>路由级别中间件：绑定在 router 上的中间件</li>
-<li>错误级别中间件：特殊中间件，要配置在所有路由函数之后。</li>
-<li>内置中间件：在 express 对象上的中间件</li>
-<li>第三方中间件：需要 npm install 的中间件</li>
-</ul>
-<p>不管怎么分类，其实它们的用法都是一样的，但唯独错误级别中间件不同。</p>
-<p>我们的路由处理函数，或者中间件函数，在执行发生错误时，会直接崩溃掉。为了防止崩溃，我们通常需要使用 try…catch… 语句来捕获错误。</p>
-<p>但是这么多的路由处理函数，这么多的中间件，每一个都去 try…catch… 未免太苦工了。</p>
-<p>为此，错误级别中间件油然而生，它专门用来捕获我们整个项目中发生的异常错误，从而防止项目异常崩溃。</p>
-<p>它必须接收 4 个参数：err,request,response,next，并且它需要放在所有中间件函数和路由函数的后面。</p>
-<p>当我们的路由处理函数和中间件函数发生错误时，不需要 try…catch… , 会直接跳到错误级别中间件做集中处理。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err,req,res,next</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err.message)</span><br><span class="line">  res.send(<span class="string">&#x27;Error:&#x27;</span> + err.message)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/06/LearnExpress/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -677,7 +543,7 @@ docker-compose版本：1.27.4</p>
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-12 08:36:27" itemprop="dateModified" datetime="2022-01-12T08:36:27Z">2022-01-12</time>
+        <time title="修改时间：2022-01-28 01:11:27" itemprop="dateModified" datetime="2022-01-28T01:11:27Z">2022-01-28</time>
       </span>
 
   
@@ -713,38 +579,14 @@ docker-compose版本：1.27.4</p>
 <p>我们使用 git 通常是为了管理某个目录下的文件。这个被管理的目录我们称为 <code>工作区</code>，目录下的文件则为 <code>工作区的文件</code></p>
 <p>工作区的文件有 4 种状态：<code>未追踪、未修改、已修改、已暂存</code>。我们操作本地仓库的最终目的，就是让所有文件处在<code>未修改</code>状态，即工作区文件和本地仓库的最新版本保持一致。</p>
 <p>接下来我们来操作本地仓库。</p>
-<h3 id="从零开始的-git-使用">从零开始的 git 使用</h3>
-<p><strong>首先第一步，创建仓库</strong></p>
-<p>在需要 git 管理的目录下使用 <code>git init</code> 命令创建本地仓库。该命令会在当前目录下新建 <code>.git</code> 文件夹，这个就是我们的本地仓库。</p>
-<p><code>.git</code> 所处的目录就是工作区，工作区内所有层级下的文件都会被 git 管理。</p>
-<p><strong>然后第二步，将工作区内未追踪、已修改的文件添加进暂存区</strong></p>
-<p>将文件添加进 git 仓库之前，需要一个暂存的操作，此时使用 <code>git add .</code> 将目录下所有未追踪、已修改的文件添加到暂存区。</p>
-<p>也可以使用 <code>git add filename</code> 添加指定文件，实际操作中不常用。</p>
-<p><strong>最后第三步，将暂存区的文件放进仓库</strong></p>
-<p>执行 <code>git commit -m &quot;完成一次提交&quot;</code> 命令，会把已暂存、未修改的文件作为一个新的版本放进 git 仓库。</p>
-<p>已暂存的文件会在新的版本中以完整快照存储，未修改的文件则存储上一个版本的索引。</p>
-<p><strong>完成</strong></p>
-<p>使用上述的 3 条命令，我们完成了最简单的本地仓库创建，还有文件版本迭代。</p>
-<h3 id="状态命令">状态命令</h3>
-<p><strong>显示文件状态</strong></p>
-<p>除了操作文件，我们还需要获取文件的状态来指导我们接下来的操作。</p>
-<p>使用 <code>git status</code> 可以查看当前工作区的文件正处在什么状态。最开始状态呈红色显示，其中 ?? 代表未跟踪，M 代表已修改。</p>
-<p>如果使用了 <code>git add</code> 命令，则将<code>未跟踪、已修改</code>的文件加入暂存区，状态呈绿色显示。其中 A 代表已暂存<code>未跟踪</code>文件，M 代表已暂存<code>已修改</code>文件。</p>
-<p><code>未修改</code> 的文件不会显示。</p>
-<p>使用 <code>git status --short</code> 或 <code>git status -s</code> 来查看短格式。</p>
-<p><strong>显示版本记录</strong></p>
-<p>如果想查看当前仓库提交了多少个版本，使用 <code>git log</code> 可以查看提交信息，按 q 退出。</p>
-<p>提交信息包含了：版本的唯一标识 hash，提交的日期 date，提交的作者及邮箱 author，提交时的文本commit</p>
-<p><code>git log -2</code> 查看最新的两个版本</p>
-<p><code>git log --pretty=oneline</code> 查看短格式，只保留 hash 和 commit</p>
-<p><code>git log --pretty=</code></p>
-<p><strong>初始配置 git</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;邮箱&quot;</span></span><br></pre></td></tr></table></figure>
-<p><strong>三、首次提交时，进入项目根目录，初始化本地仓库</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> yourApp</span><br><span class="line">git init</span><br><span class="line">touch README.md</span><br><span class="line">git add README.md</span><br><span class="line">git commit -m <span class="string">&quot;first-commit&quot;</span></span><br><span class="line">git remote add origin 仓库地址（不加引号）</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
-<p>四、将本地文件提交到 github 或 gitee(码云)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add . // 将文件添加到本地文件缓存区</span><br><span class="line">git commit -m <span class="string">&#x27;注释&#x27;</span> // 将缓存区文件添加到本地仓库</span><br><span class="line">git remote add origin 仓库地址（不加双引号） // 链接远程仓库</span><br><span class="line">git push -u origin master // 将本地仓库文件同步到远程仓库</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/02/learnGit/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -801,7 +643,7 @@ docker-compose版本：1.27.4</p>
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-06 06:56:19" itemprop="dateModified" datetime="2022-01-06T06:56:19Z">2022-01-06</time>
+        <time title="修改时间：2022-01-28 01:11:58" itemprop="dateModified" datetime="2022-01-28T01:11:58Z">2022-01-28</time>
       </span>
 
   
@@ -834,39 +676,14 @@ docker-compose版本：1.27.4</p>
 <p>JS 中常见的异步编程出现在各种请求、IO 和定时器中。比如数据库 IO，文件 IO，网络请求，定时器等。常见的有 NodeJs 中的 readFile，浏览器的 AJAX 请求，setTimeout 等。</p>
 <p>当我们调用这些异步函数时，我们无法准确得知函数何时具有返回值，因此通过 JS 顺序语句的执行是无法访问到函数结果的。这时我们的解决办法是给它们传入回调函数，当异步函数给出返回值时，通过调用回调函数，我们可以获取返回值并执行后面一系列操作，比如把返回值渲染到 DOM，把返回值写入文件，或者用返回值发起新一轮的网络请求。</p>
 <p>在没有 Promise 时，我们的生活是怎么样的呢，下面给出例子。</p>
-<p>假如有3个异步任务，他们之间形成了依赖关系，每个异步任务的请求参数需要上一个异步任务的结果值。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">getSomeData(params,<span class="function"><span class="keyword">function</span>(<span class="params">data,err</span>)</span>&#123;</span><br><span class="line">  getOtherData(data,<span class="function"><span class="keyword">function</span>(<span class="params">otherData,err</span>)</span>&#123;</span><br><span class="line">    getThirdData(otherData,<span class="function"><span class="keyword">function</span>(<span class="params">thirdData,err</span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;I have got the ThirdData&#x27;</span> + thirdData)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>可以看出，如果使用纯回调函数的方式完成这3个带依赖关系的异步任务，就会出现层层嵌套的书写格式。其中嵌套地异步任务越多，代码就会持续向右缩进，给我们阅读和维护造成影响。我们称这种书写格式为回调地狱</p>
-<p>那么 promise 是怎么完成上述过程的呢</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// promisify 是一个能将异步任务转变为 promise 风格的函数</span></span><br><span class="line"><span class="comment">// 这里是 async function 内的代码</span></span><br><span class="line"><span class="keyword">const</span> forSomeData = promisify(getSomeData)</span><br><span class="line"><span class="keyword">const</span> forOtherData = promisify(getOtherData)</span><br><span class="line"><span class="keyword">const</span> forThirdData = promisify(getThirdData)</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> someData = <span class="keyword">await</span> forSomeData(params)</span><br><span class="line">  <span class="keyword">const</span> otherData = <span class="keyword">await</span> forOtherData(someData)</span><br><span class="line">  <span class="keyword">const</span> thirdData = <span class="keyword">await</span> forThirdData(otherData)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;I have got the ThirdData&#x27;</span> + thirdData)</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.message)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>为了使用 promise，我们通常会将异步任务封装成 promise 风格的异步任务，然后通过 async 和 await 获取他们的值，这样我们的书写格式可以从原来层层的花括号嵌套，转变为线性的书写的格式。而且处理异常也十分容易。</p>
-<p>体验了 promise 的用法后，大家是不是开始对 promise 感兴趣了，接下来我们开始学习 promise，从最基础的概念开始说起。</p>
-<p>promise 是 javascript 异步编程的最流行的解决方案，它的三个特点是：异步指定回调函数，异常穿透，链式调用。</p>
-<p>promise 对象拥有 2 个重要的属性，一个是 promise 的状态，一个是 promise 的结果值。作为一个未完成的 promise 对象，它的状态为 <code>pending</code> ，它的结果值为 <code>null</code></p>
-<p>通过 Promise 构造函数我们可以创建一个 promise 对象：<code>new Promise(()=&gt;&#123;&#125;)</code></p>
-<p>Promise 构造函数接收一个函数作为参数，我们称这个函数为执行器函数：<code>executor</code></p>
-<p>执行器函数 <code>executor</code> 接收两个参数：<code>resolve</code> 和 <code>reject</code>。这是 Promise 构造函数的内部函数。其作用是修改 promise 的状态和结果值。</p>
-<p>因此创建 promise 对象时我们通常写成： <code>new Promise((resolve,reject)=&gt;&#123;&#125;)</code></p>
-<p>在执行器函数中，我们通常会书写异步任务的代码。</p>
-<p>在执行器函数中调用 <code>resolve(value)</code>，则将 promise 对象的状态由 <code>pending</code> 更改为 <code>resolved</code>，并设置结果值为 value</p>
-<p>在执行器函数中调用 <code>reject(reason)</code>，则将 promise 对象的状态由 <code>pending</code> 更改为 <code>rejected</code>，并设置结果值为 reason</p>
-<p>一个 promise 对象的状态只能变更一次，即从 <code>pending</code> 变更为 <code>resolved</code>，或者从 <code>pending</code> 变更为 <code>rejected</code></p>
-<p>promise 对象的结果值和状态是同时改变的，所以 promise 的结果值也只能变更一次</p>
-<p>我们可以通过 promise 对象的 then 方法设置回调函数，通过设置回调函数来获取异步任务的结果或失败的原因。</p>
-<p>then 方法接收两个参数： <code>onResolved</code> 和 <code>onRejected</code></p>
-<p>其中 <code>onResolved</code> 是成功的回调函数，我们通常写成 <code>(value)=&gt;&#123;&#125;</code></p>
-<p>其中 <code>onRejected</code> 是失败的回调函数，我们通常写成 <code>(reason)=&gt;&#123;&#125;</code></p>
-<p>因此使用 then 方法指定回调函数时，我们通常写成：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">p.then(<span class="function">(<span class="params">value</span>)=&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;,<span class="function">(<span class="params">reason</span>)=&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>then 方法会返回一个新的 promise 对象，不管是执行成功的回调，还是失败的回调，这个 promise 对象的状态和结果值，会根据其执行的回调函数的返回值来确定。</p>
-<p>假如 result 是回调函数的返回值</p>
-<ul>
-<li>result 是一个非 promise 对象，返回一个成功的 promise，结果值为 result</li>
-<li>result 是一个 promise 对象，返回一个 promise，其状态和结果值与 result 的状态和结果值相同</li>
-<li>在 then 方法中抛出了错误，返回一个失败的 promise，结果值为抛出的内容</li>
-</ul>
-<p>以上就是 promise 最核心的概念，是不是听得有些枯燥乏味。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/19/learnPromise/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

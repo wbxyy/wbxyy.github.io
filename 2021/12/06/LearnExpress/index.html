@@ -30,7 +30,7 @@
 <meta property="og:description" content="前言 虽说在下是 springboot 新手，但是作为前端接口调试而言，springboot 实在太过重量级。现在发现了一个作为测试服务器相当好用的玩意： NodeJs。话不多说，开搞。 首先安装 nodejs ，百度一下，下载安装即可。 新建文件夹，cd 进去，然后 npm init --yes 安装 express npm i express 设置url 映射，并开启服务器监听 1234567">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-06T09:28:42.000Z">
-<meta property="article:modified_time" content="2022-01-27T07:34:45.991Z">
+<meta property="article:modified_time" content="2022-01-28T01:11:17.112Z">
 <meta property="article:author" content="wanbaoxiaoyiyi">
 <meta property="article:tag" content="学习">
 <meta name="twitter:card" content="summary">
@@ -240,7 +240,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-27 07:34:45" itemprop="dateModified" datetime="2022-01-27T07:34:45Z">2022-01-27</time>
+        <time title="修改时间：2022-01-28 01:11:17" itemprop="dateModified" datetime="2022-01-28T01:11:17Z">2022-01-28</time>
       </span>
 
   
@@ -276,6 +276,7 @@
 <p>安装 express <code>npm i express</code></p>
 <h3 id="设置url-映射，并开启服务器监听">设置url 映射，并开启服务器监听</h3>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1、引入 express</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、创建应用对象</span></span><br><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、创建路由规则</span></span><br><span class="line"><span class="comment">// request 是对请求报文的封装</span></span><br><span class="line"><span class="comment">// response 是对响应报文的封装</span></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>,<span class="function">(<span class="params">request,response</span>)=&gt;</span>&#123;</span><br><span class="line">  response.send(<span class="string">&#x27;Hello Express&#x27;</span>)</span><br><span class="line">  </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4、监听端口启动服务</span></span><br><span class="line">app.listen(<span class="number">8000</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;服务已经启动，8000 端口监听中 ...&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
 <p>将上述代码写入 helloExpress.js 文件中，通过命令 <code>node helloExpress.js</code> 即可启动服务器。<br>
 随后打开浏览器，地址栏输入 <code>localhost:8000</code> 显示页面。</p>
 <p>express 可以轻松地帮我们开启一个服务端。使用发现，当服务端代码发生改变，我们需要重新启动服务，有点麻烦，接下来介绍一个热重载工具。</p>
