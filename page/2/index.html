@@ -136,36 +136,21 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+        <a href="https://github.com/wbxyy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wbxyy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
@@ -195,6 +180,229 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/10/22/learnVueAgain-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/22/learnVueAgain-2/" class="post-title-link" itemprop="url">Vue2 第二弹 —— 数据劫持、生命周期、组件、props</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-21 16:55:53" itemprop="dateCreated datePublished" datetime="2021-10-21T16:55:53Z">2021-10-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-03 01:10:10" itemprop="dateModified" datetime="2022-02-03T01:10:10Z">2022-02-03</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1>常见问题：react、vue 中的 key 有什么作用？（key的内部原理）</h1>
+<p><strong>虚拟 DOM 中 key 的作用</strong><br>
+key 是虚拟 DOM 对象的标识，当数据发生变化时，Vue 会根据【新数据】生成【新的虚拟 DOM】<br>
+随后 Vue 进行【新虚拟 DOM】和【旧虚拟 DOM】的差异比较，比较规则如下：</p>
+<p><strong>对比规则：</strong><br>
+旧虚拟 DOM 中找到了与新虚拟 DOM 相同的 key：<br>
+1. 若虚拟 DOM 内容没变，直接使用之前的真实 DOM！<br>
+2. 若虚拟 DOM 中内容变了，则生成新的真实 DOM，随后替换掉页面中之前的真实 DOM。</p>
+<p>旧虚拟 DOM 中未找到与新虚拟 DOM 相同的 key<br>
+创建新的真实 DOM，随后渲染到页面。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/22/learnVueAgain-2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/10/09/learnVueAgain-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/09/learnVueAgain-1/" class="post-title-link" itemprop="url">Vue2 第一弹 —— 声明式渲染</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-09 15:15:46" itemprop="dateCreated datePublished" datetime="2021-10-09T15:15:46Z">2021-10-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-02 12:21:25" itemprop="dateModified" datetime="2022-02-02T12:21:25Z">2022-02-02</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1>001 —— 初识 Vue</h1>
+<h2 id="vue">vue</h2>
+<p><strong>查看 @vue/cli 版本，确保 @vue/cli 版本在 4.5.0 以上</strong><br>
+<code>vue --version</code><br>
+<strong>安装或升级你的 @vue/cli （全局覆盖安装）</strong><br>
+<code>npm install -g @vue/cli</code><br>
+<strong>创建</strong><br>
+<code>vue create xxxx</code><br>
+<strong>启动</strong><br>
+<code>cd xxxx</code><br>
+<code>npm run serve</code></p>
+<h4 id="使用方法">使用方法</h4>
+<ol>
+<li>准备好一个容器</li>
+<li>创建 Vue 实例。</li>
+<li>el 用于指定当前 Vue 实例为哪个容器服务，值通常为 css 选择器字符串。</li>
+<li>data 用于存储数据，数据供 el 所指定的容器去使用，值我们暂时写成一个对象.</li>
+</ol>
+<h4 id="详细解答">详细解答</h4>
+<pre><code>1. 想让 Vue 工作，就必须创建一个 Vue 实例，且传入一个配置对象；
+2. 容器里的代码依然符合 html 规范，只不过混入了一些特殊的 Vue 语法；
+3. 容器里的代码被称为 [ Vue 模板 ]；
+4. Vue 实例和容器是一一对应的；
+5. 真实开发中只有一个 Vue 实例，并且会配合着组件一起使用；
+6. `&#123;&#123;xxx&#125;&#125;` 中的 xxx 要写 js 表达式，且 xxx 可以自动读取到 data 中的所有属性；
+7. 一旦 data 中的数据发生改变，那么模板中用到该数据的地方会自动更新；
+</code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/09/learnVueAgain-1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -235,7 +443,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-10-19 08:08:09" itemprop="dateModified" datetime="2021-10-19T08:08:09Z">2021-10-19</time>
+        <time title="修改时间：2022-02-27 15:42:03" itemprop="dateModified" datetime="2022-02-27T15:42:03Z">2022-02-27</time>
       </span>
 
   
@@ -246,14 +454,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>16k</span>
+      <span>15k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>14 分钟</span>
+      <span>13 分钟</span>
     </span>
 </div>
 
@@ -1051,14 +1259,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">82k</span>
+    <span title="站点总字数">86k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:14</span>
+    <span title="站点阅读时长">1:18</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

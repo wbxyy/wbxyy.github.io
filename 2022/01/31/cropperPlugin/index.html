@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css" integrity="sha256-no0c5ccDODBwp+9hSmV5VvPpKwHCpbVzXHexIkupM6U=" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/config.min.js"></script>
+<meta name="description" content="cropper.js 官网 https:&#x2F;&#x2F;fengyuanchen.github.io&#x2F;cropper&#x2F; 作为搬砖小能手，每次使用插件时都要去百度各种配置项，实在太费劲，给自己总结记录插件的使用方法也是很重要的哦。 引入文件 三个文件都要按下面顺序引入哦，因为我用的 cropper.js 是 jquery 插件嘛，不知道你们用的是不是呢？ 123456&lt;!-- 引入jq --&gt;&amp;lt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cropper.js 裁剪图片小插件">
+<meta property="og:url" content="https://wbxyy.github.io/2022/01/31/cropperPlugin/index.html">
+<meta property="og:site_name" content="这里是苏苏的小屋">
+<meta property="og:description" content="cropper.js 官网 https:&#x2F;&#x2F;fengyuanchen.github.io&#x2F;cropper&#x2F; 作为搬砖小能手，每次使用插件时都要去百度各种配置项，实在太费劲，给自己总结记录插件的使用方法也是很重要的哦。 引入文件 三个文件都要按下面顺序引入哦，因为我用的 cropper.js 是 jquery 插件嘛，不知道你们用的是不是呢？ 123456&lt;!-- 引入jq --&gt;&amp;lt">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-31T09:55:39.000Z">
+<meta property="article:modified_time" content="2022-02-27T15:58:11.810Z">
+<meta property="article:author" content="wanbaoxiaoyiyi">
+<meta property="article:tag" content="插件小知识">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wbxyy.github.io/2022/01/31/cropperPlugin/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wbxyy.github.io/2022/01/31/cropperPlugin/","path":"2022/01/31/cropperPlugin/","title":"cropper.js 裁剪图片小插件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>cropper.js 裁剪图片小插件 | 这里是苏苏的小屋</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?b7cf140e77c3362eecc3f9309c2791de"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">这里是苏苏的小屋</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">这里藏了条森蚺哦</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#cropper-js-%E5%AE%98%E7%BD%91"><span class="nav-number">1.</span> <span class="nav-text">cropper.js 官网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">引入文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-cropper"><span class="nav-number">3.</span> <span class="nav-text">初始化 cropper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%AF%B9%E8%B1%A1-options"><span class="nav-number">4.</span> <span class="nav-text">配置对象 options</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wanbaoxiaoyiyi"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wanbaoxiaoyiyi</p>
+  <div class="site-description" itemprop="description">王者的鼓动，现在就展现给你看</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wbxyy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wbxyy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2022/01/31/cropperPlugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cropper.js 裁剪图片小插件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-31 09:55:39" itemprop="dateCreated datePublished" datetime="2022-01-31T09:55:39Z">2022-01-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-27 15:58:11" itemprop="dateModified" datetime="2022-02-27T15:58:11Z">2022-02-27</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="cropper-js-官网">cropper.js 官网</h3>
+<p><a target="_blank" rel="noopener" href="https://fengyuanchen.github.io/cropper/">https://fengyuanchen.github.io/cropper/</a></p>
+<p>作为搬砖小能手，每次使用插件时都要去百度各种配置项，实在太费劲，给自己总结记录插件的使用方法也是很重要的哦。</p>
+<h3 id="引入文件">引入文件</h3>
+<p>三个文件都要按下面顺序引入哦，因为我用的 cropper.js 是 jquery 插件嘛，不知道你们用的是不是呢？</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 引入jq --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 导入cropper的js --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 导入copper中间件 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery-cropper/1.0.1/jquery-cropper.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="初始化-cropper">初始化 cropper</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;cropper_box&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;img_box&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">src</span>=<span class="string">&quot;../assets/images/nature-1.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview_container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview_box &quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview w100&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      100 x 100</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview_box &quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview w50&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      50 x 50</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.img_box</span>&#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.img_box</span> <span class="selector-tag">img</span>&#123;</span><br><span class="line">  <span class="attribute">min-width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">min-height</span>: <span class="number">100%</span>; </span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="comment">/* This rule is very important, please don&#x27;t ignore this */</span></span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.preview</span>&#123;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: gray;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 配置对象</span></span><br><span class="line">  <span class="keyword">const</span> options = &#123;</span><br><span class="line">    <span class="comment">//纵横比</span></span><br><span class="line">    <span class="attr">aspectRatio</span>: <span class="number">1</span>/<span class="number">1</span>,</span><br><span class="line">    <span class="comment">//指定预览区域(类名):</span></span><br><span class="line">    <span class="attr">preview</span>:<span class="string">&#x27;.preview&#x27;</span>,</span><br><span class="line">    <span class="attr">viewMode</span>:<span class="number">2</span>,</span><br><span class="line">    <span class="attr">zoomable</span>:<span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建裁剪区域</span></span><br><span class="line">  $(<span class="string">&#x27;#avatar&#x27;</span>).cropper(options)</span><br></pre></td></tr></table></figure>
+<p>这里的 html 是我自己写的，重点是要有 img 标签作为裁剪区域，以及 .preview 类的元素作为裁剪预览。</p>
+<p>这里的 css 也是我自己写的，重点是 img 要设置 max-width，以及 .preview 要设置 overflow:hidden</p>
+<p>好了，这样就能简单使用了！</p>
+<h3 id="配置对象-options">配置对象 options</h3>
+<p>下面只列举一些常用属性，要看全部的属性要去看官方文档。</p>
+<hr>
+<p><code>viewMode</code> 定义 cropper 的视图模式，默认：0</p>
+<pre><code>0：没有限制，**裁剪框**可以移动到**图片**外。
+1 : **裁剪框**只能在**图片**内移动。
+2：**图片** 不全部铺满**马赛克框** （即缩小时可以有一边出现空隙）
+3：**图片**填充整个**马赛克框**
+</code></pre>
+<hr>
+<p><code>dragMode</code> 定义cropper的拖拽模式，默认: ‘crop’</p>
+<pre><code>'crop': 可以产生一个新的**裁剪框**
+'move': 只可以移动**裁剪框**
+'none': 什么也不处理
+</code></pre>
+<hr>
+<p><code>aspectRatio</code> 裁剪框的宽高比，默认：NAN</p>
+<pre><code>在默认的时候可以随意改变裁剪框的大小，我这里的设置的值为 1/1。
+</code></pre>
+<hr>
+<p><code>preview</code> 添加额外的元素(容器)以供预览，默认：‘’</p>
+<pre><code>注意这里是一个dom元素，必须可以被Document.querySelectorAll获取到。
+</code></pre>
+<hr>
+<p><code>center</code> 裁剪框在图片正中心，默认：true</p>
+<hr>
+<p><code>background</code> 显示容器的网格背景，就是后面的马赛克，默认：true</p>
+<hr>
+<p><code>movable</code> 是否允许可以移动后面的图片&lt;默认：true</p>
+<hr>
+<p><code>movable</code> 是否允许可以移动后面的图片，默认：true</p>
+<hr>
+<p><code>scalable</code> 是否允许缩放图像，默认：true</p>
+<hr>
+<p><code>zoomable</code> 是否允许放大图像，默认：true</p>
+<hr>
+<p><code>responsive</code> 在调整窗口大小的时候重新渲染cropper，默认：true</p>
+<hr>
+<p><code>restore</code> 在调整窗口大小后恢复裁剪的区域，默认：true</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8F%92%E4%BB%B6%E5%B0%8F%E7%9F%A5%E8%AF%86/" rel="tag"><i class="fa fa-tag"></i> 插件小知识</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/27/dockerMysql8/" rel="prev" title="在学习环境中 如何优雅地启动 mysql8 的 docker 镜像">
+                  <i class="fa fa-chevron-left"></i> 在学习环境中 如何优雅地启动 mysql8 的 docker 镜像
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/02/13/deepCopy-shallowCopy/" rel="next" title="深拷贝和浅拷贝">
+                  深拷贝和浅拷贝 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-gift"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanbaoxiaoyiyi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">86k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:18</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/bookmark.min.js"></script>
+
+  
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js","integrity":"sha256-sVAx+v/Q7v0Q2xm5vN7h5ccSna6gaLREhG9sF8pKT6I="}}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/tags/mermaid.min.js"></script>
+
+  <script class="next-config" data-name="nprogress" type="application/json">{"enable":true,"spinner":true}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/third-party/nprogress.min.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

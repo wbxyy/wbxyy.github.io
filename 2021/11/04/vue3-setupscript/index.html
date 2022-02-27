@@ -22,15 +22,15 @@
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/config.min.js"></script>
-<meta name="description" content="Script setup 语法糖下 组件 的使用  自动的组件名推断 Vue 会依据它的文件名来自动推断组件名称 通过普通 &lt;setup&gt; 标签可以显式更改组件名称(不推荐)  123export default&amp;#123;  name:&amp;#x27;Bar&amp;#x27;&amp;#125;  普通组件的使用 不再需要 components 注册，引入直接使用。 原理：setup script 在">
+<meta name="description" content="Script setup 语法糖下 组件 的使用   自动的组件名推断 Vue 默认把 文件名 直接当成组件名，无需显式声明组件名。   普通组件的使用 组件不需要注册，引入直接使用。 原理：setup script 在编译的时候把 template 的内容变成 vNode 后继而由 setup 函数中返回。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue3.2 —— setup script">
 <meta property="og:url" content="https://wbxyy.github.io/2021/11/04/vue3-setupscript/index.html">
 <meta property="og:site_name" content="这里是苏苏的小屋">
-<meta property="og:description" content="Script setup 语法糖下 组件 的使用  自动的组件名推断 Vue 会依据它的文件名来自动推断组件名称 通过普通 &lt;setup&gt; 标签可以显式更改组件名称(不推荐)  123export default&amp;#123;  name:&amp;#x27;Bar&amp;#x27;&amp;#125;  普通组件的使用 不再需要 components 注册，引入直接使用。 原理：setup script 在">
+<meta property="og:description" content="Script setup 语法糖下 组件 的使用   自动的组件名推断 Vue 默认把 文件名 直接当成组件名，无需显式声明组件名。   普通组件的使用 组件不需要注册，引入直接使用。 原理：setup script 在编译的时候把 template 的内容变成 vNode 后继而由 setup 函数中返回。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-11-04T10:24:18.000Z">
-<meta property="article:modified_time" content="2021-11-04T07:02:57.969Z">
+<meta property="article:modified_time" content="2022-02-27T15:21:13.920Z">
 <meta property="article:author" content="wanbaoxiaoyiyi">
 <meta property="article:tag" content="学习">
 <meta name="twitter:card" content="summary">
@@ -140,36 +140,21 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+        <a href="https://github.com/wbxyy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wbxyy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
@@ -232,10 +217,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-11-04 10:24:18 / 修改时间：07:02:57" itemprop="dateCreated datePublished" datetime="2021-11-04T10:24:18Z">2021-11-04</time>
+      <time title="创建时间：2021-11-04 10:24:18" itemprop="dateCreated datePublished" datetime="2021-11-04T10:24:18Z">2021-11-04</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-27 15:21:13" itemprop="dateModified" datetime="2022-02-27T15:21:13Z">2022-02-27</time>
+      </span>
 
   
       </div>
@@ -245,7 +236,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.9k</span>
+      <span>1.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -265,21 +256,21 @@
     <div class="post-body" itemprop="articleBody">
         <h3 id="Script-setup-语法糖下-组件-的使用">Script setup 语法糖下 组件 的使用</h3>
 <ol>
-<li>自动的组件名推断<br>
-Vue 会依据它的<strong>文件名</strong>来自动推断组件名称<br>
-通过普通 <code>&lt;setup&gt;</code> 标签可以显式更改组件名称(不推荐)</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span><br><span class="line">  <span class="attr">name</span>:<span class="string">&#x27;Bar&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>普通组件的使用<br>
-不再需要 components 注册，引入直接使用。<br>
-原理：setup script 在编译的时候把 template 的内容变成 vNode 后继而由 setup 函数中返回。</li>
+<li>
+<p>自动的组件名推断<br>
+Vue 默认把 <strong>文件名</strong> 直接当成组件名，无需显式声明组件名。</p>
+</li>
+<li>
+<p>普通组件的使用<br>
+组件不需要注册，引入直接使用。<br>
+原理：setup script 在编译的时候把 template 的内容变成 vNode 后继而由 setup 函数中返回。</p>
+</li>
 </ol>
 <span id="more"></span>
 <ol start="3">
 <li>
 <p>动态组件<br>
-和 Vue2 相同<br>
+同 Vue2<br>
 <component :is="Bar"/></p>
 </li>
 <li>
@@ -336,7 +327,7 @@ Vue 会依据它的<strong>文件名</strong>来自动推断组件名称<br>
 在 setup script 中，默认情况下无法通过 ref 来获取子组件的属性和方法，需要通过 defineExpose 宏命令显式暴露出子组件的属性和方法。<br>
 单独暴露</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">defineExpose(&#123;</span><br><span class="line">  count,</span><br><span class="line">  handle</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>全部暴露(普通 <code>&lt;sripct&gt;</code> 下书写)</p>
+<p>全部暴露(普通 <code>&lt;script&gt;</code> 下书写)</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
@@ -398,14 +389,14 @@ Vue 会依据它的<strong>文件名</strong>来自动推断组件名称<br>
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">82k</span>
+    <span title="站点总字数">86k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:14</span>
+    <span title="站点阅读时长">1:18</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

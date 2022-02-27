@@ -22,15 +22,15 @@
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/config.min.js"></script>
-<meta name="description" content="前言 直接在 win10 上安装 mysql 其实不怎么优雅，毕竟要携带许多依赖环境。既然学了 docker，不用怎么行呢，接下来探讨如何用 docker 启动一个学习用的 mysql 环境准备 操作系统：win10 Docker版本：基于 wsl2 的 docker-desktop v19.03.13 docker-compose版本：1.27.4 目录结构 . ├── config │   ├">
+<meta name="description" content="前言 直接在 win10 上安装 mysql 其实不怎么优雅，毕竟要携带许多依赖环境。既然学了 docker，不用怎么行呢，接下来探讨如何用 docker 启动一个学习用的 mysql 环境准备 操作系统：win10 Docker版本：基于 wsl2 的 docker-desktop v19.03.13 docker-compose版本：1.27.4">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在学习环境中 如何优雅地启动 mysql8 的 docker 镜像">
 <meta property="og:url" content="https://wbxyy.github.io/2022/01/27/dockerMysql8/index.html">
 <meta property="og:site_name" content="这里是苏苏的小屋">
-<meta property="og:description" content="前言 直接在 win10 上安装 mysql 其实不怎么优雅，毕竟要携带许多依赖环境。既然学了 docker，不用怎么行呢，接下来探讨如何用 docker 启动一个学习用的 mysql 环境准备 操作系统：win10 Docker版本：基于 wsl2 的 docker-desktop v19.03.13 docker-compose版本：1.27.4 目录结构 . ├── config │   ├">
+<meta property="og:description" content="前言 直接在 win10 上安装 mysql 其实不怎么优雅，毕竟要携带许多依赖环境。既然学了 docker，不用怎么行呢，接下来探讨如何用 docker 启动一个学习用的 mysql 环境准备 操作系统：win10 Docker版本：基于 wsl2 的 docker-desktop v19.03.13 docker-compose版本：1.27.4">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-27T15:35:23.000Z">
-<meta property="article:modified_time" content="2022-01-28T01:10:56.781Z">
+<meta property="article:modified_time" content="2022-02-02T08:26:40.581Z">
 <meta property="article:author" content="wanbaoxiaoyiyi">
 <meta property="article:tag" content="杂货">
 <meta name="twitter:card" content="summary">
@@ -140,36 +140,21 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+        <a href="https://github.com/wbxyy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wbxyy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
@@ -240,7 +225,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-28 01:10:56" itemprop="dateModified" datetime="2022-01-28T01:10:56Z">2022-01-28</time>
+        <time title="修改时间：2022-02-02 08:26:40" itemprop="dateModified" datetime="2022-02-02T08:26:40Z">2022-02-02</time>
       </span>
 
   
@@ -275,6 +260,7 @@
 <p>操作系统：win10<br>
 Docker版本：基于 wsl2 的 docker-desktop v19.03.13<br>
 docker-compose版本：1.27.4</p>
+<span id="more"></span>
 <h3 id="目录结构">目录结构</h3>
 <p>.<br>
 ├── config<br>
@@ -286,7 +272,6 @@ docker-compose版本：1.27.4</p>
 │   ├── conf<br>
 ├── .env<br>
 └── docker-compose.yml</p>
-<span id="more"></span>
 <h3 id="配置">配置</h3>
 <ol>
 <li>修改 <code>.env</code> 文件</li>
@@ -345,6 +330,9 @@ docker-compose版本：1.27.4</p>
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2022/01/31/cropperPlugin/" rel="next" title="cropper.js 裁剪图片小插件">
+                  cropper.js 裁剪图片小插件 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -377,14 +365,14 @@ docker-compose版本：1.27.4</p>
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">82k</span>
+    <span title="站点总字数">86k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:14</span>
+    <span title="站点阅读时长">1:18</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
