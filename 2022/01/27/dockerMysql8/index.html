@@ -30,7 +30,7 @@
 <meta property="og:description" content="前言 直接在 win10 上安装 mysql 其实不怎么优雅，毕竟要携带许多依赖环境。既然学了 docker，不用怎么行呢，接下来探讨如何用 docker 启动一个学习用的 mysql 环境准备 操作系统：win10 Docker版本：基于 wsl2 的 docker-desktop v19.03.13 docker-compose版本：1.27.4">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-27T15:35:23.000Z">
-<meta property="article:modified_time" content="2022-02-02T08:26:40.581Z">
+<meta property="article:modified_time" content="2022-06-16T01:28:22.072Z">
 <meta property="article:author" content="wanbaoxiaoyiyi">
 <meta property="article:tag" content="杂货">
 <meta name="twitter:card" content="summary">
@@ -140,14 +140,14 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -225,7 +225,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-02 08:26:40" itemprop="dateModified" datetime="2022-02-02T08:26:40Z">2022-02-02</time>
+        <time title="修改时间：2022-06-16 01:28:22" itemprop="dateModified" datetime="2022-06-16T01:28:22Z">2022-06-16</time>
       </span>
 
   
@@ -291,7 +291,7 @@ docker-compose版本：1.27.4</p>
 <ol start="3">
 <li>配置 docker-compose.yml</li>
 </ol>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">    <span class="attr">mysql:</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">registry.cn-shenzhen.aliyuncs.com/sugaral/mysql:8.0.20</span>  <span class="comment"># 自行选择 mysql 镜像</span></span><br><span class="line">        <span class="attr">container_name:</span> <span class="string">mysql</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="number">3306</span><span class="string">:3306</span></span><br><span class="line">            </span><br><span class="line">        <span class="attr">environment:</span></span><br><span class="line">            <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="attr">MYSQL_DATABASE:</span> <span class="string">my_db_1</span></span><br><span class="line">            <span class="attr">MYSQL_USER:</span> <span class="string">sugar</span> <span class="comment"># mysql 默认已有 root 用户，该属性是创建一个 root 以外的新用户</span></span><br><span class="line">            <span class="attr">MYSQL_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="comment">#MYSQL_ROOT_HOST: &#x27;%&#x27; # 远程连接通配符白名单，仅限本机使用则无需开启    </span></span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">        <span class="attr">command:</span> </span><br><span class="line">            <span class="comment"># yml 注释反人类，真的反人类，别吐槽注释位置</span></span><br><span class="line">            <span class="comment"># 为了防止出现同时存在大小写库表，这里设置表名在磁盘里以小写存储，只能配置在启动项里</span></span><br><span class="line">            <span class="comment"># 除了表明大小写设置外，后续的既可以配置在启动项，也能配置在 .cnf 文件中</span></span><br><span class="line">            <span class="comment"># 旧客户端不支持新的用户认证方式，为了照顾它们这里修改为旧方式密码加密</span></span><br><span class="line">            <span class="comment"># 默认的 timestamp 规则让人挠头，而且不同版本也不一样，这个选项让 timestamp 重归正常，和其他数据类型一样使用，如 dateTime </span></span><br><span class="line">            <span class="string">--lower_case_table_names=1</span></span><br><span class="line">            <span class="string">--default-authentication-plugin=mysql_native_password</span> </span><br><span class="line">            <span class="string">--character_set_server=utf8mb4</span></span><br><span class="line">            <span class="string">--collation-server=utf8mb4_general_ci</span></span><br><span class="line">            </span><br><span class="line">        <span class="attr">volumes:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_DATA&#125;:/var/lib/mysql</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_CONF&#125;:/etc/mysql/conf.d</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_LOGS&#125;:/var/log/mysql</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">    <span class="attr">mysql:</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">registry.cn-shenzhen.aliyuncs.com/sugaral/mysql:8.0.20</span>  <span class="comment"># 自行选择 mysql 镜像</span></span><br><span class="line">        <span class="attr">container_name:</span> <span class="string">mysql</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="number">3306</span><span class="string">:3306</span></span><br><span class="line"></span><br><span class="line">        <span class="attr">environment:</span></span><br><span class="line">            <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="attr">MYSQL_DATABASE:</span> <span class="string">my_db_1</span></span><br><span class="line">            <span class="attr">MYSQL_USER:</span> <span class="string">sugar</span> <span class="comment"># mysql 默认已有 root 用户，该属性是创建一个 root 以外的新用户</span></span><br><span class="line">            <span class="attr">MYSQL_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="comment">#MYSQL_ROOT_HOST: &#x27;%&#x27; # 远程连接通配符白名单，仅限本机使用则无需开启</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">            <span class="comment"># yml 注释反人类，真的反人类，别吐槽注释位置</span></span><br><span class="line">            <span class="comment"># 为了防止出现同时存在大小写库表，这里设置表名在磁盘里以小写存储，只能配置在启动项里</span></span><br><span class="line">            <span class="comment"># 除了表明大小写设置外，后续的既可以配置在启动项，也能配置在 .cnf 文件中</span></span><br><span class="line">            <span class="comment"># 旧客户端不支持新的用户认证方式，为了照顾它们这里修改为旧方式密码加密</span></span><br><span class="line">            <span class="comment"># 默认的 timestamp 规则让人挠头，而且不同版本也不一样，这个选项让 timestamp 重归正常，和其他数据类型一样使用，如 dateTime</span></span><br><span class="line">            <span class="string">--lower_case_table_names=1</span></span><br><span class="line">            <span class="string">--default-authentication-plugin=mysql_native_password</span></span><br><span class="line">            <span class="string">--character_set_server=utf8mb4</span></span><br><span class="line">            <span class="string">--collation-server=utf8mb4_general_ci</span></span><br><span class="line"></span><br><span class="line">        <span class="attr">volumes:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_DATA&#125;:/var/lib/mysql</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_CONF&#125;:/etc/mysql/conf.d</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_LOGS&#125;:/var/log/mysql</span></span><br></pre></td></tr></table></figure>
 <h3 id="启动">启动</h3>
 <p>在 docker-compose.yml 文件夹下进入 powershell</p>
 <p>然后使用命令 <code>docker-compose up</code> 启动 mysql</p>
@@ -302,7 +302,7 @@ docker-compose版本：1.27.4</p>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;char%&#x27;</span></span><br></pre></td></tr></table></figure>
 <ol start="2">
-<li>获取 mysql 数据存储点</li>
+<li>获取 mysql 数据存储目录</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;%data%&#x27;</span>;</span><br></pre></td></tr></table></figure>
 <ol start="3">
@@ -365,14 +365,14 @@ docker-compose版本：1.27.4</p>
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">86k</span>
+    <span title="站点总字数">90k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:22</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

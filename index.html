@@ -136,14 +136,14 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -180,6 +180,308 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2022/04/21/css_teach_vw/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/21/css_teach_vw/" class="post-title-link" itemprop="url">我是真的不会用 vw，vw 爬啊</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-21 11:01:56" itemprop="dateCreated datePublished" datetime="2022-04-21T11:01:56Z">2022-04-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-06-16 05:58:15" itemprop="dateModified" datetime="2022-06-16T05:58:15Z">2022-06-16</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>写个商城静态页练练手，又想要版心，又想用 grid 布局，要致富，先撸树，砰砰砰写好了</p>
+<p>后来又想在 gird 的两行中间弄一条线分隔一下。</p>
+<p>第一想到用 border-bottom，可是这玩意跑不出 gird 的手掌心啊，我要的 bar 可是要横穿整个页面哦。</p>
+<p>算了，没有什么是定位解决不了的，如果有就砸键盘！！</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;bar&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.bar</span>&#123;</span><br><span class="line">  <span class="attribute">top</span>:<span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">left</span>:<span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">transform</span>:translateX(-<span class="number">50%</span>);</span><br><span class="line">  <span class="attribute">position</span>:absolute;</span><br><span class="line">  <span class="attribute">width</span>:<span class="number">100vw</span>;</span><br><span class="line">  <span class="attribute">height</span>:<span class="number">2px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>:red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>哪个元素下面需要横线，就塞个 <code>&lt;bar&gt;</code> 进去。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/21/css_teach_vw/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2022/04/20/css_vertical_align/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/20/css_vertical_align/" class="post-title-link" itemprop="url">关于我伪元素设置 height:百分之100 不生效之闹</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-20 14:03:48" itemprop="dateCreated datePublished" datetime="2022-04-20T14:03:48Z">2022-04-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-06-16 06:10:03" itemprop="dateModified" datetime="2022-06-16T06:10:03Z">2022-06-16</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>最近写个静态页练练 CSS，有些规则就是想不通。</p>
+<p>比如下面这个关于模态框的 CSS，我打算给 dd 添加伪元素修饰一下</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.second_class</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: none;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">999</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0%</span>;</span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">800px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f7f7f7</span>;</span><br><span class="line">    <span class="attribute">border-right</span>: <span class="number">1px</span> solid <span class="number">#e6e6e6</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#e6e6e6</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">10px</span> <span class="number">12.5px</span> <span class="number">0</span> <span class="number">12.5px</span>;</span><br><span class="line">    <span class="selector-tag">dl</span> &#123;</span><br><span class="line">      <span class="attribute">display</span>: flex;</span><br><span class="line">      <span class="attribute">align-items</span>: stretch;</span><br><span class="line">      <span class="attribute">flex-flow</span>: row wrap;</span><br><span class="line">      <span class="attribute">padding-bottom</span>: <span class="number">10px</span>;</span><br><span class="line">      <span class="comment">// padding: 0 12.5px 0 12.5px;</span></span><br><span class="line">      <span class="selector-tag">dt</span>,</span><br><span class="line">      <span class="selector-tag">dd</span> &#123;</span><br><span class="line">        <span class="comment">// position: relative;</span></span><br><span class="line">        <span class="comment">// padding: 2px 8px;</span></span><br><span class="line">        <span class="comment">// margin: 0;</span></span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">2px</span> <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-tag">dt</span> &#123;</span><br><span class="line">        <span class="attribute">font-weight</span>: <span class="number">700</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-tag">dd</span><span class="selector-pseudo">:nth-of-type</span>(n + <span class="number">2</span>)<span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">        <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        <span class="attribute">display</span>: inline-block;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">1px</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">70%</span>;</span><br><span class="line">        <span class="attribute">align-items</span>: flex-start;</span><br><span class="line">        <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">        <span class="attribute">background-color</span>: red;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-tag">dd</span><span class="selector-pseudo">:first</span><span class="selector-tag">-of-type</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">        <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">0</span> <span class="number">5px</span>;</span><br><span class="line">        <span class="attribute">display</span>: inline-block;</span><br><span class="line">        <span class="comment">// width: 10px;</span></span><br><span class="line">        <span class="comment">// height: 10px;</span></span><br><span class="line">        <span class="attribute">border-top</span>: <span class="number">5px</span> solid transparent;</span><br><span class="line">        <span class="attribute">border-left</span>: <span class="number">7px</span> solid dodgerblue;</span><br><span class="line">        <span class="attribute">border-right</span>: <span class="number">5px</span> solid transparent;</span><br><span class="line">        <span class="attribute">border-bottom</span>: <span class="number">5px</span> solid transparent;</span><br><span class="line">        <span class="comment">// vertical-align: middle;</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">        <span class="attribute">color</span>: red;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/20/css_vertical_align/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2022/03/30/webpackCollection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/30/webpackCollection/" class="post-title-link" itemprop="url">webpack 常用的第三方包</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-30 10:30:07" itemprop="dateCreated datePublished" datetime="2022-03-30T10:30:07Z">2022-03-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-06-16 05:57:10" itemprop="dateModified" datetime="2022-06-16T05:57:10Z">2022-06-16</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>826</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>自定义 webpack 作为构建工具</p>
+<h2 id="webpack-相关包">webpack 相关包</h2>
+<p>less 预编译: less, less-loader<br>
+提取 css: mini-css-extract-plugin<br>
+压缩 css: optimize-css-assets-webpack-plugin<br>
+css 兼容性处理: postcss, postcss-preset-env</p>
+<p>js 兼容性处理: babel-loader, @babel/preset-env, @babel/core, corejs</p>
+<p>样式中图片处理： url-loader<br>
+html 中图片处理: html-loader<br>
+其他文件处理： file-loader<br>
+html 模板打包: html-webpack-plugin</p>
+<p>开发工具: webpack-dev-tool</p>
+<p>开发框架：vue</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/30/webpackCollection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -416,7 +718,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-02 08:26:40" itemprop="dateModified" datetime="2022-02-02T08:26:40Z">2022-02-02</time>
+        <time title="修改时间：2022-06-16 01:28:22" itemprop="dateModified" datetime="2022-06-16T01:28:22Z">2022-06-16</time>
       </span>
 
   
@@ -515,7 +817,7 @@ docker-compose版本：1.27.4</p>
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-28 01:11:35" itemprop="dateModified" datetime="2022-01-28T01:11:35Z">2022-01-28</time>
+        <time title="修改时间：2022-06-16 02:20:09" itemprop="dateModified" datetime="2022-06-16T02:20:09Z">2022-06-16</time>
       </span>
 
   
@@ -526,7 +828,7 @@ docker-compose版本：1.27.4</p>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>582</span>
+      <span>575</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -544,7 +846,7 @@ docker-compose版本：1.27.4</p>
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>当我们前端需要数据调试的时候，除了使用 mock，或者通过 node express 开启服务监听返回数据外，还有一种模拟数据的方法，那就是今天试玩的 json-server</p>
+          <p>当我们前端调试数据的时候，除了使用 mock，或者通过 node express 开启服务监听返回数据外，还有一种玩法，那就是今天试玩的 json-server</p>
 <p>安装命令（全局安装）</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g json-server</span><br></pre></td></tr></table></figure>
 <p>create a json file，名字随便起个 db.json，里面装个示例数据。</p>
@@ -613,7 +915,7 @@ docker-compose版本：1.27.4</p>
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-27 13:59:01" itemprop="dateModified" datetime="2022-02-27T13:59:01Z">2022-02-27</time>
+        <time title="修改时间：2022-06-16 05:48:21" itemprop="dateModified" datetime="2022-06-16T05:48:21Z">2022-06-16</time>
       </span>
 
   
@@ -624,14 +926,14 @@ docker-compose版本：1.27.4</p>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.7k</span>
+      <span>6.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
+      <span>6 分钟</span>
     </span>
 </div>
 
@@ -716,7 +1018,7 @@ docker-compose版本：1.27.4</p>
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-31 06:23:53" itemprop="dateModified" datetime="2022-01-31T06:23:53Z">2022-01-31</time>
+        <time title="修改时间：2022-06-16 05:59:42" itemprop="dateModified" datetime="2022-06-16T05:59:42Z">2022-06-16</time>
       </span>
 
   
@@ -727,7 +1029,7 @@ docker-compose版本：1.27.4</p>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
+      <span>799</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -745,12 +1047,12 @@ docker-compose版本：1.27.4</p>
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="啰里啰唆，不看也罢系列">啰里啰唆，不看也罢系列</h3>
-<p>git，分布式版本控制软件，用仓库的概念管理文件，支持文件版本的提交和回滚，更好地支撑项目开发。</p>
-<p>git 本地仓库，一个隐藏的文件夹 <code>.git</code>，里面存放着提交过的所有版本，每个版本有对应文件的完整快照。</p>
-<p>git 每次提交会新增一个版本，修改过的文件会完整地保存在该版本中，称为 <code>快照</code> 。未被修改的则保存上一版本的引用。</p>
-<p>git 管理的目录叫 <code>工作区</code>，该目录下的文件为 <code>工作区的文件</code></p>
-<p>工作区的文件有 4 种状态：<code>未追踪、未修改、已修改、已暂存</code>。操作本地仓库的最终目的，就是让所有文件处在 <code>未修改</code> 状态，即工作区文件和本地仓库保持一致。</p>
+          <h3 id="概览">概览</h3>
+<div class="note info no-icon"><p>分布式版本控制软件，支持文件版本的提交和回滚<br>
+修改过的文件完整保存为一个快照，每个版本有对应文件的完整快照<br>
+文件有 4 种状态：<code>未追踪、未修改、已修改、已暂存</code>。<br>
+让所有文件处在 <code>未修改</code> 状态，即工作区和仓库保持一致，这是操作仓库的最终目的。</p>
+</div>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/12/02/learnGit/#more" rel="contents">
@@ -815,7 +1117,7 @@ docker-compose版本：1.27.4</p>
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-27 15:11:16" itemprop="dateModified" datetime="2022-02-27T15:11:16Z">2022-02-27</time>
+        <time title="修改时间：2022-06-16 03:22:33" itemprop="dateModified" datetime="2022-06-16T03:22:33Z">2022-06-16</time>
       </span>
 
   
@@ -826,14 +1128,14 @@ docker-compose版本：1.27.4</p>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.3k</span>
+      <span>2.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -844,12 +1146,10 @@ docker-compose版本：1.27.4</p>
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="Promise-的初体验">Promise 的初体验</h3>
-<p>Promise 是 ES6 新增的规范，它是 JS 中进行异步编程的新解决方案，可以很好地解决异步编程中回调地狱问题，让代码更加优雅。</p>
-<p>JS 中常见的异步编程，比如数据库 IO，文件 IO，网络请求 AJAX，定时器等。</p>
-<p>当我们调用异步任务时，是无法准确得知函数何时返回结果，通过 JS 顺序语句也无法获取结果，这时我们必须给异步任务提供回调函数。</p>
-<p>让异步任务在合适的时机帮我们调用回调函数并传入结果，以便我们在回调函数中获取结果值并执行后续操作，比如渲染 DOM，比如写入文件，比如发起新一轮的网络请求。</p>
-<p>在没有 Promise 时，我们的生活是怎么样的呢，下面给出例子。</p>
+          <h3 id="Promise-简介">Promise 简介</h3>
+<p>Promise 是 JS 中异步编程的新解决方案，让我们方便地使用同步地方式书写异步代码。它也被称作 <code>暂未存在确切值的替身</code>。</p>
+<p>学习 Promise，你要先了解 JS 中的异步编程操作，比如 IO，AJAX，timeout 等。还有 js 事件循环模型。</p>
+<p>Promise 出现前，获取异步任务的返回值，是通过设置回调函数。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/11/19/learnPromise/#more" rel="contents">
@@ -875,324 +1175,8 @@ docker-compose版本：1.27.4</p>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/11/04/vue3-setupscript/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wanbaoxiaoyiyi">
-      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="这里是苏苏的小屋">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/04/vue3-setupscript/" class="post-title-link" itemprop="url">vue3.2 —— setup script</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-04 10:24:18" itemprop="dateCreated datePublished" datetime="2021-11-04T10:24:18Z">2021-11-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-27 15:21:13" itemprop="dateModified" datetime="2022-02-27T15:21:13Z">2022-02-27</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="Script-setup-语法糖下-组件-的使用">Script setup 语法糖下 组件 的使用</h3>
-<ol>
-<li>
-<p>自动的组件名推断<br>
-Vue 默认把 <strong>文件名</strong> 直接当成组件名，无需显式声明组件名。</p>
-</li>
-<li>
-<p>普通组件的使用<br>
-组件不需要注册，引入直接使用。<br>
-原理：setup script 在编译的时候把 template 的内容变成 vNode 后继而由 setup 函数中返回。</p>
-</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/04/vue3-setupscript/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/11/04/learnVueAgain-4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wanbaoxiaoyiyi">
-      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="这里是苏苏的小屋">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/04/learnVueAgain-4/" class="post-title-link" itemprop="url">Vue2 第四弹 —— Vuex、Vue-router</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-04 10:16:25" itemprop="dateCreated datePublished" datetime="2021-11-04T10:16:25Z">2021-11-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-05 05:54:46" itemprop="dateModified" datetime="2021-11-05T05:54:46Z">2021-11-05</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>8.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>8 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1>Vuex</h1>
-<ol>
-<li>
-<p><strong>概念</strong><br>
-在 Vue 中实现集中式数据管理的一个 Vue 插件，对 vue 应用中多个组件共享数据进行集中式管理（读/写），也是一种组件间通信方式，且适用于任意组件间通信。</p>
-</li>
-<li>
-<p><strong>何时使用</strong><br>
-多个组件需要共享数据时。</p>
-</li>
-<li>
-<p><strong>搭建 vuex 环境</strong><br>
-创建文件 src/store/index.js</p>
-</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/04/learnVueAgain-4/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/10/26/learnVueAgain-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wanbaoxiaoyiyi">
-      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="这里是苏苏的小屋">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/26/learnVueAgain-3/" class="post-title-link" itemprop="url">Vue2 第三弹 —— 事件总线、插槽</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-10-26 09:59:24" itemprop="dateCreated datePublished" datetime="2021-10-26T09:59:24Z">2021-10-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-05 05:54:54" itemprop="dateModified" datetime="2021-11-05T05:54:54Z">2021-11-05</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>5.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1>mixin 混入</h1>
-<p>功能：可以把多个组件公用的配置提取成一个混入对象。</p>
-<p><strong>定义混合</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="title">data</span>(<span class="params"></span>)</span>&#123;...&#125;,</span><br><span class="line">  <span class="attr">methods</span>:&#123;...&#125;</span><br><span class="line">  ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>使用混合</strong></p>
-<p>全局混入：<code>Vue.mixin(xxx)</code><br>
-局部混入：<code>mixins:['xxx']</code></p>
-<h1>插件</h1>
-<p>功能：用于增强 Vue</p>
-<p>本质：包含一个 install 方法的对象，install 的第一个参数是 Vue，第二个以后的参数是插件的使用者传递的数据。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/26/learnVueAgain-3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -1216,14 +1200,14 @@ Vue 默认把 <strong>文件名</strong> 直接当成组件名，无需显式声
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">86k</span>
+    <span title="站点总字数">90k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:22</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

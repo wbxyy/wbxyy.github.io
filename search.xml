@@ -1,6 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>cropper.js 裁剪图片小插件</title>
+    <url>/2022/01/31/cropperPlugin/</url>
+    <content><![CDATA[<h3 id="cropper-js-官网">cropper.js 官网</h3>
+<p><a href="https://fengyuanchen.github.io/cropper/">https://fengyuanchen.github.io/cropper/</a></p>
+<p>作为搬砖小能手，每次使用插件时都要去百度各种配置项，实在太费劲，给自己总结记录插件的使用方法也是很重要的哦。</p>
+<h3 id="引入文件">引入文件</h3>
+<p>三个文件都要按下面顺序引入哦，因为我用的 cropper.js 是 jquery 插件嘛，不知道你们用的是不是呢？</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 引入jq --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 导入cropper的js --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 导入copper中间件 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery-cropper/1.0.1/jquery-cropper.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="初始化-cropper">初始化 cropper</h3>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;cropper_box&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;img_box&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">src</span>=<span class="string">&quot;../assets/images/nature-1.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview_container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview_box &quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview w100&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      100 x 100</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview_box &quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview w50&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      50 x 50</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.img_box</span>&#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.img_box</span> <span class="selector-tag">img</span>&#123;</span><br><span class="line">  <span class="attribute">min-width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">min-height</span>: <span class="number">100%</span>; </span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="comment">/* This rule is very important, please don&#x27;t ignore this */</span></span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.preview</span>&#123;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: gray;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 配置对象</span></span><br><span class="line">  <span class="keyword">const</span> options = &#123;</span><br><span class="line">    <span class="comment">//纵横比</span></span><br><span class="line">    <span class="attr">aspectRatio</span>: <span class="number">1</span>/<span class="number">1</span>,</span><br><span class="line">    <span class="comment">//指定预览区域(类名):</span></span><br><span class="line">    <span class="attr">preview</span>:<span class="string">&#x27;.preview&#x27;</span>,</span><br><span class="line">    <span class="attr">viewMode</span>:<span class="number">2</span>,</span><br><span class="line">    <span class="attr">zoomable</span>:<span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建裁剪区域</span></span><br><span class="line">  $(<span class="string">&#x27;#avatar&#x27;</span>).cropper(options)</span><br></pre></td></tr></table></figure>
+<p>这里的 html 是我自己写的，重点是要有 img 标签作为裁剪区域，以及 .preview 类的元素作为裁剪预览。</p>
+<p>这里的 css 也是我自己写的，重点是 img 要设置 max-width，以及 .preview 要设置 overflow:hidden</p>
+<p>好了，这样就能简单使用了！</p>
+<h3 id="配置对象-options">配置对象 options</h3>
+<p>下面只列举一些常用属性，要看全部的属性要去看官方文档。</p>
+<hr>
+<p><code>viewMode</code> 定义 cropper 的视图模式，默认：0</p>
+<pre><code>0：没有限制，**裁剪框**可以移动到**图片**外。
+1 : **裁剪框**只能在**图片**内移动。
+2：**图片** 不全部铺满**马赛克框** （即缩小时可以有一边出现空隙）
+3：**图片**填充整个**马赛克框**
+</code></pre>
+<hr>
+<p><code>dragMode</code> 定义cropper的拖拽模式，默认: ‘crop’</p>
+<pre><code>'crop': 可以产生一个新的**裁剪框**
+'move': 只可以移动**裁剪框**
+'none': 什么也不处理
+</code></pre>
+<hr>
+<p><code>aspectRatio</code> 裁剪框的宽高比，默认：NAN</p>
+<pre><code>在默认的时候可以随意改变裁剪框的大小，我这里的设置的值为 1/1。
+</code></pre>
+<hr>
+<p><code>preview</code> 添加额外的元素(容器)以供预览，默认：‘’</p>
+<pre><code>注意这里是一个dom元素，必须可以被Document.querySelectorAll获取到。
+</code></pre>
+<hr>
+<p><code>center</code> 裁剪框在图片正中心，默认：true</p>
+<hr>
+<p><code>background</code> 显示容器的网格背景，就是后面的马赛克，默认：true</p>
+<hr>
+<p><code>movable</code> 是否允许可以移动后面的图片&lt;默认：true</p>
+<hr>
+<p><code>movable</code> 是否允许可以移动后面的图片，默认：true</p>
+<hr>
+<p><code>scalable</code> 是否允许缩放图像，默认：true</p>
+<hr>
+<p><code>zoomable</code> 是否允许放大图像，默认：true</p>
+<hr>
+<p><code>responsive</code> 在调整窗口大小的时候重新渲染cropper，默认：true</p>
+<hr>
+<p><code>restore</code> 在调整窗口大小后恢复裁剪的区域，默认：true</p>
+]]></content>
+      <tags>
+        <tag>插件小知识</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我是真的不会用 vw，vw 爬啊</title>
+    <url>/2022/04/21/css_teach_vw/</url>
+    <content><![CDATA[<p>写个商城静态页练练手，又想要版心，又想用 grid 布局，要致富，先撸树，砰砰砰写好了</p>
+<p>后来又想在 gird 的两行中间弄一条线分隔一下。</p>
+<p>第一想到用 border-bottom，可是这玩意跑不出 gird 的手掌心啊，我要的 bar 可是要横穿整个页面哦。</p>
+<p>算了，没有什么是定位解决不了的，如果有就砸键盘！！</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;bar&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.bar</span>&#123;</span><br><span class="line">  <span class="attribute">top</span>:<span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">left</span>:<span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">transform</span>:translateX(-<span class="number">50%</span>);</span><br><span class="line">  <span class="attribute">position</span>:absolute;</span><br><span class="line">  <span class="attribute">width</span>:<span class="number">100vw</span>;</span><br><span class="line">  <span class="attribute">height</span>:<span class="number">2px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>:red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>哪个元素下面需要横线，就塞个 <code>&lt;bar&gt;</code> 进去。</p>
+<span id="more"></span>
+<p>信心满满，一刷新，emmmmmmm… 怎么跑出了一个横向滚动条。</p>
+<p>这不对吧队长，又是谁想陷害我呀。</p>
+<p>耐心想了一下，100 vw 就是个憨憨长度。如果出现了纵向滚动条，100vw 就会被遮住，所以又要出现横向滚动条来显示遮住的部分。就是 100vw 包含了被纵向滚动条遮住的部分。</p>
+<p>可是我这个 bar 又在盒子内，又想横穿屏幕，怎么也得 100vw 才能满足吧，僵住了哟。</p>
+<p>白送的总没好东西，又没好办法，只好自己弄一个 vw 了</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setVw</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> vw = <span class="built_in">document</span>.documentElement.scrollWidth / <span class="number">100</span></span><br><span class="line">  <span class="built_in">document</span>.documentElement.style.setProperty(<span class="string">&#x27;--vw&#x27;</span>,<span class="string">`<span class="subst">$&#123;vw&#125;</span>px`</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&#x27;DOMContentLoaded&#x27;</span>,setVw)</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&#x27;resize&#x27;</span>, setVw)</span><br></pre></td></tr></table></figure>
+<p>在 main.js 入口文件塞个函数，获取 body 宽的百分之一，然后作为自定义的 CSS 属性</p>
+<p>后续再改一下 bar 的宽度</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.bar</span>&#123;</span><br><span class="line">  <span class="attribute">top</span>:<span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">left</span>:<span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">transform</span>:<span class="built_in">translateX</span>(-<span class="number">50%</span>);</span><br><span class="line">  <span class="attribute">position</span>:absolute;</span><br><span class="line">  <span class="attribute">width</span>: <span class="built_in">calc</span>(<span class="built_in">var</span>(--vw,<span class="number">1vw</span>) * <span class="number">100</span>);</span><br><span class="line">  <span class="attribute">height</span>:<span class="number">2px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>:red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>暂时是丑陋地解决了，欸。</p>
+]]></content>
+      <tags>
+        <tag>我真的学不会 CSS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>初识 express</title>
     <url>/2021/12/06/LearnExpress/</url>
     <content><![CDATA[<h3 id="前言">前言</h3>
@@ -109,7 +196,7 @@ response.write() 往缓冲区添加数据
 <p>使用 express.Router() 创建路由模块，它就相当于 app 的小弟。</p>
 <pre><code>  1. 将接口按业务做代码分割，划分多个 .js 路由模块文件
   2. 每个模块文件中使用 express.Router() 创建路由实例 router。
-  3. 将请求处理函数绑定到 router 实例上 
+  3. 将请求处理函数绑定到 router 实例上
   4. 通过 module.exports 导出路由实例 router
   5. 在 app.js 中将路由实例当作中间件来加载
 </code></pre>
@@ -155,106 +242,48 @@ response.write() 往缓冲区添加数据
 <p>并且它需要放在所有中间件函数和路由函数的后面。</p>
 <p>当我们的路由处理函数和中间件函数发生错误时，不需要 try…catch… , 会直接跳到错误级别中间件做集中处理。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err,req,res,next</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err.message)</span><br><span class="line">  res.send(<span class="string">&#x27;Error:&#x27;</span> + err.message)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="静态资源托管">静态资源托管</h3>
+<p>express.static() 中间件用于资源托管</p>
+<p>路径可以是相对路径</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.use(express.static(<span class="string">&#x27;public&#x27;</span>))</span><br><span class="line">app.use(express.static(<span class="string">&#x27;../15_内置指令&#x27;</span>))</span><br><span class="line">app.use(express.static(<span class="string">&#x27;./clock&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<p>除了这种方式，也可以手动提供某个资源的 url</p>
+<p>比如下面的代码就是用来测试 v-cloak 指令的。用来延迟引入 vue.js</p>
+<div class="note info no-icon"><p>vue.js 的文件路径要按你实际的来</p>
+</div>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; resolve &#125; = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其他代码...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意：root 参数需要绝对路径</span></span><br><span class="line">app.get(<span class="string">&#x27;/delayResource/:duration/vuejs&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.params)</span><br><span class="line">  <span class="keyword">const</span> duration = req.params.duration</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    res.sendFile(</span><br><span class="line">      <span class="string">&#x27;vue.js&#x27;</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">root</span>: resolve(__dirname, <span class="string">&#x27;../js/&#x27;</span>),</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(err)</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">console</span>.log(<span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">  &#125;, duration)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>当然，你也可以不用 sendFile 方法，自己用 fs 模块来发送文件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;resolve&#125; = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其他代码...</span></span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/delayResource/:duration/vuejs&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> duration = req.params.duration</span><br><span class="line">  <span class="keyword">const</span> filePath = resolve(__dirname, <span class="string">&#x27;../js/vue.js&#x27;</span>)</span><br><span class="line">  fs.readFile(filePath, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) res.send(<span class="string">&#x27;报错拉&#x27;</span>)</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      res.send(data)</span><br><span class="line">    &#125;, duration)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>学习</tag>
       </tags>
   </entry>
   <entry>
-    <title>cropper.js 裁剪图片小插件</title>
-    <url>/2022/01/31/cropperPlugin/</url>
-    <content><![CDATA[<h3 id="cropper-js-官网">cropper.js 官网</h3>
-<p><a href="https://fengyuanchen.github.io/cropper/">https://fengyuanchen.github.io/cropper/</a></p>
-<p>作为搬砖小能手，每次使用插件时都要去百度各种配置项，实在太费劲，给自己总结记录插件的使用方法也是很重要的哦。</p>
-<h3 id="引入文件">引入文件</h3>
-<p>三个文件都要按下面顺序引入哦，因为我用的 cropper.js 是 jquery 插件嘛，不知道你们用的是不是呢？</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 引入jq --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 导入cropper的js --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 导入copper中间件 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery-cropper/1.0.1/jquery-cropper.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+    <title>关于我伪元素设置 height:百分之100 不生效之闹</title>
+    <url>/2022/04/20/css_vertical_align/</url>
+    <content><![CDATA[<p>最近写个静态页练练 CSS，有些规则就是想不通。</p>
+<p>比如下面这个关于模态框的 CSS，我打算给 dd 添加伪元素修饰一下</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.second_class</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: none;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">999</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0%</span>;</span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">800px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f7f7f7</span>;</span><br><span class="line">    <span class="attribute">border-right</span>: <span class="number">1px</span> solid <span class="number">#e6e6e6</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#e6e6e6</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">10px</span> <span class="number">12.5px</span> <span class="number">0</span> <span class="number">12.5px</span>;</span><br><span class="line">    <span class="selector-tag">dl</span> &#123;</span><br><span class="line">      <span class="attribute">display</span>: flex;</span><br><span class="line">      <span class="attribute">align-items</span>: stretch;</span><br><span class="line">      <span class="attribute">flex-flow</span>: row wrap;</span><br><span class="line">      <span class="attribute">padding-bottom</span>: <span class="number">10px</span>;</span><br><span class="line">      <span class="comment">// padding: 0 12.5px 0 12.5px;</span></span><br><span class="line">      <span class="selector-tag">dt</span>,</span><br><span class="line">      <span class="selector-tag">dd</span> &#123;</span><br><span class="line">        <span class="comment">// position: relative;</span></span><br><span class="line">        <span class="comment">// padding: 2px 8px;</span></span><br><span class="line">        <span class="comment">// margin: 0;</span></span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">2px</span> <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-tag">dt</span> &#123;</span><br><span class="line">        <span class="attribute">font-weight</span>: <span class="number">700</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-tag">dd</span><span class="selector-pseudo">:nth-of-type</span>(n + <span class="number">2</span>)<span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">        <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        <span class="attribute">display</span>: inline-block;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">1px</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">70%</span>;</span><br><span class="line">        <span class="attribute">align-items</span>: flex-start;</span><br><span class="line">        <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">        <span class="attribute">background-color</span>: red;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-tag">dd</span><span class="selector-pseudo">:first</span><span class="selector-tag">-of-type</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">        <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">0</span> <span class="number">5px</span>;</span><br><span class="line">        <span class="attribute">display</span>: inline-block;</span><br><span class="line">        <span class="comment">// width: 10px;</span></span><br><span class="line">        <span class="comment">// height: 10px;</span></span><br><span class="line">        <span class="attribute">border-top</span>: <span class="number">5px</span> solid transparent;</span><br><span class="line">        <span class="attribute">border-left</span>: <span class="number">7px</span> solid dodgerblue;</span><br><span class="line">        <span class="attribute">border-right</span>: <span class="number">5px</span> solid transparent;</span><br><span class="line">        <span class="attribute">border-bottom</span>: <span class="number">5px</span> solid transparent;</span><br><span class="line">        <span class="comment">// vertical-align: middle;</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">        <span class="attribute">color</span>: red;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
-<h3 id="初始化-cropper">初始化 cropper</h3>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;cropper_box&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;img_box&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">src</span>=<span class="string">&quot;../assets/images/nature-1.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview_container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview_box &quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview w100&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      100 x 100</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview_box &quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;preview w50&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      50 x 50</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.img_box</span>&#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.img_box</span> <span class="selector-tag">img</span>&#123;</span><br><span class="line">  <span class="attribute">min-width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">min-height</span>: <span class="number">100%</span>; </span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="comment">/* This rule is very important, please don&#x27;t ignore this */</span></span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.preview</span>&#123;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: gray;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 配置对象</span></span><br><span class="line">  <span class="keyword">const</span> options = &#123;</span><br><span class="line">    <span class="comment">//纵横比</span></span><br><span class="line">    <span class="attr">aspectRatio</span>: <span class="number">1</span>/<span class="number">1</span>,</span><br><span class="line">    <span class="comment">//指定预览区域(类名):</span></span><br><span class="line">    <span class="attr">preview</span>:<span class="string">&#x27;.preview&#x27;</span>,</span><br><span class="line">    <span class="attr">viewMode</span>:<span class="number">2</span>,</span><br><span class="line">    <span class="attr">zoomable</span>:<span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建裁剪区域</span></span><br><span class="line">  $(<span class="string">&#x27;#avatar&#x27;</span>).cropper(options)</span><br></pre></td></tr></table></figure>
-<p>这里的 html 是我自己写的，重点是要有 img 标签作为裁剪区域，以及 .preview 类的元素作为裁剪预览。</p>
-<p>这里的 css 也是我自己写的，重点是 img 要设置 max-width，以及 .preview 要设置 overflow:hidden</p>
-<p>好了，这样就能简单使用了！</p>
-<h3 id="配置对象-options">配置对象 options</h3>
-<p>下面只列举一些常用属性，要看全部的属性要去看官方文档。</p>
-<hr>
-<p><code>viewMode</code> 定义 cropper 的视图模式，默认：0</p>
-<pre><code>0：没有限制，**裁剪框**可以移动到**图片**外。
-1 : **裁剪框**只能在**图片**内移动。
-2：**图片** 不全部铺满**马赛克框** （即缩小时可以有一边出现空隙）
-3：**图片**填充整个**马赛克框**
-</code></pre>
-<hr>
-<p><code>dragMode</code> 定义cropper的拖拽模式，默认: ‘crop’</p>
-<pre><code>'crop': 可以产生一个新的**裁剪框**
-'move': 只可以移动**裁剪框**
-'none': 什么也不处理
-</code></pre>
-<hr>
-<p><code>aspectRatio</code> 裁剪框的宽高比，默认：NAN</p>
-<pre><code>在默认的时候可以随意改变裁剪框的大小，我这里的设置的值为 1/1。
-</code></pre>
-<hr>
-<p><code>preview</code> 添加额外的元素(容器)以供预览，默认：‘’</p>
-<pre><code>注意这里是一个dom元素，必须可以被Document.querySelectorAll获取到。
-</code></pre>
-<hr>
-<p><code>center</code> 裁剪框在图片正中心，默认：true</p>
-<hr>
-<p><code>background</code> 显示容器的网格背景，就是后面的马赛克，默认：true</p>
-<hr>
-<p><code>movable</code> 是否允许可以移动后面的图片&lt;默认：true</p>
-<hr>
-<p><code>movable</code> 是否允许可以移动后面的图片，默认：true</p>
-<hr>
-<p><code>scalable</code> 是否允许缩放图像，默认：true</p>
-<hr>
-<p><code>zoomable</code> 是否允许放大图像，默认：true</p>
-<hr>
-<p><code>responsive</code> 在调整窗口大小的时候重新渲染cropper，默认：true</p>
-<hr>
-<p><code>restore</code> 在调整窗口大小后恢复裁剪的区域，默认：true</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;second_class&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dl</span> <span class="attr">v-for</span>=<span class="string">&quot;second in firstClass.secondClassList&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dt</span>&gt;</span>&#123;&#123; second.dt &#125;&#125;<span class="tag">&lt;/<span class="name">dt</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dd</span> <span class="attr">v-for</span>=<span class="string">&quot;item in second.dd&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>&#123;&#123; item &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dd</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dl</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里用伪元素给 dd 一个 CSS 的三角形前缀，还有竖线前缀。然后第一个问题出现了。</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">dl</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">align-items</span>: stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>dl 是 flex 布局，默认下 align-items:stretch，竖线伪元素能显示。一旦设置 align-items:center 就不显示了。</p>
+<p>竖线伪元素，高度用的百分比。也就是说此时父元素 dd 高度为 0 !!</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">dd</span><span class="selector-pseudo">:nth-of-type</span>(n + <span class="number">2</span>)<span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">1px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">70%</span>;</span><br><span class="line">  <span class="attribute">align-items</span>: flex-start;</span><br><span class="line">  <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">  <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>按下 F12 一看，dd 高度是 19px，WTF!</p>
+<div class="note info no-icon"><p>我自己解释吧，height 写百分比只看 BFC 的高度，也就是显式给 dd 指定 height 属性的高度，而这个 19px 是 FFC 的高度。所以竖线伪元素拿不到 dd 高呗。</p>
+</div>
+<p>接下来第二个问题，用 border 写的三角形前缀，显式模式 display:inline-block</p>
+<p>众所周知，行内块元素默认是基线对齐的，也就是和我们的文字并不能居中。可是这里再次刷新我的认知，当我自信地添加 vertical-align:middle 后，三角形往下跑了，呵呵。</p>
+<p>然后我写成 vertical-align:baseline，三角形居中了 ！！</p>
+<p>CSS 我学不会了，救命 ！！</p>
+<h2 id="总结">总结</h2>
+<p>flex 和 grid 的项目，其伪元素的 height 设置百分比可能要翻车，因为 height 看父元素高度时，只看 BFC 的高</p>
+<p>行内块元素的 vertical-align 绝对不是省油的灯，有时设置 middle 会翻车哦（可能因为我没玩明白）</p>
 ]]></content>
       <tags>
-        <tag>插件小知识</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>深拷贝和浅拷贝</title>
-    <url>/2022/02/13/deepCopy-shallowCopy/</url>
-    <content><![CDATA[<h3 id="前言">前言</h3>
-<p>深拷贝和浅拷贝的区别，各位大小牛们应该都不陌生，这里主要给前端新人介绍一下，也帮助我自己复习一下。</p>
-<p>为什么会突然讲这个呢，最近搬砖有点头晕目眩，趁着有空闲时刻，突然想练习一下递归，看看自己尚能饭否，结果就猪脑过载了。</p>
-<p>后来就遇到了深拷贝，毕竟作为一道前端入门的经典面试题，以及和递归相关的题目，出场率也是挺高的。</p>
-<span id="more"></span>
-<h3 id="复制一个对象">复制一个对象</h3>
-<p>在 javascript 里是不能用变量赋值的方式来复制一个对象。因为 javascript 的赋值是值传递，复制对象的引用值到另一个变量，最终会导致 2 个变量都指向同一个对象。</p>
-<h3 id="浅拷贝">浅拷贝</h3>
-<p>浅拷贝创建一个新对象，将旧对象的属性依次复制给新对象。</p>
-<p>属性值是赋值过去的，如果碰到属性值为对象类型时，则只复制引用值，最终导致新旧对象的同名属性都指向同一个对象。</p>
-<p>因此我们通常戏称浅拷贝只复制对象的第一层属性。</p>
-<p>我自己写的哦：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shallow_copy</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//普通类型或函数直接返回</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> src !== <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> src</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 借用 源对象 构造器，创建相同类型的新对象</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title">constructor</span> = <span class="title">Object</span>.<span class="title">getPrototypeOf</span>(<span class="params">src</span>).<span class="title">constructor</span></span><br><span class="line">  <span class="title">const</span> <span class="title">dst</span> = <span class="title">new</span> <span class="title">constructor</span>(<span class="params"></span>)</span><br><span class="line"></span><br><span class="line">  // 遍历属性然后复制</span><br><span class="line">  <span class="title">Object</span>.<span class="title">keys</span>(<span class="params">src</span>).<span class="title">forEach</span>(<span class="params">k =&gt; &#123;</span></span><br><span class="line"><span class="params">    dst[k] = src[k]</span></span><br><span class="line"><span class="params">  &#125;</span>)</span><br><span class="line">  <span class="title">return</span> <span class="title">dst</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="深拷贝">深拷贝</h3>
-<p>深拷贝创建一个新对象，将旧对象的属性依次复制给新对象。当中遇到对象类型的属性，则创建新的子对象，将旧的子对象的属性复制给新的子对象。</p>
-<p>这里区别在于碰到属性值是对象类型时，我们不是简单复制引用值了，而是在内存中创建新对象，然后再进行拷贝。</p>
-<p>这种将子孙对象也进行拷贝的做法，就很“深”。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deep_copy</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//普通类型或函数直接返回</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> src !== <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> src</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 借用源对象构造器，创建相同类型的新对象</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title">constructor</span> = <span class="title">Object</span>.<span class="title">getPrototypeOf</span>(<span class="params">src</span>).<span class="title">constructor</span></span><br><span class="line">  <span class="title">const</span> <span class="title">dst</span> = <span class="title">new</span> <span class="title">constructor</span>(<span class="params"></span>)</span><br><span class="line"></span><br><span class="line">  // 递归：普通数据类型会直接返回，对象或数组则继续遍历复制</span><br><span class="line">  <span class="title">Object</span>.<span class="title">keys</span>(<span class="params">src</span>).<span class="title">forEach</span>(<span class="params">k =&gt; &#123;</span></span><br><span class="line"><span class="params">    dst[k] = deep_copy(src[k])</span></span><br><span class="line"><span class="params">  &#125;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="title">return</span> <span class="title">dst</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="注意事项">注意事项</h3>
-<p>在遍历对象的时候我使用了 <code>Object.keys()</code>，该方法会返回对象自身可枚举属性的集合。</p>
-<p>但是有小伙伴可能会使用 <code>for in</code> 来遍历对象的属性，这里就要讲一下区别：</p>
-<pre><code>- `Object.keys()` 只会枚举自身属性
-- `for in` 不仅会枚举自身属性，还会枚举原型链上的属性
-</code></pre>
-<p>如果自己写一个 Object.keys() 方法，我可能会这样写</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Object</span>.keys = <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> k <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    <span class="keyword">if</span> (obj.hasOwnProperty(k) &amp;&amp; obj.propertyIsEnumerable(k)) &#123;</span><br><span class="line">      result.push(k)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看到我在实现 <code>Object.keys()</code> 时，也使用了 <code>for in</code>，但是注意，只有自身属性才会被加入集合。</p>
-<p>关于 <code>Object.prototype.propertyIsEnumerable</code> 其实只是单纯为了复习一下方法，在这里没有任何作用，因为上 <code>for in</code> 并不能遍历出不可枚举的属性。</p>
-]]></content>
-      <tags>
-        <tag>杂货</tag>
+        <tag>我真的学不会 CSS</tag>
       </tags>
   </entry>
   <entry>
@@ -297,7 +326,7 @@ docker-compose版本：1.27.4</p>
 <ol start="3">
 <li>配置 docker-compose.yml</li>
 </ol>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">    <span class="attr">mysql:</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">registry.cn-shenzhen.aliyuncs.com/sugaral/mysql:8.0.20</span>  <span class="comment"># 自行选择 mysql 镜像</span></span><br><span class="line">        <span class="attr">container_name:</span> <span class="string">mysql</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="number">3306</span><span class="string">:3306</span></span><br><span class="line">            </span><br><span class="line">        <span class="attr">environment:</span></span><br><span class="line">            <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="attr">MYSQL_DATABASE:</span> <span class="string">my_db_1</span></span><br><span class="line">            <span class="attr">MYSQL_USER:</span> <span class="string">sugar</span> <span class="comment"># mysql 默认已有 root 用户，该属性是创建一个 root 以外的新用户</span></span><br><span class="line">            <span class="attr">MYSQL_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="comment">#MYSQL_ROOT_HOST: &#x27;%&#x27; # 远程连接通配符白名单，仅限本机使用则无需开启    </span></span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">        <span class="attr">command:</span> </span><br><span class="line">            <span class="comment"># yml 注释反人类，真的反人类，别吐槽注释位置</span></span><br><span class="line">            <span class="comment"># 为了防止出现同时存在大小写库表，这里设置表名在磁盘里以小写存储，只能配置在启动项里</span></span><br><span class="line">            <span class="comment"># 除了表明大小写设置外，后续的既可以配置在启动项，也能配置在 .cnf 文件中</span></span><br><span class="line">            <span class="comment"># 旧客户端不支持新的用户认证方式，为了照顾它们这里修改为旧方式密码加密</span></span><br><span class="line">            <span class="comment"># 默认的 timestamp 规则让人挠头，而且不同版本也不一样，这个选项让 timestamp 重归正常，和其他数据类型一样使用，如 dateTime </span></span><br><span class="line">            <span class="string">--lower_case_table_names=1</span></span><br><span class="line">            <span class="string">--default-authentication-plugin=mysql_native_password</span> </span><br><span class="line">            <span class="string">--character_set_server=utf8mb4</span></span><br><span class="line">            <span class="string">--collation-server=utf8mb4_general_ci</span></span><br><span class="line">            </span><br><span class="line">        <span class="attr">volumes:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_DATA&#125;:/var/lib/mysql</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_CONF&#125;:/etc/mysql/conf.d</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_LOGS&#125;:/var/log/mysql</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">    <span class="attr">mysql:</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">registry.cn-shenzhen.aliyuncs.com/sugaral/mysql:8.0.20</span>  <span class="comment"># 自行选择 mysql 镜像</span></span><br><span class="line">        <span class="attr">container_name:</span> <span class="string">mysql</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="number">3306</span><span class="string">:3306</span></span><br><span class="line"></span><br><span class="line">        <span class="attr">environment:</span></span><br><span class="line">            <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="attr">MYSQL_DATABASE:</span> <span class="string">my_db_1</span></span><br><span class="line">            <span class="attr">MYSQL_USER:</span> <span class="string">sugar</span> <span class="comment"># mysql 默认已有 root 用户，该属性是创建一个 root 以外的新用户</span></span><br><span class="line">            <span class="attr">MYSQL_PASSWORD:</span> <span class="string">$&#123;MASTER_PASSWD&#125;</span></span><br><span class="line">            <span class="comment">#MYSQL_ROOT_HOST: &#x27;%&#x27; # 远程连接通配符白名单，仅限本机使用则无需开启</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">            <span class="comment"># yml 注释反人类，真的反人类，别吐槽注释位置</span></span><br><span class="line">            <span class="comment"># 为了防止出现同时存在大小写库表，这里设置表名在磁盘里以小写存储，只能配置在启动项里</span></span><br><span class="line">            <span class="comment"># 除了表明大小写设置外，后续的既可以配置在启动项，也能配置在 .cnf 文件中</span></span><br><span class="line">            <span class="comment"># 旧客户端不支持新的用户认证方式，为了照顾它们这里修改为旧方式密码加密</span></span><br><span class="line">            <span class="comment"># 默认的 timestamp 规则让人挠头，而且不同版本也不一样，这个选项让 timestamp 重归正常，和其他数据类型一样使用，如 dateTime</span></span><br><span class="line">            <span class="string">--lower_case_table_names=1</span></span><br><span class="line">            <span class="string">--default-authentication-plugin=mysql_native_password</span></span><br><span class="line">            <span class="string">--character_set_server=utf8mb4</span></span><br><span class="line">            <span class="string">--collation-server=utf8mb4_general_ci</span></span><br><span class="line"></span><br><span class="line">        <span class="attr">volumes:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_DATA&#125;:/var/lib/mysql</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_CONF&#125;:/etc/mysql/conf.d</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">$&#123;MASTER_LOGS&#125;:/var/log/mysql</span></span><br></pre></td></tr></table></figure>
 <h3 id="启动">启动</h3>
 <p>在 docker-compose.yml 文件夹下进入 powershell</p>
 <p>然后使用命令 <code>docker-compose up</code> 启动 mysql</p>
@@ -308,7 +337,7 @@ docker-compose版本：1.27.4</p>
 </ol>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;char%&#x27;</span></span><br></pre></td></tr></table></figure>
 <ol start="2">
-<li>获取 mysql 数据存储点</li>
+<li>获取 mysql 数据存储目录</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;%data%&#x27;</span>;</span><br></pre></td></tr></table></figure>
 <ol start="3">
@@ -407,6 +436,42 @@ docker-compose版本：1.27.4</p>
       </tags>
   </entry>
   <entry>
+    <title>深拷贝和浅拷贝</title>
+    <url>/2022/02/13/deepCopy-shallowCopy/</url>
+    <content><![CDATA[<h3 id="前言">前言</h3>
+<p>深拷贝和浅拷贝的区别，各位大小牛们应该都不陌生，这里主要给前端新人介绍一下，也帮助我自己复习一下。</p>
+<p>为什么会突然讲这个呢，最近搬砖有点头晕目眩，趁着有空闲时刻，突然想练习一下递归，看看自己尚能饭否，结果就猪脑过载了。</p>
+<p>后来就遇到了深拷贝，毕竟作为一道前端入门的经典面试题，以及和递归相关的题目，出场率也是挺高的。</p>
+<span id="more"></span>
+<h3 id="复制一个对象">复制一个对象</h3>
+<p>在 javascript 里是不能用变量赋值的方式来复制一个对象。因为 javascript 的赋值是值传递，复制对象的引用值到另一个变量，最终会导致 2 个变量都指向同一个对象。</p>
+<h3 id="浅拷贝">浅拷贝</h3>
+<p>浅拷贝创建一个新对象，将旧对象的属性依次复制给新对象。</p>
+<p>属性值是赋值过去的，如果碰到属性值为对象类型时，则只复制引用值，最终导致新旧对象的同名属性都指向同一个对象。</p>
+<p>因此我们通常戏称浅拷贝只复制对象的第一层属性。</p>
+<p>我自己写的哦：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shallow_copy</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//普通类型或函数直接返回</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> src !== <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> src</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 借用 源对象 构造器，创建相同类型的新对象</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title">constructor</span> = <span class="title">Object</span>.<span class="title">getPrototypeOf</span>(<span class="params">src</span>).<span class="title">constructor</span></span><br><span class="line">  <span class="title">const</span> <span class="title">dst</span> = <span class="title">new</span> <span class="title">constructor</span>(<span class="params"></span>)</span><br><span class="line"></span><br><span class="line">  // 遍历属性然后复制</span><br><span class="line">  <span class="title">Object</span>.<span class="title">keys</span>(<span class="params">src</span>).<span class="title">forEach</span>(<span class="params">k =&gt; &#123;</span></span><br><span class="line"><span class="params">    dst[k] = src[k]</span></span><br><span class="line"><span class="params">  &#125;</span>)</span><br><span class="line">  <span class="title">return</span> <span class="title">dst</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="深拷贝">深拷贝</h3>
+<p>深拷贝创建一个新对象，将旧对象的属性依次复制给新对象。当中遇到对象类型的属性，则创建新的子对象，将旧的子对象的属性复制给新的子对象。</p>
+<p>这里区别在于碰到属性值是对象类型时，我们不是简单复制引用值了，而是在内存中创建新对象，然后再进行拷贝。</p>
+<p>这种将子孙对象也进行拷贝的做法，就很“深”。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deep_copy</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//普通类型或函数直接返回</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> src !== <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> src</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 借用源对象构造器，创建相同类型的新对象</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title">constructor</span> = <span class="title">Object</span>.<span class="title">getPrototypeOf</span>(<span class="params">src</span>).<span class="title">constructor</span></span><br><span class="line">  <span class="title">const</span> <span class="title">dst</span> = <span class="title">new</span> <span class="title">constructor</span>(<span class="params"></span>)</span><br><span class="line"></span><br><span class="line">  // 递归：普通数据类型会直接返回，对象或数组则继续遍历复制</span><br><span class="line">  <span class="title">Object</span>.<span class="title">keys</span>(<span class="params">src</span>).<span class="title">forEach</span>(<span class="params">k =&gt; &#123;</span></span><br><span class="line"><span class="params">    dst[k] = deep_copy(src[k])</span></span><br><span class="line"><span class="params">  &#125;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="title">return</span> <span class="title">dst</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="注意事项">注意事项</h3>
+<p>在遍历对象的时候我使用了 <code>Object.keys()</code>，该方法会返回对象自身可枚举属性的集合。</p>
+<p>但是有小伙伴可能会使用 <code>for in</code> 来遍历对象的属性，这里就要讲一下区别：</p>
+<pre><code>- `Object.keys()` 只会枚举自身属性
+- `for in` 不仅会枚举自身属性，还会枚举原型链上的属性
+</code></pre>
+<p>如果自己写一个 Object.keys() 方法，我可能会这样写</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Object</span>.keys = <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> k <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    <span class="keyword">if</span> (obj.hasOwnProperty(k) &amp;&amp; obj.propertyIsEnumerable(k)) &#123;</span><br><span class="line">      result.push(k)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到我在实现 <code>Object.keys()</code> 时，也使用了 <code>for in</code>，但是注意，只有自身属性才会被加入集合。</p>
+<p>关于 <code>Object.prototype.propertyIsEnumerable</code> 其实只是单纯为了复习一下方法，在这里没有任何作用，因为上 <code>for in</code> 并不能遍历出不可枚举的属性。</p>
+]]></content>
+      <tags>
+        <tag>杂货</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浅谈 typescript 装饰器</title>
     <url>/2021/07/21/learnDescriptor1/</url>
     <content><![CDATA[<h1>浅谈 typescript 装饰器</h1>
@@ -422,7 +487,7 @@ docker-compose版本：1.27.4</p>
 <p>typescript 的属性装饰器，是指对类中的属性进行装饰，以代码入侵性较低的方式增强该属性。当我们使用类对象的属性时，完成我们自定义的额外功能。</p>
 <p>下面是一个用 es5 风格编写的属性装饰器的例子，通过 <strong>Object.defineProperty</strong> 将类的普通属性改写成存取器属性，然后通过 <strong><ruby> Object accessor<rt>getter and setter </rt></ruby></strong> 拦截属性的基础操作，从而添加自定义的额外代码。</p>
 <p>属性装饰器函数有固定的参数：target 指被修饰的类，key 指被修饰类的属性。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//类属性装饰器</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logProperty</span>(<span class="params">target:any,key:string</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">delete</span> target[key]</span><br><span class="line">  <span class="keyword">let</span> backing = <span class="string">&#x27;_&#x27;</span>+key</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(target,backing,&#123;</span><br><span class="line">      <span class="attr">writable</span>:<span class="literal">true</span>,</span><br><span class="line">      <span class="attr">configurable</span>:<span class="literal">true</span>,</span><br><span class="line">      <span class="attr">enumerable</span>:<span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getter</span>(<span class="params"><span class="built_in">this</span>:any</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">const</span> value = <span class="built_in">this</span>.backing</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`Get: <span class="subst">$&#123;key&#125;</span> =&gt; <span class="subst">$&#123;value&#125;</span>`</span>)</span><br><span class="line">      <span class="keyword">return</span> value</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">setter</span>(<span class="params"><span class="built_in">this</span>:any,newVal:any</span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`Set: <span class="subst">$&#123;key&#125;</span> =&gt; <span class="subst">$&#123;newVal&#125;</span>`</span>)</span><br><span class="line">      <span class="built_in">this</span>.backing = newVal</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(target,key,&#123;</span><br><span class="line">      <span class="attr">get</span>:getter,</span><br><span class="line">      <span class="attr">set</span>:setter,</span><br><span class="line">      <span class="attr">configurable</span>:<span class="literal">true</span>,</span><br><span class="line">      <span class="attr">enumerable</span>:<span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Employee</span></span>&#123;</span><br><span class="line">  @logProperty</span><br><span class="line">  name?:string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> e = <span class="keyword">new</span> Employee</span><br><span class="line">e.name<span class="comment">//&quot;Get: name =&gt; undefined&quot; </span></span><br><span class="line">e.name = <span class="string">&#x27;sugar&#x27;</span><span class="comment">//&quot;Set: name =&gt; sugar&quot; </span></span><br><span class="line">e.name<span class="comment">//&quot;Get: name =&gt; sugar&quot; </span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//类属性装饰器</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logProperty</span>(<span class="params">target:any,key:string</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">delete</span> target[key]</span><br><span class="line">  <span class="keyword">let</span> backing = <span class="string">&#x27;_&#x27;</span>+key</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(target,backing,&#123;</span><br><span class="line">      <span class="attr">writable</span>:<span class="literal">true</span>,</span><br><span class="line">      <span class="attr">configurable</span>:<span class="literal">true</span>,</span><br><span class="line">      <span class="attr">enumerable</span>:<span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getter</span>(<span class="params"><span class="built_in">this</span>:any</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">const</span> value = <span class="built_in">this</span>.backing</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`Get: <span class="subst">$&#123;key&#125;</span> =&gt; <span class="subst">$&#123;value&#125;</span>`</span>)</span><br><span class="line">      <span class="keyword">return</span> value</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">setter</span>(<span class="params"><span class="built_in">this</span>:any,newVal:any</span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`Set: <span class="subst">$&#123;key&#125;</span> =&gt; <span class="subst">$&#123;newVal&#125;</span>`</span>)</span><br><span class="line">      <span class="built_in">this</span>.backing = newVal</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(target,key,&#123;</span><br><span class="line">      <span class="attr">get</span>:getter,</span><br><span class="line">      <span class="attr">set</span>:setter,</span><br><span class="line">      <span class="attr">configurable</span>:<span class="literal">true</span>,</span><br><span class="line">      <span class="attr">enumerable</span>:<span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Employee</span></span>&#123;</span><br><span class="line">  @logProperty</span><br><span class="line">  name?:string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> e = <span class="keyword">new</span> Employee</span><br><span class="line">e.name<span class="comment">//&quot;Get: name =&gt; undefined&quot;</span></span><br><span class="line">e.name = <span class="string">&#x27;sugar&#x27;</span><span class="comment">//&quot;Set: name =&gt; sugar&quot;</span></span><br><span class="line">e.name<span class="comment">//&quot;Get: name =&gt; sugar&quot;</span></span><br></pre></td></tr></table></figure>
 <p>我们使用 es6 风格的 Proxy 和 Reflect 重写一下看看，哈哈，我也不会写，毕竟我也是抄别人的。</p>
 <h3 id="类装饰器">类装饰器</h3>
 <p>类装饰器可以给一个类插入一个类方法。</p>
@@ -434,7 +499,7 @@ docker-compose版本：1.27.4</p>
 <h3 id="类方法装饰器">类方法装饰器</h3>
 <p>方法装饰器和属性装饰器相比，多了一个参数：descriptor，这个参数里记录了原函数的引用，用于调用原函数。</p>
 <p>下面的例子中，我们通过改写 descriptor.value 将原来的方法替换成了新方法，并新增了日志功能。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//类方法装饰器</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">LogMethod</span>(<span class="params">target:any,key:string,descriptor:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> oldMethod = descriptor.value</span><br><span class="line">    <span class="keyword">const</span> newMethod = <span class="function"><span class="keyword">function</span>(<span class="params"><span class="built_in">this</span>:any,...args:any[]</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> result = oldMethod.call(<span class="built_in">this</span>,args)</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">this</span>.logOutput)&#123;</span><br><span class="line">            <span class="built_in">this</span>.logOutput = <span class="keyword">new</span> <span class="built_in">Array</span>&lt;any&gt;()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">this</span>.logOutput.push(&#123;</span><br><span class="line">            <span class="attr">method</span>:key,</span><br><span class="line">            <span class="attr">parameter</span>:args,</span><br><span class="line">            <span class="attr">result</span>:result,</span><br><span class="line">            <span class="attr">timestamp</span>:<span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    descriptor.value = newMethod</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calculator</span> </span>&#123;</span><br><span class="line">    @LogMethod</span><br><span class="line">    <span class="function"><span class="title">double</span>(<span class="params">num:number</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> num * <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c = <span class="keyword">new</span> Calculator()</span><br><span class="line">c.double(<span class="number">2</span>)</span><br><span class="line">c.double(<span class="number">10</span>)</span><br><span class="line"><span class="built_in">console</span>.log(c.logOutput)</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">[LOG]: [&#123;</span></span><br><span class="line"><span class="comment">  &quot;method&quot;: &quot;double&quot;,</span></span><br><span class="line"><span class="comment">  &quot;parameter&quot;: [</span></span><br><span class="line"><span class="comment">    2</span></span><br><span class="line"><span class="comment">  ],</span></span><br><span class="line"><span class="comment">  &quot;result&quot;: 4,</span></span><br><span class="line"><span class="comment">  &quot;timestamp&quot;: &quot;2021-07-21T08:58:45.706Z&quot;</span></span><br><span class="line"><span class="comment">&#125;, &#123;</span></span><br><span class="line"><span class="comment">  &quot;method&quot;: &quot;double&quot;,</span></span><br><span class="line"><span class="comment">  &quot;parameter&quot;: [</span></span><br><span class="line"><span class="comment">    10</span></span><br><span class="line"><span class="comment">  ],</span></span><br><span class="line"><span class="comment">  &quot;result&quot;: 20,</span></span><br><span class="line"><span class="comment">  &quot;timestamp&quot;: &quot;2021-07-21T08:58:45.706Z&quot;</span></span><br><span class="line"><span class="comment">&#125;] </span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//类方法装饰器</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">LogMethod</span>(<span class="params">target:any,key:string,descriptor:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> oldMethod = descriptor.value</span><br><span class="line">    <span class="keyword">const</span> newMethod = <span class="function"><span class="keyword">function</span>(<span class="params"><span class="built_in">this</span>:any,...args:any[]</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> result = oldMethod.call(<span class="built_in">this</span>,args)</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">this</span>.logOutput)&#123;</span><br><span class="line">            <span class="built_in">this</span>.logOutput = <span class="keyword">new</span> <span class="built_in">Array</span>&lt;any&gt;()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">this</span>.logOutput.push(&#123;</span><br><span class="line">            <span class="attr">method</span>:key,</span><br><span class="line">            <span class="attr">parameter</span>:args,</span><br><span class="line">            <span class="attr">result</span>:result,</span><br><span class="line">            <span class="attr">timestamp</span>:<span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    descriptor.value = newMethod</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calculator</span> </span>&#123;</span><br><span class="line">    @LogMethod</span><br><span class="line">    <span class="function"><span class="title">double</span>(<span class="params">num:number</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> num * <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c = <span class="keyword">new</span> Calculator()</span><br><span class="line">c.double(<span class="number">2</span>)</span><br><span class="line">c.double(<span class="number">10</span>)</span><br><span class="line"><span class="built_in">console</span>.log(c.logOutput)</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">[LOG]: [&#123;</span></span><br><span class="line"><span class="comment">  &quot;method&quot;: &quot;double&quot;,</span></span><br><span class="line"><span class="comment">  &quot;parameter&quot;: [</span></span><br><span class="line"><span class="comment">    2</span></span><br><span class="line"><span class="comment">  ],</span></span><br><span class="line"><span class="comment">  &quot;result&quot;: 4,</span></span><br><span class="line"><span class="comment">  &quot;timestamp&quot;: &quot;2021-07-21T08:58:45.706Z&quot;</span></span><br><span class="line"><span class="comment">&#125;, &#123;</span></span><br><span class="line"><span class="comment">  &quot;method&quot;: &quot;double&quot;,</span></span><br><span class="line"><span class="comment">  &quot;parameter&quot;: [</span></span><br><span class="line"><span class="comment">    10</span></span><br><span class="line"><span class="comment">  ],</span></span><br><span class="line"><span class="comment">  &quot;result&quot;: 20,</span></span><br><span class="line"><span class="comment">  &quot;timestamp&quot;: &quot;2021-07-21T08:58:45.706Z&quot;</span></span><br><span class="line"><span class="comment">&#125;]</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
 <h3 id="结语">结语</h3>
 <p>以上是3种常用装饰器的使用案例，typescript 还有其他装饰器，这里就不列出了，因为笔者也只了解这3种。</p>
 <p>本篇没有对装饰器做出足够详细的讲解，笔者也只懂这些，不足之处请多多包涵。</p>
@@ -446,44 +511,46 @@ docker-compose版本：1.27.4</p>
   <entry>
     <title>学习 Git ——— 最基础的命令</title>
     <url>/2021/12/02/learnGit/</url>
-    <content><![CDATA[<h3 id="啰里啰唆，不看也罢系列">啰里啰唆，不看也罢系列</h3>
-<p>git，分布式版本控制软件，用仓库的概念管理文件，支持文件版本的提交和回滚，更好地支撑项目开发。</p>
-<p>git 本地仓库，一个隐藏的文件夹 <code>.git</code>，里面存放着提交过的所有版本，每个版本有对应文件的完整快照。</p>
-<p>git 每次提交会新增一个版本，修改过的文件会完整地保存在该版本中，称为 <code>快照</code> 。未被修改的则保存上一版本的引用。</p>
-<p>git 管理的目录叫 <code>工作区</code>，该目录下的文件为 <code>工作区的文件</code></p>
-<p>工作区的文件有 4 种状态：<code>未追踪、未修改、已修改、已暂存</code>。操作本地仓库的最终目的，就是让所有文件处在 <code>未修改</code> 状态，即工作区文件和本地仓库保持一致。</p>
+    <content><![CDATA[<h3 id="概览">概览</h3>
+<div class="note info no-icon"><p>分布式版本控制软件，支持文件版本的提交和回滚<br>
+修改过的文件完整保存为一个快照，每个版本有对应文件的完整快照<br>
+文件有 4 种状态：<code>未追踪、未修改、已修改、已暂存</code>。<br>
+让所有文件处在 <code>未修改</code> 状态，即工作区和仓库保持一致，这是操作仓库的最终目的。</p>
+</div>
 <span id="more"></span>
 <h3 id="从零开始使用-git">从零开始使用 git</h3>
 <p><strong>创建仓库</strong></p>
-<p>使用 <code>git init</code> 命令创建本地仓库。该命令在当前目录下新建 <code>.git</code> 文件夹作为本地仓库。</p>
-<p><code>.git</code> 所处的目录就是工作区，工作区内所有层级下的文件都会被 git 管理。</p>
-<p><strong>将工作区内未追踪、已修改的文件添加进暂存区</strong></p>
-<p>文件添加进仓库之前，需要暂存，使用 <code>git add .</code> 将目录下所有未追踪、已修改的文件添加到暂存区，文件状态变为已暂存。</p>
-<p>也可以使用 <code>git add filename</code> 添加指定文件，实际操作中不常用。</p>
-<p><strong>将暂存区的文件放进仓库</strong></p>
-<p>执行 <code>git commit -m &quot;完成一次提交&quot;</code> 命令，会把已暂存、未修改的文件作为一个新的版本放进 git 仓库。</p>
-<p>已暂存的文件会在新的版本中以完整快照存储，未修改的文件则存储上一个版本的索引。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<p><code>.git</code> 所处的目录下的文件会被 git 管理。</p>
+<p><strong>加进暂存区</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+<p>这将让未追踪或已修改的文件添加到暂存区</p>
+<p><strong>放进仓库</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;完成一次提交&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这将让已暂存或未修改的文件放进 git 仓库，形成一个新的版本。</p>
 <h3 id="状态命令">状态命令</h3>
-<p><strong>显示文件状态</strong></p>
-<p>使用 <code>git status</code> 可以查看当前工作区的文件正处在什么状态。最开始状态呈红色显示，其中 ?? 代表未跟踪，M 代表已修改。</p>
-<p>如果使用了 <code>git add</code> 命令，则将<code>未跟踪、已修改</code>的文件加入暂存区，状态呈绿色显示。其中 A 代表已暂存<code>未跟踪</code>文件，M 代表已暂存<code>已修改</code>文件。</p>
-<p><code>未修改</code> 的文件不会显示。</p>
-<p>使用 <code>git status --short</code> 或 <code>git status -s</code> 来查看短格式。</p>
-<p><strong>显示版本记录</strong></p>
-<p>如果想查看当前仓库提交了多少个版本，使用 <code>git log</code> 可以查看提交信息，按 q 退出。</p>
-<p>提交信息包含了：版本的唯一标识 hash，提交的日期 date，提交的作者及邮箱 author，提交时的文本commit</p>
-<p><code>git log -2</code> 查看最新的两个版本</p>
-<p><code>git log --pretty=oneline</code> 查看短格式，只保留 hash 和 commit</p>
+<p><strong>文件状态</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+<p>未跟踪(??)，已修改(M) 的文件用红色标记。</p>
+<p>已跟踪(A)，已暂存修改(M) 的文件用绿色标记。</p>
+<p>未修改(U) 的文件不会列出。</p>
+<p><code>--short</code> 或 <code>-s</code> 选项输出短格式。</p>
+<p><strong>版本记录</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+<p>查看提交信息，按 q 退出。</p>
+<p>信息包含了：版本标识 hash，提交日期 date，作者及邮箱 author，提交文本 commit</p>
+<p><code>git log -2</code> 显示最新的两个版本</p>
+<p><code>git log --pretty=oneline</code> 显示短格式，只保留 hash 和 commit</p>
 <p><code>git log --pretty=</code></p>
-<h3 id="连接远程仓库-github">连接远程仓库 github</h3>
-<p><strong>初始配置 git</strong></p>
+<h3 id="连接远程仓库">连接远程仓库</h3>
+<p><strong>全局配置</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;邮箱&quot;</span></span><br></pre></td></tr></table></figure>
 <p><strong>首次提交</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> yourApp</span><br><span class="line">git init</span><br><span class="line">touch README.md</span><br><span class="line">git add README.md</span><br><span class="line">git commit -m <span class="string">&quot;first-commit&quot;</span></span><br><span class="line">git remote add origin <span class="comment">#仓库地址（不加引号）</span></span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
-<p><strong>后续提交</strong></p>
+<p><strong>提交</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&#x27;提交注释&#x27;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
 <h3 id="推送分支">推送分支</h3>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push -u origin 本地分支名</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push -u origin 本地分支名</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>学习</tag>
@@ -492,7 +559,7 @@ docker-compose版本：1.27.4</p>
   <entry>
     <title>试玩一个 Json 服务器 —— json-server</title>
     <url>/2021/12/07/learnJsonServer/</url>
-    <content><![CDATA[<p>当我们前端需要数据调试的时候，除了使用 mock，或者通过 node express 开启服务监听返回数据外，还有一种模拟数据的方法，那就是今天试玩的 json-server</p>
+    <content><![CDATA[<p>当我们前端调试数据的时候，除了使用 mock，或者通过 node express 开启服务监听返回数据外，还有一种玩法，那就是今天试玩的 json-server</p>
 <p>安装命令（全局安装）</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g json-server</span><br></pre></td></tr></table></figure>
 <p>create a json file，名字随便起个 db.json，里面装个示例数据。</p>
@@ -501,96 +568,7 @@ docker-compose版本：1.27.4</p>
 <p>然后在 db.json 相同文件目录下使用启动命令</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">json-server --watch db.json</span><br></pre></td></tr></table></figure>
 <p>设置响应延时</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">json-server --watch db.json --delay 2000</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>跟我一起手撕 Promise</title>
-    <url>/2021/11/19/learnPromise/</url>
-    <content><![CDATA[<h3 id="Promise-的初体验">Promise 的初体验</h3>
-<p>Promise 是 ES6 新增的规范，它是 JS 中进行异步编程的新解决方案，可以很好地解决异步编程中回调地狱问题，让代码更加优雅。</p>
-<p>JS 中常见的异步编程，比如数据库 IO，文件 IO，网络请求 AJAX，定时器等。</p>
-<p>当我们调用异步任务时，是无法准确得知函数何时返回结果，通过 JS 顺序语句也无法获取结果，这时我们必须给异步任务提供回调函数。</p>
-<p>让异步任务在合适的时机帮我们调用回调函数并传入结果，以便我们在回调函数中获取结果值并执行后续操作，比如渲染 DOM，比如写入文件，比如发起新一轮的网络请求。</p>
-<p>在没有 Promise 时，我们的生活是怎么样的呢，下面给出例子。</p>
-<span id="more"></span>
-<p>假如有3个异步任务，他们之间形成了依赖关系，每个异步任务的请求参数需要上一个异步任务的结果值。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">getSomeData(params,<span class="function"><span class="keyword">function</span>(<span class="params">data,err</span>)</span>&#123;</span><br><span class="line">  getOtherData(data,<span class="function"><span class="keyword">function</span>(<span class="params">otherData,err</span>)</span>&#123;</span><br><span class="line">    getLastData(otherData,<span class="function"><span class="keyword">function</span>(<span class="params">lastData,err</span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;I have got the lastData&#x27;</span> + lastData)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>可以看出，使用纯回调函数来处理以特定执行顺序编排的异步任务，会出现层层嵌套的书写格式。其中嵌套的任务越多，代码就会持续向右缩进，给我们阅读和维护造成影响。我们称这种书写格式为回调地狱</p>
-<p>我们用 Promise 改写一下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">  getSomeData(params,<span class="function"><span class="keyword">function</span>(<span class="params">data,err</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) reject(err)</span><br><span class="line">    resolve(data)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">value</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    getOtherData(value,<span class="function"><span class="keyword">function</span>(<span class="params">data,err</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err) reject(err)</span><br><span class="line">      resolve(data)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">value</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    getLastData(value,<span class="function"><span class="keyword">function</span>(<span class="params">data,err</span>)=&gt;</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err) reject(err)</span><br><span class="line">      resolve(data)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">value</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;I have got the lastData&#x27;</span> + value)</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>Promise 将层层的花括号嵌套，转变为线性的书写的格式，而且异常处理也十分容易，只需要在最后 catch 一下就行。</p>
-<p>别看着代码量变多了，当异步任务的逻辑变得复杂时，这种链式的书写格式所造就的可维护性，是之前纯回调函数无法比拟的。</p>
-<p>因为我们每一个异步任务都可以单独进行折叠和修改，而之前回调地狱，一折叠其中一个任务，就会把往后所有任务都给递归折叠。</p>
-<!-- javascript
-// promisify 是一个能将异步任务转变为 promise 风格的函数
-// 这里是 async function 内的代码
-const forSomeData = promisify(getSomeData)
-const forOtherData = promisify(getOtherData)
-const forThirdData = promisify(getThirdData)
-try{
-  const someData = await forSomeData(params)
-  const otherData = await forOtherData(someData)
-  const thirdData = await forThirdData(otherData)
-  console.log('I have got the ThirdData' + thirdData)
-}catch(e){
-  console.log(e.message)
-}
- -->
-<!-- 我们通常会将异步任务封装成 promise 风格的函数，然后通过 async 和 await 获取他们的值，将层层的花括号嵌套，转变为线性的书写的格式，而且异常处理也十分容易。 -->
-<h3 id="剖析-Promise-的优势">剖析 Promise 的优势</h3>
-<p><strong>从异步任务中解耦了回调函数</strong> ⭐⭐⭐⭐⭐</p>
-<p>Promise 最大的特征，是它对回调函数没有做硬性要求。</p>
-<p>你指定回调也好，不指定也罢。或者立马指定回调，或者等一等再指定回调（异步）</p>
-<p>无论你用什么姿势提供回调函数，都不会影响 Promise 执行。</p>
-<p>跟我们以前只要定义异步任务就一定要传入回调函数的方式来比，简直就是新奇。</p>
-<p><strong>提供链式调用</strong> ⭐</p>
-<p>链式调用，指一个对象执行了方法，这个方法最终也会返回对象来供我们继续调用方法。</p>
-<p>链式调用对我们而言也不是什么新奇货了，放在 Promise 这里也是一样。</p>
-<p>Promise 的 then 方法会返回新的 Promise 实例，供我们继续调用 then 方法。</p>
-<p>那么我们就可以通过 then 方法，组成一条 Promise 链，来串连我们的异步任务，就像上面的例子一样。</p>
-<p><strong>异常穿透</strong> ⭐</p>
-<p>有了异常穿透，我们无需为每个 Promise 单独设置错误回调函数，而只需要在 Promise 链的最后添加错误回调函数（也称为 onRejected），就能捕获到整条 Promise 链上出现的错误。</p>
-<div class="note info no-icon"><p>总结起来，Promise 的三个特点：解耦回调函数、异常穿透、链式调用</p>
-</div>
-<h3 id="Promise-的内部实现">Promise 的内部实现</h3>
-<p><strong>Promise 如何实现状态的转换</strong></p>
-<p>Promise 实例有 2 个重要属性：</p>
-<pre><code>promiseResult 保存异步任务的结果值
-promiseState 当前 Promise 实例的状态
-</code></pre>
-<p>Promise 实例的初始状态为 pending，它只有以下 2 种状态转换，且一个实例的状态只能改变一次：</p>
-<pre><code>pending -&gt; fulfilled 成功
-pending -&gt; rejected 失败
-</code></pre>
-<p>我们在创建 Promise 实例时，需要向构造函数传入一个执行器函数，这个函数的参数提供了两个方法： <code>resolve</code> 和 <code>reject</code></p>
-<p>通过调用 resolve 方法，将 promiseState 改为 fulfilled，而 reject 方法则反之。</p>
-<p>作为一个未完成的 promise 对象，它的状态为 <code>pending</code> ，它的结果值为 <code>null</code></p>
-<p>通过 Promise 构造函数我们可以创建一个 promise 对象：<code>new Promise(()=&gt;&#123;&#125;)</code></p>
-<p>Promise 构造函数接收一个函数作为参数，我们称这个函数为执行器函数：<code>executor</code></p>
-<p>执行器函数 <code>executor</code> 接收两个参数：<code>resolve</code> 和 <code>reject</code>。这是 Promise 构造函数的内部函数。其作用是修改 promise 的状态和结果值。</p>
-<p>因此创建 promise 对象时我们通常写成： <code>new Promise((resolve,reject)=&gt;&#123;&#125;)</code></p>
-<p>在执行器函数中，我们通常会书写异步任务的代码。</p>
-<p>在执行器函数中调用 <code>resolve(value)</code>，则将 promise 对象的状态由 <code>pending</code> 更改为 <code>resolved</code>，并设置结果值为 value</p>
-<p>在执行器函数中调用 <code>reject(reason)</code>，则将 promise 对象的状态由 <code>pending</code> 更改为 <code>rejected</code>，并设置结果值为 reason</p>
-<p>一个 promise 对象的状态只能变更一次，即从 <code>pending</code> 变更为 <code>resolved</code>，或者从 <code>pending</code> 变更为 <code>rejected</code></p>
-<p>promise 对象的结果值和状态是同时改变的，所以 promise 的结果值也只能变更一次</p>
-<p>我们可以通过 promise 对象的 then 方法设置回调函数，通过设置回调函数来获取异步任务的结果或失败的原因。</p>
-<p>then 方法接收两个参数： <code>onResolved</code> 和 <code>onRejected</code></p>
-<p>其中 <code>onResolved</code> 是成功的回调函数，我们通常写成 <code>(value)=&gt;&#123;&#125;</code></p>
-<p>其中 <code>onRejected</code> 是失败的回调函数，我们通常写成 <code>(reason)=&gt;&#123;&#125;</code></p>
-<p>因此使用 then 方法指定回调函数时，我们通常写成：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">p.then(<span class="function">(<span class="params">value</span>)=&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;,<span class="function">(<span class="params">reason</span>)=&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>then 方法会返回一个新的 promise 对象，不管是执行成功的回调，还是失败的回调，这个 promise 对象的状态和结果值，会根据其执行的回调函数的返回值来确定。</p>
-<p>假如 result 是回调函数的返回值</p>
-<ul>
-<li>result 是一个非 promise 对象，返回一个成功的 promise，结果值为 result</li>
-<li>result 是一个 promise 对象，返回一个 promise，其状态和结果值与 result 的状态和结果值相同</li>
-<li>在 then 方法中抛出了错误，返回一个失败的 promise，结果值为抛出的内容</li>
-</ul>
-<p>以上就是 promise 最核心的概念，是不是听得有些枯燥乏味。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">json-server --watch db.json --delay 2000</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>学习</tag>
@@ -624,6 +602,144 @@ pending -&gt; rejected 失败
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">10</span>,</span><br><span class="line">  <span class="attr">quantity</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trigger</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  total = p.price * p.quantity</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> product = <span class="keyword">new</span> <span class="built_in">Proxy</span>(p,&#123;</span><br><span class="line">  <span class="function"><span class="title">set</span>(<span class="params">target:any,key:string,value:any,receiver:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="built_in">Reflect</span>.set(target,key,value,receiver)</span><br><span class="line">    trigger()</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">trigger()</span><br><span class="line">total<span class="comment">//20</span></span><br><span class="line">product.quantity = <span class="number">3</span></span><br><span class="line">total<span class="comment">//30</span></span><br></pre></td></tr></table></figure>
 <p>这下我们可以在 <code>set</code> 操作时自动执行 <code>trigger</code> 了</p>
 <p>未完持续O(∩_∩)O</p>
+]]></content>
+      <tags>
+        <tag>杂货</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>跟我一起手撕 Promise</title>
+    <url>/2021/11/19/learnPromise/</url>
+    <content><![CDATA[<h3 id="Promise-简介">Promise 简介</h3>
+<p>Promise 是 JS 中异步编程的新解决方案，让我们方便地使用同步地方式书写异步代码。它也被称作 <code>暂未存在确切值的替身</code>。</p>
+<p>学习 Promise，你要先了解 JS 中的异步编程操作，比如 IO，AJAX，timeout 等。还有 js 事件循环模型。</p>
+<p>Promise 出现前，获取异步任务的返回值，是通过设置回调函数。</p>
+<span id="more"></span>
+<p>下面假设了 3 个异步任务，任务之间存在依赖关系，每个异步请求的参数需要上一个异步任务返回的结果值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">getData(params,<span class="function"><span class="keyword">function</span>(<span class="params">data,err</span>)</span>&#123;</span><br><span class="line">  getSomeData(data,<span class="function"><span class="keyword">function</span>(<span class="params">someData,err</span>)</span>&#123;</span><br><span class="line">    getTotalData(someData,<span class="function"><span class="keyword">function</span>(<span class="params">totalData,err</span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;I have got the totalData&#x27;</span> + totalData)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>以特定执行顺序编排的异步任务，若使用纯回调函数来处理，会出现层层嵌套的书写格式。</p>
+<p>我们用 Promise 改写一下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">  getData(params,<span class="function"><span class="keyword">function</span>(<span class="params">data,err</span>)</span>&#123;</span><br><span class="line">    resolve(data)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">value</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    getSomeData(value,<span class="function"><span class="keyword">function</span>(<span class="params">data,err</span>)</span>&#123;</span><br><span class="line">      resolve(data)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">value</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    getTotalData(value,<span class="function"><span class="keyword">function</span>(<span class="params">data,err</span>)=&gt;</span>&#123;</span><br><span class="line">      resolve(data)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">value</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;I have got the totalData&#x27;</span> + value)</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>只需要在最后 catch 一下，就能捕获到上述每个环节的错误。</p>
+<p>ES8 还提供了异步函数语法 async/await</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 假设 promisify 是将异步任务转变为 promise 风格的函数</span></span><br><span class="line"><span class="keyword">const</span> data = promisify(getData)</span><br><span class="line"><span class="keyword">const</span> someData = promisify(getSomeData)</span><br><span class="line"><span class="keyword">const</span> totalData = promisify(getTotalData)</span><br><span class="line"><span class="comment">// 立即执行的 async 函数</span></span><br><span class="line">;(<span class="keyword">async</span> ()=&gt;&#123;</span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> param1 = <span class="keyword">await</span> data(params)</span><br><span class="line">    <span class="keyword">const</span> param2 = <span class="keyword">await</span> someData(param1)</span><br><span class="line">    <span class="keyword">const</span> total = <span class="keyword">await</span> totalData(param2)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;I have got the totalData&#x27;</span> + total)</span><br><span class="line">  &#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e.message)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="Promise-的特点">Promise 的特点</h3>
+<p><strong>解耦了回调函数</strong> ⭐⭐⭐⭐</p>
+<p>promise 使用 then 方法指定回调函数</p>
+<p>跟以前只要定义异步任务就一定要传入回调函数相比，简直就是新奇。</p>
+<p><strong>链式调用</strong> ⭐</p>
+<p>Promise 的 then 方法会返回新的 Promise 实例，供我们继续调用 then 方法指定下一个回调函数。</p>
+<p>我们可以组成一条 Promise 链，串连我们的异步任务。</p>
+<p><strong>异常穿透</strong> ⭐</p>
+<p>单个 Promise 无需设置错误回调函数，在 Promise 链的末尾指定错误回调（onRejected），就能捕获到 Promise 链上出现的错误。</p>
+<div class="note info no-icon"><p>总结起来，Promise 的三个特点：解耦回调函数、异常穿透、链式调用</p>
+</div>
+<h3 id="Promise-的内部实现">Promise 的内部实现</h3>
+<p>Promise 本质上是一个构造函数，通过传入执行器(executor)构造 Promise 对象，这个过程也称为封装异步操作。</p>
+<p>要对 7 个问题有所认识。</p>
+<ol>
+<li>Promise 如何实现状态转换</li>
+<li>Promise 是先改状态再指定回调，还是先指定回调再改状态</li>
+<li>Promise 对象指定多个成功的回调，在状态改变时它们都会调用吗</li>
+<li>then 方法返回的 Promise 对象，其状态是由什么来决定的。</li>
+<li>Promise 如何实现链式调用</li>
+<li>Promise 如何实现异常穿透</li>
+<li>Promise 链如何中断</li>
+</ol>
+<p><strong>Promise 如何实现状态的转换</strong></p>
+<p>Promise 通过 3 种方式实现状态转换：</p>
+<blockquote>
+<p>调用 resolve() 将状态改为 fulfilled<br>
+调用 reject() 将状态改为 rejected<br>
+throw 一个值，将状态改为 rejected</p>
+</blockquote>
+<p>上述操作都在执行器函数(executor)中发生，并且 promise 的状态只能改变一次，改变状态的同时也会设置 promise 的结果值。</p>
+<p><strong>Promise 是先改状态再指定回调，还是先指定回调再改状态</strong></p>
+<p>Promise 既可以先改变状态，也可以先指定回调，这都不会影响运行 Promise 以及获取结果值。</p>
+<p><strong>Promise 对象指定多个成功的回调，在状态改变时它们都会调用吗</strong></p>
+<p>它们都会调用</p>
+<p><strong>then 方法返回的 Promise 对象，其状态是由什么来决定的。</strong></p>
+<p>由执行的回调函数的返回值决定：</p>
+<p>回调函数返回非 Promise 对象，then 方法返回 fulfilled 的 Promise</p>
+<p>回调函数返回 Promise 对象，then 方法返回的 Promise 拥有相同的状态和结果</p>
+<p>回调函数 throw 一个值，then 方法返回 rejected 的 Promise</p>
+<p><strong>Promise 如何实现链式调用</strong></p>
+<p>调用 then 方法返回封装了新的异步任务的 Promise</p>
+<p><strong>Promise 如何实现异常穿透</strong></p>
+<p>当没有给 then 方法提供失败回调(onRejected)时，then 方法内部存在一个默认失败回调 <code>reason =&gt; &#123;throw reason&#125;</code>，让 then 方法返回失败的 Promise，沿着 Promise 链传递到最后。</p>
+<p>因此我们只需要给最后的一个 promise 指定失败回调即可捕获链上 Promise 的错误。</p>
+<p><strong>Promise 链如何中断</strong></p>
+<p>返回一个永久 pending 状态的 Promise 对象</p>
+]]></content>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>浅谈 vue3 响应式原理 第三篇 ref、computed</title>
+    <url>/2021/07/21/learnReactivity3/</url>
+    <content><![CDATA[<h1>浅谈 vue3 响应式原理 第三篇 ref、computed</h1>
+<p>能够坚持看到这里，实属不易，vue3 响应式的原理在前两篇已经讲得差不多了。</p>
+<p>本篇作为一个补充，结合前面的内容，带大家了解 vue3 开放的2个 api：</p>
+<div class="note info"><p>ref 函数和 computed 函数</p>
+</div>
+<h2 id="ref-和-computed-的由来"><a href="#ref-%E5%92%8C-computed-%E7%9A%84%E7%94%B1%E6%9D%A5">ref 和 computed 的由来</a></h2>
+<p>回想起上一篇，我们把 <strong>Proxy</strong> 封装成了 <strong>Reactive 函数</strong></p>
+<p>通过它，我们对对象的<strong>读取、写入</strong>进行<strong>拦截</strong>，在拦截中插入<strong>记录</strong>和<strong>重放</strong>的操作，就能把普通的 javascript 对象变成响应式对象。</p>
+<span id="more"></span>
+<p>那么如果我们需要让 javascript 基本类型也实现响应式该怎么办呢？我们写一个 ref 函数。</p>
+<h3 id="ref"><a href="#ref">ref</a></h3>
+<p>这个 ref 函数期待接收一个<strong>基本类型</strong>，并借助 <strong>reactive</strong> 包一下，然后返回。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ref</span>(<span class="params">raw:any</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = reactive(&#123;&#125;)</span><br><span class="line">  result.value = raw</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，ref 函数就实现了。</p>
+<p>不过 vue3 的 ref 不是这样实现的。</p>
+<p>为了区分开<strong>基本类型</strong>和<strong>对象</strong>，方便框架后续的维护，vue3 的 ref 采用了独立的实现，并不是使用 <strong>Proxy</strong>，而是采用<strong>存取器属性</strong>做拦截。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ref</span>(<span class="params">raw?:any</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> r = &#123;</span><br><span class="line">    <span class="keyword">get</span> <span class="title">value</span>()&#123;</span><br><span class="line">      track(r,<span class="string">&#x27;value&#x27;</span>)</span><br><span class="line">      <span class="keyword">return</span> raw</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span> <span class="title">value</span>(<span class="params">newVal:any</span>)&#123;</span><br><span class="line">      raw = newVal</span><br><span class="line">      trigger(r,<span class="string">&#x27;value&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="computed"><a href="#computed">computed</a></h3>
+<p>说完 ref，我们来说 computed。</p>
+<p>computed 实际上是对 effect 的其中一种封装。将<strong>借助副作用实现自动计算</strong>这个概念写成一个函数，他就是 <strong>computed</strong></p>
+<div class="note info"><p><strong>computed函数</strong> 期待接收一个<strong>计算函数：getter</strong><br>
+<strong>getter</strong> 会惰性地返回一个值，我们会创建一个响应式对象，将 <strong>getter</strong> 和<strong>响应式对象</strong>组合成我们的副作用，通过 effect 进行 <strong>track</strong>。<br>
+<strong>getter</strong> 中出现的所有响应式对象，都会通过 effect 把这个副作用添加到它们各自的 dep</p>
+</div>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">computed</span>(<span class="params">getter:any</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = ref()</span><br><span class="line">  effect(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    result.value = getter()</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="整合3篇文章内容后的响应式代码"><a href="#%E6%95%B4%E5%90%883%E7%AF%87%E6%96%87%E7%AB%A0%E5%86%85%E5%AE%B9%E5%90%8E%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F%E4%BB%A3%E7%A0%81">整合3篇文章内容后的响应式代码</a></h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> targetMap = <span class="keyword">new</span> <span class="built_in">WeakMap</span>()</span><br><span class="line"><span class="keyword">let</span> activeEffect:any = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">track</span>(<span class="params">target:any,key:string</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!activeEffect)&#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> depsMap = targetMap.get(target)</span><br><span class="line">    <span class="keyword">if</span>(!depsMap)&#123;</span><br><span class="line">        targetMap.set(target,(depsMap = <span class="keyword">new</span> <span class="built_in">Map</span>()))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> dep = depsMap.get(key)</span><br><span class="line">    <span class="keyword">if</span>(!dep)&#123;</span><br><span class="line">        depsMap.set(key,(dep = <span class="keyword">new</span> <span class="built_in">Set</span>()))</span><br><span class="line">    &#125;</span><br><span class="line">    dep.add(activeEffect)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trigger</span>(<span class="params">target:any,key:string</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> depsMap = targetMap.get(target)</span><br><span class="line">    <span class="keyword">if</span>(!depsMap)&#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> dep = depsMap.get(key)</span><br><span class="line">    <span class="keyword">if</span>(dep)&#123;</span><br><span class="line">        dep.forEach(<span class="function">(<span class="params">effect:any</span>)=&gt;</span>&#123;</span><br><span class="line">            effect()</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reactive</span>(<span class="params">target:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> handler:any = &#123;</span><br><span class="line">        <span class="function"><span class="title">get</span>(<span class="params">target:any,key:string,receiver:any</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> result = <span class="built_in">Reflect</span>.get(target,key,receiver)</span><br><span class="line">            track(target,key)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="title">set</span>(<span class="params">target:any,key:string,value:any,receiver:any</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> oldVal = target[key]</span><br><span class="line">            <span class="keyword">let</span> result = <span class="built_in">Reflect</span>.set(target,key,value,receiver)</span><br><span class="line">            <span class="keyword">if</span>(result &amp;&amp; oldVal !== value)&#123;</span><br><span class="line">                trigger(target,key)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(target,handler)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">effect</span>(<span class="params">eff:any</span>)</span>&#123;</span><br><span class="line">    activeEffect = eff</span><br><span class="line">    activeEffect()</span><br><span class="line">    activeEffect = <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ref</span>(<span class="params">raw?:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> r = &#123;</span><br><span class="line">        <span class="keyword">get</span> <span class="title">value</span>()&#123;</span><br><span class="line">            track(r,<span class="string">&#x27;value&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> raw</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">set</span> <span class="title">value</span>(<span class="params">newVal:any</span>)&#123;</span><br><span class="line">            raw = newVal</span><br><span class="line">            trigger(r,<span class="string">&#x27;value&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> r</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">computed</span>(<span class="params">getter:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = ref()</span><br><span class="line">    effect(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        result.value = getter()</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p = &#123;</span><br><span class="line">    <span class="attr">price</span>:<span class="number">2</span>,</span><br><span class="line">    <span class="attr">quantity</span>:<span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> product = reactive(p)</span><br><span class="line"><span class="keyword">let</span> salePrice = computed(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> product.price * <span class="number">0.9</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">let</span> total = computed(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> salePrice.value * product.quantity</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(total.value,salePrice.value)<span class="comment">//5.4,1.8</span></span><br><span class="line">product.quantity = <span class="number">4</span></span><br><span class="line"><span class="built_in">console</span>.log(total.value,salePrice.value)<span class="comment">//7.2,1.8</span></span><br><span class="line">product.price = <span class="number">3</span></span><br><span class="line"><span class="built_in">console</span>.log(total.value,salePrice.value)<span class="comment">//10.8,2.7</span></span><br></pre></td></tr></table></figure>
+<p>这些就是对 vue3 响应式原理比较简单的理解，实际上这些代码和 vue3 源码还是差距很大的，不过只要是能帮助我们学习响应式，这就是值得的。</p>
+<a href="/2021/07/19/learnReactivity1/" title="浅谈 vue3 响应式原理 第一篇 响应式和副作用">浅谈 vue3 响应式原理 第一篇 响应式和副作用</a>
+<br>
+<a href="/2021/07/19/learnReactivity2/" title="浅谈 vue3 响应式原理 第二篇 记录与重放">浅谈 vue3 响应式原理 第二篇 记录与重放</a>
+]]></content>
+      <tags>
+        <tag>杂货</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue-route杂谈</title>
+    <url>/2021/07/19/learnRouter/</url>
+    <content><![CDATA[<h2 id="vue-router杂谈"><a href="#vue-router%E6%9D%82%E8%B0%88">vue-router杂谈</a></h2>
+<h3 id="简介">简介</h3>
+<p>说到 <code>vue-router</code> ，首先脑海中浮现出几个对象：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">router,routes,route</span><br></pre></td></tr></table></figure>
+<p>说到 <code>route</code> 脑海中又有了几个属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">path,component,name</span><br></pre></td></tr></table></figure>
+<p>还有几个方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BeforeRouteUpdate()，BeforeRouteEnter()，BeforeRouteLeave()，router.beforeEach()</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p><code>router</code> 路由器，功能是根据路由表实现路由和组件的映射，可通过 <code>go()，replace()，push()</code> 方法做编程式路由切换。</p>
+<p><code>routes</code> 路由表，存储路由的数组。</p>
+<p><code>route</code> 路由，路由表中的元素，包含 url 地址(path)、路由名(name)、组件(component)、路由参数(params)、查询串(query) 等信息的对象。让 url 地址(path)和组件(component)形成映射关系，路由名(name)则是地址的别名 。</p>
+<h3 id="使用-vue-router">使用 vue-router</h3>
+<p>地址栏输入地址后，router 通过 path 查找路由表中的路由，依据路由元信息映射到 component，实现输入指定地址显示指定组件。</p>
+<p>而使用 <code>router.push()</code> 等方法切换路由时，router 通过路由别名 name 找到路由，根据路由元信息映射到 component 完成路由切换。</p>
+<p><code>BeforeRouteWTF()</code>，根据文档的说法，这个玩意称作导航守卫。“导航”意为路由发生变化，“守卫”意为声明周期回调(句柄)。</p>
+<p>当参数或查询改变时，不会触发进入/离开的导航守卫，而会触发更新的导航守卫。所以，进入/离开守卫与更新守卫是互斥的。</p>
+<p>当path的查询和参数被修改时，进入 <code>BeforeRouteUpdate()</code>；当查询和参数未被修改，或path被修改时，进入 <code>BeforeRouteEnter()</code> 和 <code>BeforeRouteLeave()</code></p>
+<h3 id="因此">因此</h3>
+<p>路由变更有两种：<strong>路由修改</strong>和<strong>路由切换</strong></p>
+<p>前者复用实例，后者销毁并创建新实例</p>
+<div class="note info"><p>关于路由切换时，watch route 无法触发这个问题，我的解释是这样的：组件实例被销毁，是对响应式对象的直接销毁，watch 无法追踪。</p>
+</div>
 ]]></content>
       <tags>
         <tag>杂货</tag>
@@ -678,71 +794,6 @@ pending -&gt; rejected 失败
 <p>我们还修改了 <strong>track</strong> 方法，当 <code>activeEffect</code> 有值时，才会往下执行,并且最后 <code>dep</code> 添加的是 <code>activeEffect</code>。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> targetMap = <span class="keyword">new</span> <span class="built_in">WeakMap</span>()</span><br><span class="line"><span class="keyword">let</span> activeEffect:any = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">track</span>(<span class="params">target:any,key:string</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!activeEffect)&#123;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> depsMap = targetMap.get(target)</span><br><span class="line">  <span class="keyword">if</span>(!depsMap)&#123;</span><br><span class="line">    targetMap.set(target,(depsMap = <span class="keyword">new</span> <span class="built_in">Map</span>()))</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> dep = depsMap.get(key)</span><br><span class="line">  <span class="keyword">if</span>(!dep)&#123;</span><br><span class="line">    depsMap.set(key,(dep = <span class="keyword">new</span> <span class="built_in">Set</span>()))</span><br><span class="line">  &#125;</span><br><span class="line">  dep.add(activeEffect)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trigger</span>(<span class="params">target:any,key:string</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> depsMap = targetMap.get(target)</span><br><span class="line">  <span class="keyword">if</span>(!depsMap)&#123;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> dep = depsMap.get(key)</span><br><span class="line">  <span class="keyword">if</span>(dep)&#123;</span><br><span class="line">    dep.forEach(<span class="function">(<span class="params">effect:any</span>)=&gt;</span>&#123;</span><br><span class="line">      effect()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reactive</span>(<span class="params">target:any</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> handler:any = &#123;</span><br><span class="line">    <span class="function"><span class="title">get</span>(<span class="params">target:any,key:string,receiver:any</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">const</span> result = <span class="built_in">Reflect</span>.get(target,key,receiver)</span><br><span class="line">      track(target,key)</span><br><span class="line">      <span class="keyword">return</span> result</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">set</span>(<span class="params">target:any,key:string,value:any,receiver:any</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">const</span> oldVal = target[key]</span><br><span class="line">      <span class="keyword">const</span> result = <span class="built_in">Reflect</span>.set(target,key,value,receiver)</span><br><span class="line">      <span class="keyword">if</span>(result &amp;&amp; oldVal !== value)&#123;</span><br><span class="line">        trigger(target,key)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(target,handler)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">effect</span>(<span class="params">eff:any</span>)</span>&#123;</span><br><span class="line">  activeEffect = eff</span><br><span class="line">  activeEffect()</span><br><span class="line">  activeEffect = <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">10</span>,</span><br><span class="line">  <span class="attr">quantity</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> product = reactive(p)</span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span></span><br><span class="line">effect(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">  total = product.price * product.quantity</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">total<span class="comment">//20</span></span><br><span class="line">product.quantity = <span class="number">3</span></span><br><span class="line">total<span class="comment">//30</span></span><br></pre></td></tr></table></figure>
 <p>未完持续O(∩_∩)O</p>
-]]></content>
-      <tags>
-        <tag>杂货</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>浅谈 vue3 响应式原理 第三篇 ref、computed</title>
-    <url>/2021/07/21/learnReactivity3/</url>
-    <content><![CDATA[<h1>浅谈 vue3 响应式原理 第三篇 ref、computed</h1>
-<p>能够坚持看到这里，实属不易，vue3 响应式的原理在前两篇已经讲得差不多了。</p>
-<p>本篇作为一个补充，结合前面的内容，带大家了解 vue3 开放的2个 api：</p>
-<div class="note info"><p>ref 函数和 computed 函数</p>
-</div>
-<h2 id="ref-和-computed-的由来"><a href="#ref-%E5%92%8C-computed-%E7%9A%84%E7%94%B1%E6%9D%A5">ref 和 computed 的由来</a></h2>
-<p>回想起上一篇，我们把 <strong>Proxy</strong> 封装成了 <strong>Reactive 函数</strong></p>
-<p>通过它，我们对对象的<strong>读取、写入</strong>进行<strong>拦截</strong>，在拦截中插入<strong>记录</strong>和<strong>重放</strong>的操作，就能把普通的 javascript 对象变成响应式对象。</p>
-<span id="more"></span>
-<p>那么如果我们需要让 javascript 基本类型也实现响应式该怎么办呢？我们写一个 ref 函数。</p>
-<h3 id="ref"><a href="#ref">ref</a></h3>
-<p>这个 ref 函数期待接收一个<strong>基本类型</strong>，并借助 <strong>reactive</strong> 包一下，然后返回。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ref</span>(<span class="params">raw:any</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = reactive(&#123;&#125;)</span><br><span class="line">  result.value = raw</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样，ref 函数就实现了。</p>
-<p>不过 vue3 的 ref 不是这样实现的。</p>
-<p>为了区分开<strong>基本类型</strong>和<strong>对象</strong>，方便框架后续的维护，vue3 的 ref 采用了独立的实现，并不是使用 <strong>Proxy</strong>，而是采用<strong>存取器属性</strong>做拦截。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ref</span>(<span class="params">raw?:any</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> r = &#123;</span><br><span class="line">    <span class="keyword">get</span> <span class="title">value</span>()&#123;</span><br><span class="line">      track(r,<span class="string">&#x27;value&#x27;</span>)</span><br><span class="line">      <span class="keyword">return</span> raw</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span> <span class="title">value</span>(<span class="params">newVal:any</span>)&#123;</span><br><span class="line">      raw = newVal</span><br><span class="line">      trigger(r,<span class="string">&#x27;value&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="computed"><a href="#computed">computed</a></h3>
-<p>说完 ref，我们来说 computed。</p>
-<p>computed 实际上是对 effect 的其中一种封装。将<strong>借助副作用实现自动计算</strong>这个概念写成一个函数，他就是 <strong>computed</strong></p>
-<div class="note info"><p><strong>computed函数</strong> 期待接收一个<strong>计算函数：getter</strong><br>
-<strong>getter</strong> 会惰性地返回一个值，我们会创建一个响应式对象，将 <strong>getter</strong> 和<strong>响应式对象</strong>组合成我们的副作用，通过 effect 进行 <strong>track</strong>。<br>
-<strong>getter</strong> 中出现的所有响应式对象，都会通过 effect 把这个副作用添加到它们各自的 dep</p>
-</div>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">computed</span>(<span class="params">getter:any</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = ref()</span><br><span class="line">  effect(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    result.value = getter()</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="整合3篇文章内容后的响应式代码"><a href="#%E6%95%B4%E5%90%883%E7%AF%87%E6%96%87%E7%AB%A0%E5%86%85%E5%AE%B9%E5%90%8E%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F%E4%BB%A3%E7%A0%81">整合3篇文章内容后的响应式代码</a></h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> targetMap = <span class="keyword">new</span> <span class="built_in">WeakMap</span>()</span><br><span class="line"><span class="keyword">let</span> activeEffect:any = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">track</span>(<span class="params">target:any,key:string</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!activeEffect)&#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> depsMap = targetMap.get(target)</span><br><span class="line">    <span class="keyword">if</span>(!depsMap)&#123;</span><br><span class="line">        targetMap.set(target,(depsMap = <span class="keyword">new</span> <span class="built_in">Map</span>()))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> dep = depsMap.get(key)</span><br><span class="line">    <span class="keyword">if</span>(!dep)&#123;</span><br><span class="line">        depsMap.set(key,(dep = <span class="keyword">new</span> <span class="built_in">Set</span>()))</span><br><span class="line">    &#125;</span><br><span class="line">    dep.add(activeEffect)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trigger</span>(<span class="params">target:any,key:string</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> depsMap = targetMap.get(target)</span><br><span class="line">    <span class="keyword">if</span>(!depsMap)&#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> dep = depsMap.get(key)</span><br><span class="line">    <span class="keyword">if</span>(dep)&#123;</span><br><span class="line">        dep.forEach(<span class="function">(<span class="params">effect:any</span>)=&gt;</span>&#123;</span><br><span class="line">            effect()</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reactive</span>(<span class="params">target:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> handler:any = &#123;</span><br><span class="line">        <span class="function"><span class="title">get</span>(<span class="params">target:any,key:string,receiver:any</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> result = <span class="built_in">Reflect</span>.get(target,key,receiver)</span><br><span class="line">            track(target,key)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="title">set</span>(<span class="params">target:any,key:string,value:any,receiver:any</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> oldVal = target[key]</span><br><span class="line">            <span class="keyword">let</span> result = <span class="built_in">Reflect</span>.set(target,key,value,receiver)</span><br><span class="line">            <span class="keyword">if</span>(result &amp;&amp; oldVal !== value)&#123;</span><br><span class="line">                trigger(target,key)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(target,handler)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">effect</span>(<span class="params">eff:any</span>)</span>&#123;</span><br><span class="line">    activeEffect = eff</span><br><span class="line">    activeEffect()</span><br><span class="line">    activeEffect = <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ref</span>(<span class="params">raw?:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> r = &#123;</span><br><span class="line">        <span class="keyword">get</span> <span class="title">value</span>()&#123;</span><br><span class="line">            track(r,<span class="string">&#x27;value&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> raw</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">set</span> <span class="title">value</span>(<span class="params">newVal:any</span>)&#123;</span><br><span class="line">            raw = newVal</span><br><span class="line">            trigger(r,<span class="string">&#x27;value&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> r</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">computed</span>(<span class="params">getter:any</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = ref()</span><br><span class="line">    effect(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        result.value = getter()</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p = &#123;</span><br><span class="line">    <span class="attr">price</span>:<span class="number">2</span>,</span><br><span class="line">    <span class="attr">quantity</span>:<span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> product = reactive(p)</span><br><span class="line"><span class="keyword">let</span> salePrice = computed(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> product.price * <span class="number">0.9</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">let</span> total = computed(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> salePrice.value * product.quantity</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(total.value,salePrice.value)<span class="comment">//5.4,1.8</span></span><br><span class="line">product.quantity = <span class="number">4</span></span><br><span class="line"><span class="built_in">console</span>.log(total.value,salePrice.value)<span class="comment">//7.2,1.8</span></span><br><span class="line">product.price = <span class="number">3</span></span><br><span class="line"><span class="built_in">console</span>.log(total.value,salePrice.value)<span class="comment">//10.8,2.7</span></span><br></pre></td></tr></table></figure>
-<p>这些就是对 vue3 响应式原理比较简单的理解，实际上这些代码和 vue3 源码还是差距很大的，不过只要是能帮助我们学习响应式，这就是值得的。</p>
-<a href="/2021/07/19/learnReactivity1/" title="浅谈 vue3 响应式原理 第一篇 响应式和副作用">浅谈 vue3 响应式原理 第一篇 响应式和副作用</a>
-<br>
-<a href="/2021/07/19/learnReactivity2/" title="浅谈 vue3 响应式原理 第二篇 记录与重放">浅谈 vue3 响应式原理 第二篇 记录与重放</a>
-]]></content>
-      <tags>
-        <tag>杂货</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vue-route杂谈</title>
-    <url>/2021/07/19/learnRouter/</url>
-    <content><![CDATA[<h2 id="vue-router杂谈"><a href="#vue-router%E6%9D%82%E8%B0%88">vue-router杂谈</a></h2>
-<p>说到 <code>vue-router</code> ，我会有联系到下面几个对象： <code>router,routes,route</code>，还有下面几个属性： <code>path,component,name</code>，还有下面几个方法： <code>BeforeRouteUpdate()，BeforeRouteEnter()，BeforeRouteLeave()，router.beforeEach()</code></p>
-<p><code>router</code> 是一个路由器，他的功能是根据自身记录的路由表，完成路由和组件的映射，并通过 <code>go()，replace()，push()</code> 方法提供可编程的路由切换。</p>
-<p><code>routes</code> 是路由表，是一个路由对象数组，他将被登记在路由器中。</p>
-<p><code>route</code> 就是路由，路由表中的一个元素，是一个拥有地址 path、路由参数 params、查询串 query、路由名 name、组件 component 等信息的对象。根据这个路由对象，就能让地址栏中的地址 path 和组件 component 形成映射关系，路由名 name 和 component 形成映射关系。</p>
-<span id="more"></span>
-<h3 id="这些玩意怎么使用？">这些玩意怎么使用？</h3>
-<p>地址栏输入地址后，router 通过 path 查找路由表中的路由，确定 path 和 component 的映射关系，从而实现输入指定地址显示指定组件。而使用 <code>router.push()</code> 等方法切换路由时，router 通过传入的参数 name，确定 name 和 component 的映射关系，确定参数 name 对应的 component 完成路由切换。</p>
-<p><code>BeforeRouteWhatTheFuck()</code>，根据文档的说法，这个玩意称作导航守卫。“导航”意为路由发生变化，“守卫”意为回调。</p>
-<p>当参数或查询改变时，不会触发进入/离开的导航守卫，而会触发更新的导航守卫</p>
-<p>所以，进入/离开守卫与更新守卫是互斥的。</p>
-<p>当path的查询和参数被修改时，进入 <code>BeforeRouteUpdate()</code></p>
-<p>当查询和参数未被修改，或path被修改时，进入 <code>BeforeRouteEnter()</code> 和 <code>BeforeRouteLeave()</code></p>
-<h3 id="由此可见">由此可见</h3>
-<p>路由变更有两种：<strong>路由修改</strong>和<strong>路由切换</strong></p>
-<p>前者复用实例，后者销毁并创建新实例</p>
-<div class="note info"><p>关于路由切换时，watch route 无法触发这个问题，我的解释是这样的：组件实例被销毁，是对响应式对象的直接销毁，watch 无法追踪。</p>
-</div>
 ]]></content>
       <tags>
         <tag>杂货</tag>
@@ -1733,6 +1784,37 @@ status：保存 ACCESS_TOKEN。
 ]]></content>
       <tags>
         <tag>干货</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>webpack 常用的第三方包</title>
+    <url>/2022/03/30/webpackCollection/</url>
+    <content><![CDATA[<p>自定义 webpack 作为构建工具</p>
+<h2 id="webpack-相关包">webpack 相关包</h2>
+<p>less 预编译: less, less-loader<br>
+提取 css: mini-css-extract-plugin<br>
+压缩 css: optimize-css-assets-webpack-plugin<br>
+css 兼容性处理: postcss, postcss-preset-env</p>
+<p>js 兼容性处理: babel-loader, @babel/preset-env, @babel/core, corejs</p>
+<p>样式中图片处理： url-loader<br>
+html 中图片处理: html-loader<br>
+其他文件处理： file-loader<br>
+html 模板打包: html-webpack-plugin</p>
+<p>开发工具: webpack-dev-tool</p>
+<p>开发框架：vue</p>
+<span id="more"></span>
+<h3 id="编写-shell-文件帮助安装-——-init-sh">编写 shell 文件帮助安装 —— <a href="http://init.sh">init.sh</a></h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;hello world&quot;</span></span><br><span class="line"><span class="comment"># 开发环境</span></span><br><span class="line">npm i -D webpack@4 webpack-cli@4 \</span><br><span class="line">less less-loader@3 css-loader@2 style-loader@2 \</span><br><span class="line">file-loader@3 url-loader@3 html-loader@1 \</span><br><span class="line">html-webpack-plugin@3 webpack-dev-server@3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生产环境</span></span><br><span class="line">npm i -D mini-css-extract-plugin \</span><br><span class="line">postcss-loader postcss-preset-env \</span><br><span class="line">optimize-css-assets-webpack-plugin \</span><br><span class="line">babel-loader @babel/preset-env @babel/core corejs \</span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他</span></span><br><span class="line"><span class="comment"># css 跨浏览器初始化</span></span><br><span class="line">npm i normalize.css</span><br><span class="line"></span><br><span class="line"><span class="comment"># vue</span></span><br><span class="line">npm i vue</span><br></pre></td></tr></table></figure>
+<h2 id="应用场景包">应用场景包</h2>
+<h3 id="消息订阅与发布">消息订阅与发布</h3>
+<p>用于实现兄弟组件间通信</p>
+<p><code>npm i pubsub-js</code></p>
+<h3 id="生成-id-包">生成 id 包</h3>
+<p>前端单机项目生成 id</p>
+<p><code>npm i nanoid</code></p>
+]]></content>
+      <tags>
+        <tag>杂项</tag>
       </tags>
   </entry>
   <entry>
