@@ -220,7 +220,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-10-16 06:16:44" itemprop="dateModified" datetime="2022-10-16T06:16:44Z">2022-10-16</time>
+        <time title="修改时间：2022-10-16 06:30:52" itemprop="dateModified" datetime="2022-10-16T06:30:52Z">2022-10-16</time>
       </span>
 
   
@@ -289,8 +289,7 @@ CPU:R7-5800H 8核<br>
 <h4 id="1-安装-Python-3-10-6">1.安装 Python 3.10.6</h4>
 <p>和其他文章不同，笔者依旧推荐使用 Miniconda 来管理 Python 版本，可以实现 Python 多版本切换，下面来讲述如何安装 Miniconda。</p>
 <p>进入Miniconda 官网，选择适用于自己的操作系统的版本，下载安装即可，全部图形化操作。</p>
-<p>1.png<br>
-<img src="./stable-diffusion/1.jpg" alt="图片标题随便"></p>
+<img src="/2022/10/16/stable-diffusion/1.png" class="">
 <p>安装成功后在命令行执行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda -V</span><br></pre></td></tr></table></figure>
 <p>成功跳出版本即为安装成功。</p>
@@ -313,7 +312,7 @@ CPU:R7-5800H 8核<br>
 <p>这时我们就有了一个 Python 3.10.6 的纯净环境了</p>
 <h4 id="2-安装-Git">2.安装 Git</h4>
 <p>前往 Git 官网 或其他镜像网站下载即可。</p>
-<p>2.png</p>
+<img src="/2022/10/16/stable-diffusion/2.png" class="">
 <p>命令行运行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
 <p>出现版本号即为安装成功</p>
@@ -323,12 +322,12 @@ CPU:R7-5800H 8核<br>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
 <p>会跳出如下结果，只要看 CUDA Version一项即可，记住这个版本号，之后就下载这个版本即可。</p>
 <p>比如说笔者这里就是 11.6版本，下载的 CUDA 也是这个版本就行了。</p>
-<p>3.png</p>
+<img src="/2022/10/16/stable-diffusion/3.png" class="">
 <p>接下来前往 CUDA 的官网，下载对应版本即可。</p>
-<p>4.png</p>
+<img src="/2022/10/16/stable-diffusion/4.png" class="">
 <p>CUDA 的版本很多，请一定要下对版本，建议就下载nvidia-smi查询出来的结果。</p>
 <p>另外多说一句，CUDA 的体积很大，建议安装在 C 盘之外的硬盘，免得占用宝贵的 C 盘空间。</p>
-<p>5.png</p>
+<img src="/2022/10/16/stable-diffusion/5.png" class="">
 <p>在版本的选择上，操作系统版本就不用多说了，选择自己的系统就行，win10 就选 10，win11 就选 11。</p>
 <p>至于下面的 Installer Type，用 local 版本比较省事，下载一次就是完整的安装包了，用 network 版本依旧是要联网下载的，结果也没差太多。</p>
 <h4 id="4-下载项目源码">4.下载项目源码</h4>
@@ -364,13 +363,13 @@ CPU:R7-5800H 8核<br>
 <p>然后就在输入框里面写你想要生成的图片即可，相信各位的英语水平一定比笔者要高，在此就不赘述了。</p>
 <p>【Prompt 里填写想要的特征点，Negative prompt 里填不想要的特征点】</p>
 <p>温馨提示：Prompt 里最大只支持 77 个词，多了会报错，删掉几个词就行</p>
-<p>6.png</p>
+<img src="/2022/10/16/stable-diffusion/6.png" class="">
 <p>可能是由于源码差异，在相同配置下，运行 waifu-diffusion 最大只能生成 512 x 512 ，但是运行 stable-diffusion-webui 时最大可以支持 832 x 832，可以说提高了一些性能。</p>
 <p>另外多说一句，本项目和 waifu-diffusion 不同，没有 NSFW 问题！</p>
 <h3 id="最后">最后</h3>
 <p>那么最后就是老问题了，要怎么写 prompt 呢？</p>
 <p>答案是科学上网，自行前往推特上 Waifu Diffusion 相关话题下查看即可，点击 ALT，看下别人是怎么写的就行了。</p>
-<p>7.png</p>
+<img src="/2022/10/16/stable-diffusion/7.png" class="">
 <p>完成以上步骤之后，相信你也能愉快的玩耍 Waifu Diffusion 了。</p>
 <p>喜欢的话就请支持下笔者。</p>
 <h3 id="附录">附录</h3>
