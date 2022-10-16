@@ -22,15 +22,15 @@
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wbxyy.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.6.1/source/js/config.min.js"></script>
-<meta name="description" content="概览 分布式版本控制软件，支持文件版本的提交和回滚 修改过的文件完整保存为一个快照，每个版本有对应文件的完整快照 文件有 4 种状态：未追踪、未修改、已修改、已暂存。 让所有文件处在 未修改 状态，即工作区和仓库保持一致，这是操作仓库的最终目的。">
+<meta name="description" content="概览 分布式-版本控制软件，支持版本提交和回滚 修改的文件完整保存为一个快照，每个版本有对应文件的完整快照 文件有 4 种状态：未追踪、未修改、已修改、已暂存。 操作仓库的最终目的：让所有文件处在 未修改 状态，即工作区和仓库保持一致。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习 Git ——— 最基础的命令">
 <meta property="og:url" content="https://wbxyy.github.io/2021/12/02/learnGit/index.html">
 <meta property="og:site_name" content="这里是苏苏的小屋">
-<meta property="og:description" content="概览 分布式版本控制软件，支持文件版本的提交和回滚 修改过的文件完整保存为一个快照，每个版本有对应文件的完整快照 文件有 4 种状态：未追踪、未修改、已修改、已暂存。 让所有文件处在 未修改 状态，即工作区和仓库保持一致，这是操作仓库的最终目的。">
+<meta property="og:description" content="概览 分布式-版本控制软件，支持版本提交和回滚 修改的文件完整保存为一个快照，每个版本有对应文件的完整快照 文件有 4 种状态：未追踪、未修改、已修改、已暂存。 操作仓库的最终目的：让所有文件处在 未修改 状态，即工作区和仓库保持一致。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-02T11:30:17.000Z">
-<meta property="article:modified_time" content="2022-06-16T05:59:42.372Z">
+<meta property="article:modified_time" content="2022-06-17T03:50:51.561Z">
 <meta property="article:author" content="wanbaoxiaoyiyi">
 <meta property="article:tag" content="学习">
 <meta name="twitter:card" content="summary">
@@ -124,7 +124,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-number">1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8-git"><span class="nav-number">2.</span> <span class="nav-text">从零开始使用 git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">状态命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">4.</span> <span class="nav-text">连接远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E5%88%86%E6%94%AF"><span class="nav-number">5.</span> <span class="nav-text">推送分支</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-number">1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8-git"><span class="nav-number">2.</span> <span class="nav-text">从零开始使用 git</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">创建仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BB%93%E5%BA%93"><span class="nav-number">2.2.</span> <span class="nav-text">配置仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="nav-number">2.3.</span> <span class="nav-text">本地仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">2.4.</span> <span class="nav-text">远程仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%91%BD%E4%BB%A4"><span class="nav-number">2.5.</span> <span class="nav-text">状态命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">连接远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E5%88%86%E6%94%AF"><span class="nav-number">4.</span> <span class="nav-text">推送分支</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -140,7 +140,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -225,7 +225,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-06-16 05:59:42" itemprop="dateModified" datetime="2022-06-16T05:59:42Z">2022-06-16</time>
+        <time title="修改时间：2022-06-17 03:50:51" itemprop="dateModified" datetime="2022-06-17T03:50:51Z">2022-06-17</time>
       </span>
 
   
@@ -236,7 +236,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>799</span>
+      <span>1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -255,23 +255,28 @@
     
     <div class="post-body" itemprop="articleBody">
         <h3 id="概览">概览</h3>
-<div class="note info no-icon"><p>分布式版本控制软件，支持文件版本的提交和回滚<br>
-修改过的文件完整保存为一个快照，每个版本有对应文件的完整快照<br>
+<div class="note info no-icon"><p>分布式-版本控制软件，支持版本提交和回滚<br>
+修改的文件完整保存为一个快照，每个版本有对应文件的完整快照<br>
 文件有 4 种状态：<code>未追踪、未修改、已修改、已暂存</code>。<br>
-让所有文件处在 <code>未修改</code> 状态，即工作区和仓库保持一致，这是操作仓库的最终目的。</p>
+操作仓库的最终目的：让所有文件处在 <code>未修改</code> 状态，即工作区和仓库保持一致。</p>
 </div>
 <span id="more"></span>
 <h3 id="从零开始使用-git">从零开始使用 git</h3>
-<p><strong>创建仓库</strong></p>
+<h4 id="创建仓库">创建仓库</h4>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
 <p><code>.git</code> 所处的目录下的文件会被 git 管理。</p>
-<p><strong>加进暂存区</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
-<p>这将让未追踪或已修改的文件添加到暂存区</p>
-<p><strong>放进仓库</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;完成一次提交&quot;</span></span><br></pre></td></tr></table></figure>
-<p>这将让已暂存或未修改的文件放进 git 仓库，形成一个新的版本。</p>
-<h3 id="状态命令">状态命令</h3>
+<h4 id="配置仓库">配置仓库</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+<p><code>--global</code> 配置所有仓库</p>
+<h4 id="本地仓库">本地仓库</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 未追踪/已修改的文件添加到暂存区</span></span><br><span class="line">git add .</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分支 HEAD 替换暂存区</span></span><br><span class="line">git reset HEAD</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 已暂存/未修改文件放进 git 仓库，形成一个新的版本。</span></span><br><span class="line">git commit -m <span class="string">&quot;完成一次提交&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 危险！ 暂存区替换工作区</span></span><br><span class="line">git checkout .</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 危险！ 分区 HEAD 替换暂存区和工作区</span></span><br><span class="line">git checkout HEAD .</span><br></pre></td></tr></table></figure>
+<h4 id="远程仓库">远程仓库</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 链接远程仓库</span></span><br><span class="line">git remote add origin [远程仓库url]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已链接的远程仓库</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解除链接</span></span><br><span class="line">git remote rm origin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看远程仓库 origin</span></span><br><span class="line">git remote show origin</span><br></pre></td></tr></table></figure>
+<h4 id="状态命令">状态命令</h4>
 <p><strong>文件状态</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
 <p>未跟踪(??)，已修改(M) 的文件用红色标记。</p>
@@ -350,14 +355,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">90k</span>
+    <span title="站点总字数">95k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:22</span>
+    <span title="站点阅读时长">1:26</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
