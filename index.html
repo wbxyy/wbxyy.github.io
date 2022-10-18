@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -180,6 +180,131 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2022/10/18/NPL-bin2ckpt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/10/18/NPL-bin2ckpt/" class="post-title-link" itemprop="url">将 PyTorch 版 bin 模型转换成 Tensorflow 版 ckpt</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-10-17 21:45:10" itemprop="dateCreated datePublished" datetime="2022-10-17T21:45:10Z">2022-10-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-10-18 01:56:43" itemprop="dateModified" datetime="2022-10-18T01:56:43Z">2022-10-18</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>最近由于工作上的需求，需要使用Tensorflow加载语言模型 SpanBERT（Facebook 发布的 BERT 模型的变体），但是作者只发布了 Pytorch 版的预训练权重，因此需要将其转换为 Tensorflow 可以加载的 checkpoint。</p>
+<p>在 Pytorch 框架下，大多数开发者使用 Huggingface 发布的 Transformers 工具来加载语言模型，它同时支持加载 Pytorch 和 Tensorflow 版的模型。但是，目前基于 Tensorflow（或 Keras）的工具基本上都不支持加载 Pytorch 版的 bin 模型，转换代码在网上也很难找到，这带来了很多不便。</p>
+<p>bert</p>
+<p>通过搜索，目前能够找到的有以下几个转换代码片段可供参考：</p>
+<ul>
+<li>bin2ckpt：用于转换 TinyBERT，但实测并不可用；</li>
+<li>convert_pytorch_checkpoint_to_tf：Transformers 自带的转换脚本，但官方文档中并没有提及；</li>
+<li>pytorch_to_tf：实体同指任务的一篇论文提供的转换脚本；</li>
+<li>PyTorch 版的 BERT 转换成 Tensorflow 版的 BERT：VoidOc 编写的基于 Transformers 的转换脚本。</li>
+</ul>
+<p>通过分析可以看到，将 PyTorch 版 bin 模型转换成 Tensorflow 版 ckpt 的过程并不复杂，可以分为以下几步：</p>
+<ol>
+<li>读取出模型中每一层网络结构的名称和参数；</li>
+<li>针对 PyTorch 和 Tensorflow 的模型格式差异对参数做一些调整；</li>
+<li>按照 Tensorflow 的格式保存模型。</li>
+</ol>
+<h3 id="读取和保存模型">读取和保存模型</h3>
+<p>PyTorch 和 Tensorflow 框架都提供了模型的读取和保存功能，因此读取和保存语言模型的过程非常简单。</p>
+<p>读取模型直接使用 PyTorch 自带函数 torch.load() 或者 Transformers 提供的对应模型包的 from_pretrained() 函数就可以了；而保存模型则使用 Tensorflow 自带的模型保存器 tf.train.Saver 来完成。</p>
+<p>以 BERT 模型为例，读取模型的过程就是：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">model = BertModel.from_pretrained(</span><br><span class="line">    pretrained_model_name_or_path=pytorch_bin_path,</span><br><span class="line">    state_dict=torch.load(os.path.join(pytorch_bin_path, pytorch_bin_model), map_location=<span class="string">&#x27;cpu&#x27;</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = torch.load(os.path.join(pytorch_bin_path, pytorch_bin_model), map_location=<span class="string">&#x27;cpu&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>模型的保存过程则通过 Tensorflow 提供的保存器 tf.train.Saver 来完成：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">tf.reset_default_graph()</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> session:</span><br><span class="line">    <span class="keyword">for</span> var_name <span class="keyword">in</span> state_dict:</span><br><span class="line">        tf_name = to_tf_var_name(var_name) <span class="comment"># 将层名称改为Tensorflow模型格式</span></span><br><span class="line">        torch_tensor = state_dict[var_name].numpy()</span><br><span class="line">        <span class="comment"># 将参数矩阵改为Tensorflow模型格式</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">any</span>([x <span class="keyword">in</span> var_name <span class="keyword">for</span> x <span class="keyword">in</span> tensors_to_transpose]):</span><br><span class="line">            torch_tensor = torch_tensor.T</span><br><span class="line">        tf_var = create_tf_var(tensor=torch_tensor, name=tf_name, session=session)</span><br><span class="line">        tf.keras.backend.set_value(tf_var, torch_tensor)</span><br><span class="line">        tf_weight = session.run(tf_var)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Successfully created &#123;&#125;: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(tf_name, np.allclose(tf_weight, torch_tensor)))</span><br><span class="line"></span><br><span class="line">    saver = tf.train.Saver(tf.trainable_variables())</span><br><span class="line">    saver.save(session, os.path.join(ckpt_dir, model_name.replace(<span class="string">&quot;-&quot;</span>, <span class="string">&quot;_&quot;</span>).replace(<span class="string">&quot;.ckpt&quot;</span>, <span class="string">&quot;&quot;</span>) + <span class="string">&quot;.ckpt&quot;</span>))</span><br></pre></td></tr></table></figure>
+<p>整个过程就是先逐层读取模型的层名称和对应参数，然后将格式调整为 Tensorflow 模型的格式，再一次性写入到 checkpoint 文件中。</p>
+<p>注意：部分转换脚本忽略了 reset_default_graph() 这一操作，会导致生成的 meta 文件不仅保存网络结构，还会保存完整的网络参数，从而体积庞大。</p>
+<h3 id="调整模型格式">调整模型格式</h3>
+<p>由于 PyTorch 和 Tensorflow 的模型格式定义有所差异，因此转换的关键就是对部分层的名称和参数矩阵进行调整。具体来说，首先需要构建名称映射字典，对部分层的名称进行调整：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var_map = (</span><br><span class="line">    (<span class="string">&quot;layer.&quot;</span>, <span class="string">&quot;layer_&quot;</span>),</span><br><span class="line">    (<span class="string">&quot;word_embeddings.weight&quot;</span>, <span class="string">&quot;word_embeddings&quot;</span>),</span><br><span class="line">    (<span class="string">&quot;position_embeddings.weight&quot;</span>, <span class="string">&quot;position_embeddings&quot;</span>),</span><br><span class="line">    (<span class="string">&quot;token_type_embeddings.weight&quot;</span>, <span class="string">&quot;token_type_embeddings&quot;</span>),</span><br><span class="line">    (<span class="string">&quot;.&quot;</span>, <span class="string">&quot;/&quot;</span>),</span><br><span class="line">    (<span class="string">&quot;LayerNorm/weight&quot;</span>, <span class="string">&quot;LayerNorm/gamma&quot;</span>),</span><br><span class="line">    (<span class="string">&quot;LayerNorm/bias&quot;</span>, <span class="string">&quot;LayerNorm/beta&quot;</span>),</span><br><span class="line">    (<span class="string">&quot;weight&quot;</span>, <span class="string">&quot;kernel&quot;</span>),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_tf_var_name</span>(<span class="params">name: <span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="keyword">for</span> patt, repl <span class="keyword">in</span> <span class="built_in">iter</span>(var_map):</span><br><span class="line">        name = name.replace(patt, repl)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;bert/&#123;&#125;&quot;</span>.<span class="built_in">format</span>(name)</span><br></pre></td></tr></table></figure>
+<p>注意：这里演示的是转换 BERT 模型，所以转换后的层名以 bert/ 开头。如果转换的是其他模型，需要做相应的修改。</p>
+<p>然后，由于 PyTorch 和 Tensorflow 模型中 dense/kernel、attention/self/query、attention/self/key 和 attention/self/value 层的参数矩阵互为转置，因此还需要对模型中的对应层的参数进行调整：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tensors_to_transpose = (<span class="string">&quot;dense.weight&quot;</span>, <span class="string">&quot;attention.self.query&quot;</span>, <span class="string">&quot;attention.self.key&quot;</span>, <span class="string">&quot;attention.self.value&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">any</span>([x <span class="keyword">in</span> var_name <span class="keyword">for</span> x <span class="keyword">in</span> tensors_to_transpose]):</span><br><span class="line">    torch_tensor = torch_tensor.T</span><br></pre></td></tr></table></figure>
+<p>至此，转换过程就全部完成了。</p>
+<h3 id="完整的代码">完整的代码</h3>
+<p>综上所述，将 PyTorch 版 bin 模型转换成 Tensorflow 版 ckpt 的过程还是比较清晰的。本文对 VoidOc 编写的脚本进行了进一步的简化，以转换 BERT 模型为例，完整的代码如下（Github）：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Convert Huggingface Pytorch checkpoint to Tensorflow checkpoint.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow.compat.v1 <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> BertModel</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_pytorch_checkpoint_to_tf</span>(<span class="params">model: BertModel, ckpt_dir: <span class="built_in">str</span>, model_name: <span class="built_in">str</span></span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    :param model:BertModel Pytorch model instance to be converted</span></span><br><span class="line"><span class="string">    :param ckpt_dir: Tensorflow model directory</span></span><br><span class="line"><span class="string">    :param model_name: model name</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Currently supported Huggingface models:</span></span><br><span class="line"><span class="string">        Y BertModel</span></span><br><span class="line"><span class="string">        N BertForMaskedLM</span></span><br><span class="line"><span class="string">        N BertForPreTraining</span></span><br><span class="line"><span class="string">        N BertForMultipleChoice</span></span><br><span class="line"><span class="string">        N BertForNextSentencePrediction</span></span><br><span class="line"><span class="string">        N BertForSequenceClassification</span></span><br><span class="line"><span class="string">        N BertForQuestionAnswering</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    tensors_to_transpose = (<span class="string">&quot;dense.weight&quot;</span>, <span class="string">&quot;attention.self.query&quot;</span>, <span class="string">&quot;attention.self.key&quot;</span>, <span class="string">&quot;attention.self.value&quot;</span>)</span><br><span class="line"></span><br><span class="line">    var_map = (</span><br><span class="line">        (<span class="string">&quot;layer.&quot;</span>, <span class="string">&quot;layer_&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;word_embeddings.weight&quot;</span>, <span class="string">&quot;word_embeddings&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;position_embeddings.weight&quot;</span>, <span class="string">&quot;position_embeddings&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;token_type_embeddings.weight&quot;</span>, <span class="string">&quot;token_type_embeddings&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;.&quot;</span>, <span class="string">&quot;/&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;LayerNorm/weight&quot;</span>, <span class="string">&quot;LayerNorm/gamma&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;LayerNorm/bias&quot;</span>, <span class="string">&quot;LayerNorm/beta&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;weight&quot;</span>, <span class="string">&quot;kernel&quot;</span>),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(ckpt_dir):</span><br><span class="line">        os.makedirs(ckpt_dir)</span><br><span class="line"></span><br><span class="line">    state_dict = model.state_dict()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to_tf_var_name</span>(<span class="params">name: <span class="built_in">str</span></span>):</span></span><br><span class="line">        <span class="keyword">for</span> patt, repl <span class="keyword">in</span> <span class="built_in">iter</span>(var_map):</span><br><span class="line">            name = name.replace(patt, repl)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;bert/&#123;&#125;&quot;</span>.<span class="built_in">format</span>(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create_tf_var</span>(<span class="params">tensor: np.ndarray, name: <span class="built_in">str</span>, session: tf.Session</span>):</span></span><br><span class="line">        tf_dtype = tf.dtypes.as_dtype(tensor.dtype)</span><br><span class="line">        tf_var = tf.get_variable(dtype=tf_dtype, shape=tensor.shape, name=name, initializer=tf.zeros_initializer())</span><br><span class="line">        session.run(tf.variables_initializer([tf_var]))</span><br><span class="line">        session.run(tf_var)</span><br><span class="line">        <span class="keyword">return</span> tf_var</span><br><span class="line"></span><br><span class="line">    tf.reset_default_graph()</span><br><span class="line">    <span class="keyword">with</span> tf.Session() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">for</span> var_name <span class="keyword">in</span> state_dict:</span><br><span class="line">            tf_name = to_tf_var_name(var_name)</span><br><span class="line">            torch_tensor = state_dict[var_name].numpy()</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">any</span>([x <span class="keyword">in</span> var_name <span class="keyword">for</span> x <span class="keyword">in</span> tensors_to_transpose]):</span><br><span class="line">                torch_tensor = torch_tensor.T</span><br><span class="line">            tf_var = create_tf_var(tensor=torch_tensor, name=tf_name, session=session)</span><br><span class="line">            tf.keras.backend.set_value(tf_var, torch_tensor)</span><br><span class="line">            tf_weight = session.run(tf_var)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Successfully created &#123;&#125;: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(tf_name, np.allclose(tf_weight, torch_tensor)))</span><br><span class="line"></span><br><span class="line">        saver = tf.train.Saver(tf.trainable_variables())</span><br><span class="line">        saver.save(session, os.path.join(ckpt_dir, model_name.replace(<span class="string">&quot;-&quot;</span>, <span class="string">&quot;_&quot;</span>).replace(<span class="string">&quot;.ckpt&quot;</span>, <span class="string">&quot;&quot;</span>) + <span class="string">&quot;.ckpt&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert</span>(<span class="params">pytorch_bin_path: <span class="built_in">str</span>, pytorch_bin_model: <span class="built_in">str</span>, tf_ckpt_path: <span class="built_in">str</span>, tf_ckpt_model: <span class="built_in">str</span></span>):</span></span><br><span class="line"></span><br><span class="line">    model = BertModel.from_pretrained(</span><br><span class="line">        pretrained_model_name_or_path=pytorch_bin_path,</span><br><span class="line">        state_dict=torch.load(os.path.join(pytorch_bin_path, pytorch_bin_model), map_location=<span class="string">&#x27;cpu&#x27;</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    convert_pytorch_checkpoint_to_tf(model=model, ckpt_dir=tf_ckpt_path, model_name=tf_ckpt_model)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    bin_path = <span class="string">&#x27;./pretrained_model/pytorch_model/&#x27;</span></span><br><span class="line">    bin_model = <span class="string">&#x27;pytorch_model.bin&#x27;</span></span><br><span class="line">    ckpt_path = <span class="string">&#x27;./pretrained_model/tensorflow_model/&#x27;</span></span><br><span class="line">    ckpt_model = <span class="string">&#x27;bert_model.ckpt&#x27;</span></span><br><span class="line"></span><br><span class="line">    convert(bin_path, bin_model, ckpt_path, ckpt_model)</span><br></pre></td></tr></table></figure>
+<p>转换过程被包装为 convert() 函数，输入 PyTorch 版 bin 模型的路径和名称，以及 Tensorflow 版 ckpt 的保存路径和名称即可。</p>
+<p>再次提醒一下，由于本文转换的 SpanBERT 只是 BERT 的一个变体，因此模型的层名称是与 BERT 模型完全一致的，如果需要转换其他模型，请自行修改 to_tf_var_name() 函数和 tensors_to_transpose 变量。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1190,105 +1315,6 @@ docker-compose版本：1.27.4</p>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/12/02/learnGit/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wanbaoxiaoyiyi">
-      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="这里是苏苏的小屋">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/12/02/learnGit/" class="post-title-link" itemprop="url">学习 Git ——— 最基础的命令</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-12-02 11:30:17" itemprop="dateCreated datePublished" datetime="2021-12-02T11:30:17Z">2021-12-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-06-17 03:50:51" itemprop="dateModified" datetime="2022-06-17T03:50:51Z">2022-06-17</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="概览">概览</h3>
-<div class="note info no-icon"><p>分布式-版本控制软件，支持版本提交和回滚<br>
-修改的文件完整保存为一个快照，每个版本有对应文件的完整快照<br>
-文件有 4 种状态：<code>未追踪、未修改、已修改、已暂存</code>。<br>
-操作仓库的最终目的：让所有文件处在 <code>未修改</code> 状态，即工作区和仓库保持一致。</p>
-</div>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/12/02/learnGit/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -1314,14 +1340,14 @@ docker-compose版本：1.27.4</p>
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">95k</span>
+    <span title="站点总字数">102k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:26</span>
+    <span title="站点阅读时长">1:33</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

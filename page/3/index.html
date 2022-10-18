@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -180,6 +180,110 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wbxyy.github.io/2021/07/19/learnReactivity2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wanbaoxiaoyiyi">
+      <meta itemprop="description" content="王者的鼓动，现在就展现给你看">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里是苏苏的小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/19/learnReactivity2/" class="post-title-link" itemprop="url">浅谈 vue3 响应式原理 第二篇 记录与重放</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-07-19 11:38:35" itemprop="dateCreated datePublished" datetime="2021-07-19T11:38:35Z">2021-07-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-03-31 01:29:44" itemprop="dateModified" datetime="2022-03-31T01:29:44Z">2022-03-31</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <style>
+  <%- fa_inline('twitter', {prefix: 'fab'}) %>
+</style>
+<h1>浅谈 vue3 响应式原理 第二篇 记录与重放</h1>
+<p>上一篇简单讲了一下什么是响应式，实现响应式的基本套路：在变量被设置新值的时候，重新执行一次副作用。</p>
+<p>但是副作用有很多，我们不可能把每个副作用的执行都在 <code>Proxy</code> 中硬编码一遍，如何设计才能管理这么多副作用，这次来讲 vue3 实现响应式需要的数据结构。</p>
+<h3 id="副作用的存储">副作用的存储</h3>
+<p>要完成响应式，我们上一篇讲了在变量执行 <code>set</code> 操作时将副作用重放一遍。但是一个程序有这么多变量，这么多副作用，vue3 是如何管理的呢？</p>
+<div class="note info"><p>首先这里引入一个<strong>新名词：depsMap</strong></p>
+</div>
+<p><code>depsMap</code> 是一个绑定属性与副作用的 <code>Map</code>。他的 key 是变量的属性名，他的 value 是属性对应的副作用。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/19/learnReactivity2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -627,14 +731,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">95k</span>
+    <span title="站点总字数">102k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:26</span>
+    <span title="站点阅读时长">1:33</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
